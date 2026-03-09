@@ -18,7 +18,6 @@ class AccueilController extends AbstractController
     #[Route('/', name: 'app_accueil')]
     public function index(Request $request, UtilisateurRepository $compteRepository, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
-        // 1. Vérification de la session
         $userSession = $session->get('user');
         if ($userSession) {
             return $this->redirectToRoute('app_inscription');
@@ -38,18 +37,14 @@ class AccueilController extends AbstractController
             if (empty($login) || empty($mdp)) {
                 $erreur = 'Veuillez remplir tous les champs.';
             } else {
-                // 2. Recherche selon ton MCD : colonne UTI_Login
-                // On suppose que dans ton entité la propriété est $login (mappée sur UTI_Login)
                 $compte = $compteRepository->findOneBy(['login' => $login]);
 
                 if ($compte) {
                     $passwordHasher = new NativePasswordHasher();
                     
-                    // 3. Récupération du mot de passe (mappé sur UTI_Password)
                     $hashedPassword = $compte->getPassword(); 
 
                     if ($passwordHasher->verify($hashedPassword, $mdp)) {
-                        // 4. Stockage en session simplifié
                         $session->set('user', [
                             'id' => $compte->getId(),
                             'login' => $compte->getLogin(),
