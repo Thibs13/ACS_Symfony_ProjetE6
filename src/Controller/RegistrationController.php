@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+//use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 
@@ -16,8 +16,8 @@ class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
     public function register(
-        Request $request, 
-        UserPasswordHasherInterface $userPasswordHasher, 
+        Request $request,
+        //UserPasswordHasherInterface $userPasswordHasher,
         EntityManagerInterface $entityManager
     ): Response {
         // Si l'utilisateur est déjà connecté, rediriger
@@ -30,21 +30,16 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $plainPassword = $form->get('plainPassword')->getData();
-            if (!is_string($plainPassword)) {
-                throw new \LogicException('Le mot de passe doit être une chaîne.');
-            }
-
             // Encoder le mot de passe
-            $user->setPassword(
+            /*$user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
-                    $plainPassword
+                    $form->get('plainPassword')->getData()
                 )
-            );
+            );  */
 
             // Définir le rôle par défaut
-            $user->setRoles(['ROLE_USER']);
+            /*$user->setRoles(['ROLE_USER']);   */
 
             $entityManager->persist($user);
             $entityManager->flush();
