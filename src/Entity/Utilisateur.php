@@ -25,6 +25,14 @@ class Utilisateur
     #[ORM\Column(name: "UTI_Password", length: 255)]
     private ?string $password = null;
 
+    #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
+    #[ORM\JoinColumn(
+        name: "ROL_ID",           // Nom de la colonne dans la table Utilisateur
+        referencedColumnName: "ROL_ID", // Nom de la colonne cible dans la table Role (TRES IMPORTANT)
+        nullable: false
+    )]
+    private ?Role $role = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +82,18 @@ class Utilisateur
     public function setPassword(string $password): static
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getRole(): ?Role
+    {
+        return $this->role;
+    }
+
+    public function setRole(?Role $role): static
+    {
+        $this->role = $role;
 
         return $this;
     }
