@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="fond accueil">
+        <div class="logo">
+            <img src="{{'Asset/logo.svg' }}" alt="Logo" style="max-width: 150px;" />
+        </div>
+
+        <div class="login-box">
+        {% if erreur %}
+                <div class="erreur">
+                    {{ erreur }}
+                </div>
+            {% endif %}
+            {% if succes %}
+                <div class="success">
+                    {{ succes }}
+                </div>
+            {% endif %}
+            {{ form_start(form) }}
+                <div class="marge-basse">
+                    {{ form_label(form.Login, 'Login :') }}
+                    {{ form_widget(form.Login, { 'attr': { 'class': 'form-control' } }) }}
+                </div>
+
+                <div class="marge-basse">
+                    {{ form_label(form.MotDePasse, 'Mot de passe :') }}
+                    {{ form_widget(form.MotDePasse, { 'attr': { 'class': 'form-control' } }) }}
+                </div>
+
+                <div class="marge-basse">
+                    {{ form_label(form.Nom, 'Nom :') }}
+                    {{ form_widget(form.Nom, { 'attr': { 'class': 'form-control' } }) }}
+                </div>
+
+                <div class="marge-basse">
+                    {{ form_label(form.Prenom, 'Prénom :') }}
+                    {{ form_widget(form.Prenom, { 'attr': { 'class': 'form-control' } }) }}
+                </div>
+
+                <div class="marge-basse">
+                    {{ form_label(form.Role, 'Rôle :') }}
+                    {{ form_widget(form.Role, { 'attr': { 'class': 'form-control' } }) }}
+                </div>
+                
+                <div class="marge-basse align-centre">
+                    <a href="#">Retour</a>
+                </div>
+
+                <div class="align-centre">
+                    {{ form_widget(form.Save, { 'attr': { 'class': 'btn-submit' } }) }}
+                </div>
+
+                </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
