@@ -33,13 +33,19 @@ class InscriptionController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $login = $data['Login'] ?? null;
-            $mdp = $data['MotDePasse'] ?? null;
-            $nom = $data['Nom'] ?? null;
-            $prenom = $data['Prenom'] ?? null;
+            
+            // On aligne les clés sur ton InscriptionType
+            $login  = $data['login'] ?? null;      // minuscule
+            $mdp    = $data['MotDePasse'] ?? null; // Majuscule
+            $nom    = $data['Nom'] ?? null;        // Majuscule
+            $prenom = $data['Prenom'] ?? null;     // Majuscule
 
+            // On vérifie si l'un d'eux est vide
             if (empty($login) || empty($mdp) || empty($nom) || empty($prenom)) {
                 $erreur = 'Veuillez remplir tous les champs.';
+            } 
+            elseif (str_contains($login, ' ')) {
+                $erreur = 'Le login ne doit pas contenir d\'espaces.';
             } else {
                 $repo = $entityManager->getRepository(Utilisateur::class);
                 $existingUser = $repo->findOneBy(['login' => $login]);

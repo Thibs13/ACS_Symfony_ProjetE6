@@ -2,37 +2,43 @@
 {% block body %}
     <div class="fond accueil">
         <div class="logo">
-            <img src="{{'Asset/logo.svg' }}" alt="Logo" style="max-width: 150px;" />
+            {# Ajout de la fonction asset() pour le logo #}
+            <img src="{{ asset('Asset/logo.svg') }}" alt="Logo" style="max-width: 150px;" />
         </div>
 
         <div class="login-box">
-        {% if erreur %}
-                <div class="erreur">
+            {% if erreur %}
+                <div class="erreur" style="color: red; margin-bottom: 10px;">
                     {{ erreur }}
                 </div>
             {% endif %}
+            
             {% if succes %}
-                <div class="success">
+                <div class="success" style="color: green; margin-bottom: 10px;">
                     {{ succes }}
                 </div>
             {% endif %}
+
             {{ form_start(form) }}
                 <div class="marge-basse">
-                    {{ form_label(form.Login, 'Login :') }}
-                    {{ form_widget(form.Login, { 'attr': { 'class': 'form-control' } }) }}
+                    {{ form_label(form.login, 'Login :') }}
+                    {{ form_widget(form.login, { 'attr': { 'class': 'form-control' } }) }}
                 </div>
 
                 <div class="marge-basse">
+                    {# Ici, on utilise MotDePasse car c'est le nom dans ton InscriptionType #}
                     {{ form_label(form.MotDePasse, 'Mot de passe :') }}
                     {{ form_widget(form.MotDePasse, { 'attr': { 'class': 'form-control' } }) }}
                 </div>
 
                 <div class="marge-basse">
+                    {# Ici, Nom avec une majuscule #}
                     {{ form_label(form.Nom, 'Nom :') }}
                     {{ form_widget(form.Nom, { 'attr': { 'class': 'form-control' } }) }}
                 </div>
 
                 <div class="marge-basse">
+                    {# Ici, Prenom avec une majuscule #}
                     {{ form_label(form.Prenom, 'Prénom :') }}
                     {{ form_widget(form.Prenom, { 'attr': { 'class': 'form-control' } }) }}
                 </div>
@@ -42,11 +48,9 @@
                 </div>
 
                 <div class="align-centre">
+                    {# Ici, Save avec une majuscule #}
                     {{ form_widget(form.Save, { 'attr': { 'class': 'btn-submit' } }) }}
                 </div>
-
-                </div>
-
             {{ form_end(form) }}
         </div>
     </div>
