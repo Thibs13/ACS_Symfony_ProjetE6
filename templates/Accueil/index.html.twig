@@ -3,9 +3,11 @@
 
 {% block body %}
     <div class="fond accueil">
-        <div class="logo">
-            <img src="{{ asset('Asset/logo.svg') }}" alt="Logo" style="max-width: 180px;" />
-        </div>
+        <header>
+            <div class="logo" style="margin-bottom: 20px; display: flex; justify-content: center; height: 150px; align-items: center;">
+                <img class="fit-picture" src="{{ asset('Image/campus-logo.png') }}" alt="Logo" style="max-width: 350px;" />
+            </div>
+        </header>
 
         <div class="login-box">
             {% if erreur %}
@@ -20,28 +22,43 @@
                 </div>
             {% endfor %}
 
-            {{ form_start(form) }}
-                <div class="marge-basse">
-                    {# Correction ici : login en minuscule #}
-                    {{ form_label(form.login, 'Login :') }}
-                    {{ form_widget(form.login) }}
-                </div>
+            <div class="form-container">
 
-                <div class="marge-basse">
-                    {# Correction ici : password au lieu de MotDePasse #}
-                    {{ form_label(form.password, 'Mot de passe :') }}
-                    {{ form_widget(form.password) }}
-                </div>
+                {{ form_start(form) }}
+                    <div class="marge-basse" style="text-align: center; margin-right: 50px; margin-bottom: 15px; height: 50px;">
+                        {# Correction ici : login en minuscule #}
+                        <a style="margin-right: 125px;">{{ form_label(form.login, 'Login :') }}</a>
+                        </br>
+                        {{ form_widget(form.login) }}
+                    </div>
 
-                <div class="marge-basse align-centre">
-                    <a href="{{ path('app_inscription') }}">Créer un compte</a>
-                </div>
+                    <div class="marge-basse" style="margin-bottom: 20px; text-align: center; height: 50px;">
+                        {# Correction ici : password au lieu de MotDePasse #}
+                        <a style="margin-right: 125px;">{{ form_label(form.password, 'Mot de passe :') }}</a>
+                        </br>
+                        <a style="margin-right: 50px;">{{ form_widget(form.password) }}</a>
+                    </div>
 
-                <div class="align-centre">
-                    {# Correction ici : save en minuscule #}
-                    {{ form_widget(form.save) }}
-                </div>
-            {{ form_end(form) }}
+                    <!--
+                    <button type="submit" class="btn btn-primary-gradient w-100" style="text-align: center; align-items: center;">                   
+                        {# Correction ici : save en minuscule #}
+                        {{ form_widget(form.save) }}
+                        <a href="{{ path('app_inscription') }}">Créer un compte</a>
+                    </button>
+                    -->
+                    <button type="submit" class="btn btn-primary-gradient w-100" style="display: block; margin: auto; height: 50px; width: 200px; border-radius: 50px;">
+                        <a>Se connecter</a>
+                        <svg class="btn-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 75px; height: 25px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                    </button>
+
+                    <div class="marge-basse" style="text-align: center; margin-top: 15px;">
+                         <a href="{{ path('app_inscription') }}">Créer un compte</a>
+                    </div>
+
+                {{ form_end(form) }}
+            </div>
         </div>
     </div>
 {% endblock %}
