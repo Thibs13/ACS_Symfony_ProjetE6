@@ -55,19 +55,6 @@
                     ],
                 ])
 
-                ->add('Role', ChoiceType::class, [
-                    'choices' => [
-                        'Administrateur' => 'administrateur',
-                        'Enseignant' => 'Enseignant',
-                    ],
-                    'data' => 'profs',
-                    'required' => true,
-                    'attr' => [
-                        'placeholder' => 'Saisir un rôle',
-                        'class' => 'form-control'
-                    ],
-                ])
-
                 ->add('Save', SubmitType::class, [
                     'label' => 'S\'inscrire',
                     'attr' => [
