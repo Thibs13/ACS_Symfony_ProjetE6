@@ -1,0 +1,115 @@
+/* Container principal pour centrer la carte */
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* La carte blanche */
+.auth-card {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    transition: transform 0.3s ease;
+}
+
+.auth-logo {
+    display: block;
+    margin: 0 auto 20px;
+    max-width: 200px;
+}
+
+.auth-header h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 5px;
+    font-size: 24px;
+}
+
+.auth-header p {
+    text-align: center;
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+/* Formulaire */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 600;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-sizing: border-box; /* Très important ! */
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #4facfe;
+    box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+}
+
+/* Bouton moderne */
+.btn-submit {
+    width: 100%;
+    background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: opacity 0.3s;
+}
+
+.btn-submit:hover {
+    opacity: 0.9;
+}
+
+.btn-arrow {
+    width: 20px;
+    height: 20px;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.auth-footer a {
+    color: #4facfe;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* Alertes */
+.alert {
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+.alert-danger { background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; }
+.alert-success { background: #dcfce7; color: #16a34a; border: 1px solid #bbf7d0; }
