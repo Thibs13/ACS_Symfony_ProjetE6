@@ -14,7 +14,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AccueilController extends AbstractController
 {
-    #[Route('/connexion', name: 'app_accueil')]
+    #[Route('/', name: 'app_accueil')]
     public function index(Request $request, UtilisateurRepository $compteRepository, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
         $userSession = $session->get('user');
