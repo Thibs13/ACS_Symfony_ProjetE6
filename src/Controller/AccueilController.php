@@ -20,7 +20,7 @@ class AccueilController extends AbstractController
     {
         $userSession = $session->get('user');
         if ($userSession) {
-            return $this->redirectToRoute('app_inscription');
+            return $this->redirectToRoute('app_dashboard');
         }
 
         $form = $this->createForm(AccueilType::class);
