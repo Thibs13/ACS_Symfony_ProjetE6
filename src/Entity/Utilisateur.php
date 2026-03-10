@@ -28,8 +28,8 @@ class Utilisateur implements PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
     #[ORM\JoinColumn(
-        name: "ROL_ID",           // Nom de la colonne dans la table Utilisateur
-        referencedColumnName: "ROL_ID", // Nom de la colonne cible dans la table Role (TRES IMPORTANT)
+        name: "ROL_ID",
+        referencedColumnName: "ROL_ID", 
         nullable: false
     )]
     private ?Role $role = null;
