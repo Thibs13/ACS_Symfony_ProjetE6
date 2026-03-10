@@ -7,16 +7,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Form\AccueilType;
-use App\Entity\Utilisateur; 
 use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AccueilController extends AbstractController
 {
     #[Route('/connexion', name: 'app_accueil')]
-    public function index(Request $request, UtilisateurRepository $compteRepository, EntityManagerInterface $entityManager, SessionInterface $session): Response
+    public function index(Request $request, UtilisateurRepository $compteRepository, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
         $userSession = $session->get('user');
         if ($userSession) {
@@ -31,8 +30,10 @@ class AccueilController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $login = $data['Login'] ?? null;
-            $mdp = $data['MotDePasse'] ?? null;
+            
+            // IMPORTANT : Utilise les mêmes noms que dans ton AccueilType (minuscules)
+            $login = $data['login'] ?? null;     // 'login' au lieu de 'Login'
+            $mdp = $data['password'] ?? null;   // 'password' au lieu de 'MotDePasse'
 
             if (empty($login) || empty($mdp)) {
                 $erreur = 'Veuillez remplir tous les champs.';
@@ -40,11 +41,8 @@ class AccueilController extends AbstractController
                 $compte = $compteRepository->findOneBy(['login' => $login]);
 
                 if ($compte) {
-                    $passwordHasher = new NativePasswordHasher();
-                    
-                    $hashedPassword = $compte->getPassword(); 
-
-                    if ($passwordHasher->verify($hashedPassword, $mdp)) {
+                    // Utilisation directe du service injecté en paramètre
+                    if ($passwordHasher->isPasswordValid($compte, $mdp)) {
                         $session->set('user', [
                             'id' => $compte->getId(),
                             'login' => $compte->getLogin(),

@@ -22,13 +22,15 @@
 
             {{ form_start(form) }}
                 <div class="marge-basse">
-                    {{ form_label(form.Login, 'Login :') }}
-                    {{ form_widget(form.Login) }}
+                    {# Correction ici : login en minuscule #}
+                    {{ form_label(form.login, 'Login :') }}
+                    {{ form_widget(form.login) }}
                 </div>
 
                 <div class="marge-basse">
-                    {{ form_label(form.MotDePasse, 'Mot de passe :') }}
-                    {{ form_widget(form.MotDePasse) }}
+                    {# Correction ici : password au lieu de MotDePasse #}
+                    {{ form_label(form.password, 'Mot de passe :') }}
+                    {{ form_widget(form.password) }}
                 </div>
 
                 <div class="marge-basse align-centre">
@@ -36,11 +38,10 @@
                 </div>
 
                 <div class="align-centre">
-                    {{ form_widget(form.Save) }}
+                    {# Correction ici : save en minuscule #}
+                    {{ form_widget(form.save) }}
                 </div>
             {{ form_end(form) }}
         </div>
     </div>
-
-    
 {% endblock %}
