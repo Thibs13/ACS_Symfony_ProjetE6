@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
@@ -33,6 +35,24 @@ class Utilisateur implements PasswordAuthenticatedUserInterface
         nullable: false
     )]
     private ?Role $role = null;
+
+    /**
+     * @var Collection<int, Historique>
+     */
+    #[ORM\OneToMany(targetEntity: Historique::class, mappedBy: 'UTI_ID', orphanRemoval: true)]
+    private Collection $Historiques;
+
+    /**
+     * @var Collection<int, Stage>
+     */
+    #[ORM\OneToMany(targetEntity: Stage::class, mappedBy: 'EnseignantVisite')]
+    private Collection $stages;
+
+    public function __construct()
+    {
+        $this->Historiques = new ArrayCollection();
+        $this->stages = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -95,6 +115,66 @@ class Utilisateur implements PasswordAuthenticatedUserInterface
     public function setRole(?Role $role): static
     {
         $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Historique>
+     */
+    public function getHistoriques(): Collection
+    {
+        return $this->Historiques;
+    }
+
+    public function addHistorique(Historique $historique): static
+    {
+        if (!$this->Historiques->contains($historique)) {
+            $this->Historiques->add($historique);
+            $historique->setUTIID($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHistorique(Historique $historique): static
+    {
+        if ($this->Historiques->removeElement($historique)) {
+            // set the owning side to null (unless already changed)
+            if ($historique->getUTIID() === $this) {
+                $historique->setUTIID(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Stage>
+     */
+    public function getStages(): Collection
+    {
+        return $this->stages;
+    }
+
+    public function addStage(Stage $stage): static
+    {
+        if (!$this->stages->contains($stage)) {
+            $this->stages->add($stage);
+            $stage->setEnseignantVisite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStage(Stage $stage): static
+    {
+        if ($this->stages->removeElement($stage)) {
+            // set the owning side to null (unless already changed)
+            if ($stage->getEnseignantVisite() === $this) {
+                $stage->setEnseignantVisite(null);
+            }
+        }
 
         return $this;
     }
