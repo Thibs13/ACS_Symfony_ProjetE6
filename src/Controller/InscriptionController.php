@@ -56,7 +56,7 @@ class InscriptionController extends AbstractController
                     $compte->setNom($nom);            
                     $compte->setPrenom($prenom);
 
-                    $roleEntity = $entityManager->getRepository(Role::class)->findOneBy(['libelle' => 'Enseignant']);
+                    $roleEntity = $entityManager->getRepository(Role::class)->findOneBy(['libelle' => 'Administrateur']);
                     if ($roleEntity) {
                         $compte->setRole($roleEntity); 
                     }
