@@ -16,8 +16,7 @@ use Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher;
 class InscriptionController extends AbstractController
 {
     #[Route('/inscription', name: 'app_inscription')]
-    // Si tu es sur Symfony 6+, tu peux ajouter cet attribut pour forcer l'accès public :
-    // #[AllowAnonymous] 
+    
     public function index(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
         /* On vérifie si l'utilisateur est déjà en session
@@ -42,7 +41,6 @@ class InscriptionController extends AbstractController
             if (empty($login) || empty($mdp) || empty($nom) || empty($prenom)) {
                 $erreur = 'Veuillez remplir tous les champs.';
             } else {
-                // Vérification des doublons (ajusté sur tes noms de propriétés)
                 $repo = $entityManager->getRepository(Utilisateur::class);
                 $existingUser = $repo->findOneBy(['login' => $login]);
 
@@ -58,17 +56,16 @@ class InscriptionController extends AbstractController
                     $compte->setNom($nom);            
                     $compte->setPrenom($prenom);
 
-                    // Attribution du rôle par rapport au MCD
                     $roleEntity = $entityManager->getRepository(Role::class)->findOneBy(['libelle' => 'Enseignant']);
                     if ($roleEntity) {
-                        $compte->setRole($roleEntity); // Remplit FK_ROL_ID
+                        $compte->setRole($roleEntity); 
                     }
 
                     $entityManager->persist($compte);
                     $entityManager->flush();
 
                     $this->addFlash('success', 'Inscription réussie.');
-                    return $this->redirectToRoute('app_accueil'); // Redirige vers la connexion
+                    return $this->redirectToRoute('app_accueil'); 
                 }
             }
         }
