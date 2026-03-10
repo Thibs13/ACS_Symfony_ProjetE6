@@ -68,7 +68,7 @@ class InscriptionController extends AbstractController
                     $entityManager->flush();
 
                     $this->addFlash('success', 'Inscription réussie.');
-                    return $this->redirectToRoute('app_login'); // Redirige vers la connexion
+                    return $this->redirectToRoute('app_accueil'); // Redirige vers la connexion
                 }
             }
         }
