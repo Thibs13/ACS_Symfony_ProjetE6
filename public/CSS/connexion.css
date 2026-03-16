@@ -1,0 +1,122 @@
+.accueil-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f4f7f6; /* Couleur de fond douce */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.login-card {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 400px;
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo-container img {
+  max-width: 250px;
+  height: auto;
+}
+
+.alert {
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 0.9em;
+  text-align: center;
+}
+
+.alert-error {
+  background-color: #ffe6e6;
+  color: #d63031;
+  border: 1px solid #ffcccc;
+}
+
+.alert-success {
+  background-color: #e6ffed;
+  color: #27ae60;
+  border: 1px solid #cce8d6;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #2d3436;
+}
+
+/* Applique ce style aux inputs générés par Symfony */
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dfe6e9;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #0984e3;
+  box-shadow: 0 0 0 3px rgba(9, 132, 227, 0.1);
+}
+
+.btn-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #0984e3, #74b9ff);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+  margin-top: 10px;
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(9, 132, 227, 0.3);
+}
+
+.btn-submit svg {
+  width: 20px;
+  height: 20px;
+}
+
+.links-container {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.links-container a {
+  color: #0984e3;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9em;
+  transition: color 0.3s;
+}
+
+.links-container a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}

@@ -1,0 +1,44 @@
+{% block body %}
+    <div class="accueil-wrapper">
+        <div class="login-card">
+            
+            <header class="logo-container">
+                <img src="{{ asset('Image/campus-logo.png') }}" alt="Logo du Campus" />
+                <link rel="stylesheet" href="{{ asset('CSS/connexion.css') }}">
+            </header>
+
+            {# Gestion des messages d'erreur et de succès #}
+            {% if erreur %}
+                <div class="alert alert-error">
+                    {{ erreur }}
+                </div>
+            {% endif %}
+
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            {# Début du formulaire #}
+            {{ form_start(form) }}
+                
+                <div class="form-group">
+                    {{ form_label(form.login, 'Login :') }}
+                    {{ form_widget(form.login) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.password, 'Mot de passe :') }}
+                    {{ form_widget(form.password) }}
+                </div>
+
+            {{ form_end(form) }}
+
+            <div class="links-container">
+                <a href="{{ path('app_inscription') }}">Créer un compte</a>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

@@ -59,7 +59,7 @@ class AccueilController extends AbstractController
             }
         }
 
-        return $this->render('accueil/index.html.twig', [
+        return $this->render('connexion/index.html.twig', [
             'form' => $form->createView(),
             'erreur' => $erreur,
             'succes' => $succes
