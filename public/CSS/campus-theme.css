@@ -1,0 +1,19 @@
+:root {
+    --campus-bg: #f1f4f4;
+    --campus-surface: #ffffff;
+    --campus-text: #3a3d45;
+    --campus-muted: #627183;
+
+    --campus-sidebar: #343a48;
+    --campus-sidebar-hover: #465062;
+    --campus-sidebar-text: #c0cada;
+
+    --campus-primary: #119ca0;
+    --campus-primary-2: #67b45f;
+    --campus-gold: #d7a32f;
+    --campus-orange: #e06a18;
+    --campus-red: #c83732;
+
+    --campus-border: #dbe3ea;
+    --campus-shadow: 0 12px 30px rgba(34, 47, 62, 0.12);
+}

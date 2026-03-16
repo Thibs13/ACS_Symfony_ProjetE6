@@ -1,122 +1,135 @@
-.accueil-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: #f4f7f6; /* Couleur de fond douce */
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+@import url("campus-theme.css");
+
+* {
+    box-sizing: border-box;
 }
 
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--campus-text);
+}
+
+/* Container principal pour centrer la carte */
+.accueil-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 24px;
+    background: linear-gradient(160deg, var(--campus-bg) 0%, #e7eeed 60%, #dce6e4 100%);
+}
+
+/* Carte de connexion */
 .login-card {
-  background: #ffffff;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-  width: 100%;
-  max-width: 400px;
+    width: min(100%, 420px);
+    background: var(--campus-surface);
+    border: 1px solid var(--campus-border);
+    border-radius: 16px;
+    box-shadow: var(--campus-shadow);
+    padding: 34px 30px;
 }
 
 .logo-container {
-  text-align: center;
-  margin-bottom: 30px;
+    text-align: center;
+    margin-bottom: 24px;
 }
 
 .logo-container img {
-  max-width: 250px;
-  height: auto;
+    max-width: 250px;
+    height: auto;
 }
 
 .alert {
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  font-size: 0.9em;
-  text-align: center;
+    padding: 12px 14px;
+    border-radius: 10px;
+    margin-bottom: 18px;
+    font-size: 14px;
+    text-align: center;
 }
 
 .alert-error {
-  background-color: #ffe6e6;
-  color: #d63031;
-  border: 1px solid #ffcccc;
+    background-color: #fdecec;
+    color: var(--campus-red);
+    border: 1px solid #f8c5c2;
 }
 
 .alert-success {
-  background-color: #e6ffed;
-  color: #27ae60;
-  border: 1px solid #cce8d6;
+    background-color: #eaf7ef;
+    color: var(--campus-primary-2);
+    border: 1px solid #cde8d6;
 }
 
 .form-group {
-  margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: #2d3436;
+    display: block;
+    margin-bottom: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--campus-text);
 }
 
-/* Applique ce style aux inputs générés par Symfony */
-.form-group input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #dfe6e9;
-  border-radius: 8px;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease;
+/* Champs Symfony: input natif et classe form-control */
+.form-group input,
+.form-group .form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--campus-border);
+    border-radius: 10px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.form-group input:focus {
-  outline: none;
-  border-color: #0984e3;
-  box-shadow: 0 0 0 3px rgba(9, 132, 227, 0.1);
+.form-group input:focus,
+.form-group .form-control:focus {
+    outline: none;
+    border-color: var(--campus-primary);
+    box-shadow: 0 0 0 3px rgba(17, 156, 160, 0.16);
 }
 
 .btn-submit {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  padding: 12px;
-  background: linear-gradient(135deg, #0984e3, #74b9ff);
-  color: white;
-  border: none;
-  border-radius: 50px;
-  font-size: 1em;
-  font-weight: bold;
-  cursor: pointer;
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s;
-  margin-top: 10px;
+    width: 100%;
+    margin-top: 6px;
+    padding: 12px;
+    border: none;
+    border-radius: 999px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    background: linear-gradient(120deg, var(--campus-primary), var(--campus-primary-2));
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
 
 .btn-submit:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(9, 132, 227, 0.3);
-}
-
-.btn-submit svg {
-  width: 20px;
-  height: 20px;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 16px rgba(17, 156, 160, 0.25);
 }
 
 .links-container {
-  text-align: center;
-  margin-top: 25px;
+    text-align: center;
+    margin-top: 20px;
 }
 
 .links-container a {
-  color: #0984e3;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 0.9em;
-  transition: color 0.3s;
+    color: var(--campus-orange);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
 }
 
 .links-container a:hover {
-  color: #0056b3;
-  text-decoration: underline;
+    text-decoration: underline;
+}
+
+@media (max-width: 520px) {
+    .accueil-wrapper {
+        padding: 14px;
+    }
+
+    .login-card {
+        padding: 24px 20px;
+    }
 }

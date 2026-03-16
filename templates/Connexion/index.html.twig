@@ -1,13 +1,19 @@
-{% block body %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion | Campus La Chataigneraie</title>
+    <link rel="stylesheet" href="{{ asset('CSS/connexion.css') }}">
+</head>
+<body>
     <div class="accueil-wrapper">
         <div class="login-card">
-            
             <header class="logo-container">
                 <img src="{{ asset('Image/campus-logo.png') }}" alt="Logo du Campus" />
-                <link rel="stylesheet" href="{{ asset('CSS/connexion.css') }}">
             </header>
 
-            {# Gestion des messages d'erreur et de succès #}
+            {# Gestion des messages d'erreur et de succes #}
             {% if erreur %}
                 <div class="alert alert-error">
                     {{ erreur }}
@@ -20,9 +26,8 @@
                 </div>
             {% endfor %}
 
-            {# Début du formulaire #}
+            {# Debut du formulaire #}
             {{ form_start(form) }}
-                
                 <div class="form-group">
                     {{ form_label(form.login, 'Login :') }}
                     {{ form_widget(form.login) }}
@@ -32,13 +37,12 @@
                     {{ form_label(form.password, 'Mot de passe :') }}
                     {{ form_widget(form.password) }}
                 </div>
-
             {{ form_end(form) }}
 
             <div class="links-container">
-                <a href="{{ path('app_inscription') }}">Créer un compte</a>
+                <a href="{{ path('app_inscription') }}">Creer un compte</a>
             </div>
-
         </div>
     </div>
-{% endblock %}
+</body>
+</html>
