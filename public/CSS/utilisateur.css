@@ -1,0 +1,153 @@
+.page-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.btn-add {
+  background-color: #6fc2a6; /* Vert du bouton */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+}
+.btn-add:hover {
+  background-color: #5ba88f;
+}
+.btn-add svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Barre de recherche */
+.search-container {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.search-container svg {
+  width: 20px;
+  height: 20px;
+  color: #94a3b8;
+}
+.search-container input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 1rem;
+  color: #334155;
+  background: transparent;
+}
+.search-container input::placeholder {
+  color: #94a3b8;
+}
+
+/* Encart d'information (Rôles) */
+.info-box {
+  background-color: #f4f7fc; /* Bleu très clair */
+  border: 1px solid #cce3f6;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  color: #1e40af;
+}
+.info-box-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #1e3a8a;
+}
+.info-box-header svg {
+  width: 22px;
+  height: 22px;
+}
+.info-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.info-box ul li strong {
+  color: #1e3a8a;
+}
+
+/* Badges de rôles */
+.badge-role {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-block;
+}
+.badge-admin {
+  background-color: #f3e8ff;
+  color: #7e22ce;
+  border: 1px solid #d8b4fe;
+}
+.badge-teacher {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+.badge-readonly {
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+}
+.badge-active {
+  background-color: #dcfce7;
+  color: #15803d;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+/* Actions du tableau */
+.table-actions {
+  display: flex;
+  gap: 10px;
+}
+.action-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: 0.2s;
+}
+.action-edit {
+  color: #10b981;
+  border: 1px solid #10b981;
+  background: transparent;
+}
+.action-edit:hover {
+  background: #d1fae5;
+}
+.action-delete {
+  color: #ef4444;
+  border: 1px solid #ef4444;
+  background: transparent;
+}
+.action-delete:hover {
+  background: #fee2e2;
+}
+.action-icon svg {
+  width: 16px;
+  height: 16px;
+}
