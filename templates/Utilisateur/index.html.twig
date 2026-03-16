@@ -12,9 +12,7 @@
 <aside class="sidebar">
     <div class="sidebar-logo">
         <div class="logo-badge">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L4 6v6c0 5.25 3.4 10.15 8 11.35C16.6 22.15 20 17.25 20 12V6l-8-4z"/>
-            </svg>
+            <img src="{{ asset('Image/campus-logo.png') }}" alt="Logo Campus La Chataigneraie" />
         </div>
         <h2>La Châtaigneraie</h2>
         <p>Suivi des stages</p>
@@ -57,7 +55,7 @@
             </svg>
             Suivi &amp; Visites
         </a>
-        <a href="#" class="nav-item active">
+        <a href="{{ path('app_utilisateurs') }}" class="nav-item active">
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
                 <circle cx="12" cy="7" r="4"/>
