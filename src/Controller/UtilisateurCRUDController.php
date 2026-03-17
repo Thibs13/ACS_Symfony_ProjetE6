@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/utilisateur/c/r/u/d')]
+#[Route('/utilisateurs')]
 final class UtilisateurCRUDController extends AbstractController
 {
     #[Route(name: 'app_utilisateur_c_r_u_d_index', methods: ['GET'])]

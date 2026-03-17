@@ -151,3 +151,11 @@
   width: 16px;
   height: 16px;
 }
+.action-show {
+  color: #3b82f6;
+  border: 1px solid #3b82f6;
+  background: transparent;
+}
+.action-show:hover {
+  background: #eff6ff;
+}
