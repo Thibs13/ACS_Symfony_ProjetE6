@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<title>Stage</title>
+
+{% block body %}
+    <h1>Stage</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ stage.id }}</td>
+            </tr>
+            <tr>
+                <th>STA_DateDebut</th>
+                <td>{{ stage.STADateDebut ? stage.STADateDebut|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>STA_DateFin</th>
+                <td>{{ stage.STADateFin ? stage.STADateFin|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>STA_Remarque</th>
+                <td>{{ stage.STARemarque }}</td>
+            </tr>
+            <tr>
+                <th>STA_Remerciement</th>
+                <td>{{ stage.STARemerciement }}</td>
+            </tr>
+            <tr>
+                <th>STA_Bilan</th>
+                <td>{{ stage.STABilan }}</td>
+            </tr>
+            <tr>
+                <th>STA_Attestation</th>
+                <td>{{ stage.STAAttestation }}</td>
+            </tr>
+            <tr>
+                <th>STA_Jury</th>
+                <td>{{ stage.STAJury }}</td>
+            </tr>
+            <tr>
+                <th>STA_Commentaire</th>
+                <td>{{ stage.STACommentaire }}</td>
+            </tr>
+            <tr>
+                <th>STA_DateRetenu</th>
+                <td>{{ stage.STADateRetenu ? stage.STADateRetenu|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_stage_c_r_u_d_index') }}">back to list</a>
+
+    <a href="{{ path('app_stage_c_r_u_d_edit', {'id': stage.id}) }}">edit</a>
+
+    {{ include('stage_crud/_delete_form.html.twig') }}
+{% endblock %}

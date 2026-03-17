@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+
+<title>New Entreprise</title>
+
+{% block body %}
+    <h1>Create new Entreprise</h1>
+
+    {{ include('entreprise_crud/_form.html.twig') }}
+
+    <a href="{{ path('app_entreprise_c_r_u_d_index') }}">back to list</a>
+{% endblock %}

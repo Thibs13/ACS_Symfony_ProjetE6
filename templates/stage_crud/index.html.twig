@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<title>Stage index</title>
+
+{% block body %}
+    <h1>Stage index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>STA_DateDebut</th>
+                <th>STA_DateFin</th>
+                <th>STA_Remarque</th>
+                <th>STA_Remerciement</th>
+                <th>STA_Bilan</th>
+                <th>STA_Attestation</th>
+                <th>STA_Jury</th>
+                <th>STA_Commentaire</th>
+                <th>STA_DateRetenu</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for stage in stages %}
+            <tr>
+                <td>{{ stage.id }}</td>
+                <td>{{ stage.STADateDebut ? stage.STADateDebut|date('Y-m-d') : '' }}</td>
+                <td>{{ stage.STADateFin ? stage.STADateFin|date('Y-m-d') : '' }}</td>
+                <td>{{ stage.STARemarque }}</td>
+                <td>{{ stage.STARemerciement }}</td>
+                <td>{{ stage.STABilan }}</td>
+                <td>{{ stage.STAAttestation }}</td>
+                <td>{{ stage.STAJury }}</td>
+                <td>{{ stage.STACommentaire }}</td>
+                <td>{{ stage.STADateRetenu ? stage.STADateRetenu|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_stage_c_r_u_d_show', {'id': stage.id}) }}">show</a>
+                    <a href="{{ path('app_stage_c_r_u_d_edit', {'id': stage.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_stage_c_r_u_d_new') }}">Create new</a>
+{% endblock %}

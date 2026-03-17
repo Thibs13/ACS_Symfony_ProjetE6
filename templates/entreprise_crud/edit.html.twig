@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<title>Edit Entreprise</title>
+
+{% block body %}
+    <h1>Edit Entreprise</h1>
+
+    {{ include('entreprise_crud/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_entreprise_c_r_u_d_index') }}">back to list</a>
+
+    {{ include('entreprise_crud/_delete_form.html.twig') }}
+{% endblock %}

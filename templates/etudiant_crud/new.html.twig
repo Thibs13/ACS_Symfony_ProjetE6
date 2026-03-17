@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+
+<title>New Etudiant</title>
+
+{% block body %}
+    <h1>Create new Etudiant</h1>
+
+    {{ include('etudiant_crud/_form.html.twig') }}
+
+    <a href="{{ path('app_etudiant_c_r_u_d_index') }}">back to list</a>
+{% endblock %}

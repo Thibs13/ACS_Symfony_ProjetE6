@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<title>Entreprise index</title>
+
+{% block body %}
+    <h1>Entreprise index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>ENT_Nom</th>
+                <th>ENT_Telephone</th>
+                <th>ENT_Email</th>
+                <th>ENT_Adresse</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entreprise in entreprises %}
+            <tr>
+                <td>{{ entreprise.id }}</td>
+                <td>{{ entreprise.ENTNom }}</td>
+                <td>{{ entreprise.ENTTelephone }}</td>
+                <td>{{ entreprise.ENTEmail }}</td>
+                <td>{{ entreprise.ENTAdresse }}</td>
+                <td>
+                    <a href="{{ path('app_entreprise_c_r_u_d_show', {'id': entreprise.id}) }}">show</a>
+                    <a href="{{ path('app_entreprise_c_r_u_d_edit', {'id': entreprise.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_entreprise_c_r_u_d_new') }}">Create new</a>
+{% endblock %}
