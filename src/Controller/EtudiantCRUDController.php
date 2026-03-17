@@ -11,10 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/etudiant/c/r/u/d')]
+#[Route('/dashboard/etudiants')]
 final class EtudiantCRUDController extends AbstractController
 {
-    #[Route(name: 'app_etudiant_c_r_u_d_index', methods: ['GET'])]
+    #[Route('', name: 'app_etudiant_c_r_u_d_index', methods: ['GET'])]
     public function index(EtudiantRepository $etudiantRepository): Response
     {
         return $this->render('etudiant_crud/index.html.twig', [

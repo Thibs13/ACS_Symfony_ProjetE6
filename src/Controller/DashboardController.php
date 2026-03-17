@@ -20,7 +20,7 @@ class DashboardController extends AbstractController
             return $this->redirectToRoute('app_accueil');
         }
 
-        return $this->render('dashboard/index.html.twig', [
+        return $this->render('Dashboard/index.html.twig', [
             'user' => $userSession,
         ]);
     }
