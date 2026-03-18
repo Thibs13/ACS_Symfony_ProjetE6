@@ -14,11 +14,12 @@ class EtudiantType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('ETU_Nom')
-            ->add('ETU_Prenom')
-            ->add('ETU_Promotion')
+            ->add('ETU_Nom', null, ['label' => 'Nom'])
+            ->add('ETU_Prenom', null, ['label' => 'Prénom'])
+            ->add('ETU_Promotion', null, ['label' => 'Promotion'])
             ->add('FIL_ID', EntityType::class, [
                 'class' => Filiere::class,
+                'label' => 'Filière',
                 'choice_label' => 'id',
             ])
         ;

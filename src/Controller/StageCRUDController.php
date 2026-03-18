@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/stage/c/r/u/d')]
+#[Route('/stage')]
 final class StageCRUDController extends AbstractController
 {
     #[Route(name: 'app_stage_c_r_u_d_index', methods: ['GET'])]

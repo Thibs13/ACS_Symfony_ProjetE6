@@ -12,27 +12,27 @@
                 <td>{{ entreprise.id }}</td>
             </tr>
             <tr>
-                <th>ENT_Nom</th>
+                <th>Nom</th>
                 <td>{{ entreprise.ENTNom }}</td>
             </tr>
             <tr>
-                <th>ENT_Telephone</th>
+                <th>Telephone</th>
                 <td>{{ entreprise.ENTTelephone }}</td>
             </tr>
             <tr>
-                <th>ENT_Email</th>
+                <th>Email</th>
                 <td>{{ entreprise.ENTEmail }}</td>
             </tr>
             <tr>
-                <th>ENT_Adresse</th>
+                <th>Adresse</th>
                 <td>{{ entreprise.ENTAdresse }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_entreprise_c_r_u_d_index') }}">back to list</a>
+    <a href="{{ path('app_entreprise_read') }}">Retour</a>
 
-    <a href="{{ path('app_entreprise_c_r_u_d_edit', {'id': entreprise.id}) }}">edit</a>
+    <a href="{{ path('app_entreprise_update', {'id': entreprise.id}) }}">Modification</a>
 
     {{ include('entreprise_crud/_delete_form.html.twig') }}
 {% endblock %}

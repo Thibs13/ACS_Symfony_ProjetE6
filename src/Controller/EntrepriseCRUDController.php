@@ -11,10 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/entreprise/c/r/u/d')]
+#[Route('/entreprise')]
 final class EntrepriseCRUDController extends AbstractController
 {
-    #[Route(name: 'app_entreprise_c_r_u_d_index', methods: ['GET'])]
+    #[Route(name: 'app_entreprise_read', methods: ['GET'])]
     public function index(EntrepriseRepository $entrepriseRepository): Response
     {
         return $this->render('entreprise_crud/index.html.twig', [
@@ -22,7 +22,7 @@ final class EntrepriseCRUDController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_entreprise_c_r_u_d_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_entreprise_create', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $entreprise = new Entreprise();
@@ -33,7 +33,7 @@ final class EntrepriseCRUDController extends AbstractController
             $entityManager->persist($entreprise);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_entreprise_c_r_u_d_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_entreprise_read', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('entreprise_crud/new.html.twig', [
@@ -42,7 +42,7 @@ final class EntrepriseCRUDController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_entreprise_c_r_u_d_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_entreprise_show', methods: ['GET'])]
     public function show(Entreprise $entreprise): Response
     {
         return $this->render('entreprise_crud/show.html.twig', [
@@ -50,7 +50,7 @@ final class EntrepriseCRUDController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_entreprise_c_r_u_d_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_entreprise_update', methods: ['GET', 'POST'])]
     public function edit(Request $request, Entreprise $entreprise, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(EntrepriseType::class, $entreprise);
@@ -59,7 +59,7 @@ final class EntrepriseCRUDController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_entreprise_c_r_u_d_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_entreprise_read', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('entreprise_crud/edit.html.twig', [
@@ -68,7 +68,7 @@ final class EntrepriseCRUDController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_entreprise_c_r_u_d_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_entreprise_delete', methods: ['POST'])]
     public function delete(Request $request, Entreprise $entreprise, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$entreprise->getId(), $request->getPayload()->getString('_token'))) {
@@ -76,6 +76,6 @@ final class EntrepriseCRUDController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_entreprise_c_r_u_d_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_entreprise_read', [], Response::HTTP_SEE_OTHER);
     }
 }

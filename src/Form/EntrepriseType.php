@@ -14,12 +14,13 @@ class EntrepriseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('ENT_Nom')
-            ->add('ENT_Telephone')
-            ->add('ENT_Email')
-            ->add('ENT_Adresse')
+            ->add('ENT_Nom', null, ['label' => 'Nom'])
+            ->add('ENT_Telephone', null, ['label' => 'Téléphone'])
+            ->add('ENT_Email', null, ['label' => 'Email'])
+            ->add('ENT_Adresse', null, ['label' => 'Adresse'])
             ->add('VIL_ID', EntityType::class, [
                 'class' => Ville::class,
+                'label' => 'Ville',
                 'choice_label' => 'id',
             ])
         ;
