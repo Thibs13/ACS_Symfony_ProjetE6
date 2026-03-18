@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/utilisateurs')]
 final class UtilisateurCRUDController extends AbstractController
 {
-    #[Route(name: 'app_utilisateur_c_r_u_d_index', methods: ['GET'])]
+    #[Route(name: 'app_utilisateur_read', methods: ['GET'])]
     public function index(UtilisateurRepository $utilisateurRepository): Response
     {
         return $this->render('utilisateur_crud/index.html.twig', [
@@ -22,7 +22,7 @@ final class UtilisateurCRUDController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_utilisateur_c_r_u_d_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_utilisateur_create', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $utilisateur = new Utilisateur();
@@ -33,7 +33,7 @@ final class UtilisateurCRUDController extends AbstractController
             $entityManager->persist($utilisateur);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_utilisateur_c_r_u_d_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_utilisateur_read', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('utilisateur_crud/new.html.twig', [
@@ -42,7 +42,7 @@ final class UtilisateurCRUDController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_utilisateur_c_r_u_d_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_utilisateur_show', methods: ['GET'])]
     public function show(Utilisateur $utilisateur): Response
     {
         return $this->render('utilisateur_crud/show.html.twig', [
@@ -50,7 +50,7 @@ final class UtilisateurCRUDController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_utilisateur_c_r_u_d_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_utilisateur_update', methods: ['GET', 'POST'])]
     public function edit(Request $request, Utilisateur $utilisateur, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
@@ -59,7 +59,7 @@ final class UtilisateurCRUDController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_utilisateur_c_r_u_d_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_utilisateur_read', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('utilisateur_crud/edit.html.twig', [
@@ -68,7 +68,7 @@ final class UtilisateurCRUDController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_utilisateur_c_r_u_d_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_utilisateur_delete', methods: ['POST'])]
     public function delete(Request $request, Utilisateur $utilisateur, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$utilisateur->getId(), $request->getPayload()->getString('_token'))) {
@@ -76,6 +76,6 @@ final class UtilisateurCRUDController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_utilisateur_c_r_u_d_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_utilisateur_read', [], Response::HTTP_SEE_OTHER);
     }
 }

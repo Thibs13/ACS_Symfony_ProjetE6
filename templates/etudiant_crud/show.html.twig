@@ -8,27 +8,27 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>Id : </th>
                 <td>{{ etudiant.id }}</td>
             </tr>
             <tr>
-                <th>ETU_Nom</th>
+                <th>Nom : </th>
                 <td>{{ etudiant.ETUNom }}</td>
             </tr>
             <tr>
-                <th>ETU_Prenom</th>
+                <th>Prenom : </th>
                 <td>{{ etudiant.ETUPrenom }}</td>
             </tr>
             <tr>
-                <th>ETU_Promotion</th>
+                <th>Promotion : </th>
                 <td>{{ etudiant.ETUPromotion }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_etudiant_c_r_u_d_index') }}">back to list</a>
+    <a href="{{ path('app_etudiant_read') }}">Retour</a>
 
-    <a href="{{ path('app_etudiant_c_r_u_d_edit', {'id': etudiant.id}) }}">edit</a>
+    <a href="{{ path('app_etudiant_update', {'id': etudiant.id}) }}">Modifier</a>
 
     {{ include('etudiant_crud/_delete_form.html.twig') }}
 {% endblock %}

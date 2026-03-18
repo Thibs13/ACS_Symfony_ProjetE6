@@ -3,9 +3,9 @@
 <title>New Utilisateur</title>
 
 {% block body %}
-    <h1>Create new Utilisateur</h1>
+    <h1>Créer un nouvel utilisateur</h1>
 
     {{ include('utilisateur_crud/_form.html.twig') }}
 
-    <a href="{{ path('app_utilisateur_c_r_u_d_index') }}">back to list</a>
+    <a href="{{ path('app_utilisateur_read') }}">Retour</a>
 {% endblock %}

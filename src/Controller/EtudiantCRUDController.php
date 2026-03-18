@@ -11,10 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/dashboard/etudiants')]
+#[Route('/etudiants')]
 final class EtudiantCRUDController extends AbstractController
 {
-    #[Route('', name: 'app_etudiant_c_r_u_d_index', methods: ['GET'])]
+    #[Route('', name: 'app_etudiant_read', methods: ['GET'])]
     public function index(EtudiantRepository $etudiantRepository): Response
     {
         return $this->render('etudiant_crud/index.html.twig', [
@@ -22,7 +22,7 @@ final class EtudiantCRUDController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_etudiant_c_r_u_d_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_etudiant_create', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $etudiant = new Etudiant();
@@ -33,7 +33,7 @@ final class EtudiantCRUDController extends AbstractController
             $entityManager->persist($etudiant);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_etudiant_c_r_u_d_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_etudiant_read', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('etudiant_crud/new.html.twig', [
@@ -42,7 +42,7 @@ final class EtudiantCRUDController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_etudiant_c_r_u_d_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_etudiant_show', methods: ['GET'])]
     public function show(Etudiant $etudiant): Response
     {
         return $this->render('etudiant_crud/show.html.twig', [
@@ -50,7 +50,7 @@ final class EtudiantCRUDController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_etudiant_c_r_u_d_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_etudiant_update', methods: ['GET', 'POST'])]
     public function edit(Request $request, Etudiant $etudiant, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(EtudiantType::class, $etudiant);
@@ -59,7 +59,7 @@ final class EtudiantCRUDController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_etudiant_c_r_u_d_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_etudiant_read', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('etudiant_crud/edit.html.twig', [
@@ -68,7 +68,7 @@ final class EtudiantCRUDController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_etudiant_c_r_u_d_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_etudiant_delete', methods: ['POST'])]
     public function delete(Request $request, Etudiant $etudiant, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$etudiant->getId(), $request->getPayload()->getString('_token'))) {
@@ -76,6 +76,6 @@ final class EtudiantCRUDController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_etudiant_c_r_u_d_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_etudiant_read', [], Response::HTTP_SEE_OTHER);
     }
 }
