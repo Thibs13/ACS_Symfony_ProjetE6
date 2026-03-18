@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/stage')]
 final class StageCRUDController extends AbstractController
 {
-    #[Route(name: 'app_stage_c_r_u_d_index', methods: ['GET'])]
+    #[Route(name: 'app_stage_read', methods: ['GET'])]
     public function index(StageRepository $stageRepository): Response
     {
         return $this->render('stage_crud/index.html.twig', [
@@ -22,7 +22,7 @@ final class StageCRUDController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_stage_c_r_u_d_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_stage_create', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $stage = new Stage();
@@ -33,7 +33,7 @@ final class StageCRUDController extends AbstractController
             $entityManager->persist($stage);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_stage_c_r_u_d_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_stage_read', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('stage_crud/new.html.twig', [
@@ -42,7 +42,7 @@ final class StageCRUDController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_stage_c_r_u_d_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_stage_show', methods: ['GET'])]
     public function show(Stage $stage): Response
     {
         return $this->render('stage_crud/show.html.twig', [
@@ -50,7 +50,7 @@ final class StageCRUDController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_stage_c_r_u_d_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_stage_update', methods: ['GET', 'POST'])]
     public function edit(Request $request, Stage $stage, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(StageType::class, $stage);
@@ -59,7 +59,7 @@ final class StageCRUDController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_stage_c_r_u_d_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_stage_read', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('stage_crud/edit.html.twig', [
@@ -68,7 +68,7 @@ final class StageCRUDController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_stage_c_r_u_d_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_stage_delete', methods: ['POST'])]
     public function delete(Request $request, Stage $stage, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$stage->getId(), $request->getPayload()->getString('_token'))) {
@@ -76,6 +76,6 @@ final class StageCRUDController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_stage_c_r_u_d_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_stage_read', [], Response::HTTP_SEE_OTHER);
     }
 }

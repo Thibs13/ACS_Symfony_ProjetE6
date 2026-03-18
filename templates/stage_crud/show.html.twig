@@ -8,51 +8,51 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>Id </th>
                 <td>{{ stage.id }}</td>
             </tr>
             <tr>
-                <th>STA_DateDebut</th>
+                <th>Date de début </th>
                 <td>{{ stage.STADateDebut ? stage.STADateDebut|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>STA_DateFin</th>
+                <th>Date de fin</th>
                 <td>{{ stage.STADateFin ? stage.STADateFin|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>STA_Remarque</th>
+                <th>Remarque </th>
                 <td>{{ stage.STARemarque }}</td>
             </tr>
             <tr>
-                <th>STA_Remerciement</th>
+                <th>Remerciement </th>
                 <td>{{ stage.STARemerciement }}</td>
             </tr>
             <tr>
-                <th>STA_Bilan</th>
+                <th>Bilan </th>
                 <td>{{ stage.STABilan }}</td>
             </tr>
             <tr>
-                <th>STA_Attestation</th>
+                <th>Attestation </th>
                 <td>{{ stage.STAAttestation }}</td>
             </tr>
             <tr>
-                <th>STA_Jury</th>
+                <th>Jury </th>
                 <td>{{ stage.STAJury }}</td>
             </tr>
             <tr>
-                <th>STA_Commentaire</th>
+                <th>Commentaire </th>
                 <td>{{ stage.STACommentaire }}</td>
             </tr>
             <tr>
-                <th>STA_DateRetenu</th>
+                <th>Date Retenu </th>
                 <td>{{ stage.STADateRetenu ? stage.STADateRetenu|date('Y-m-d') : '' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_stage_c_r_u_d_index') }}">back to list</a>
+    <a href="{{ path('app_stage_read') }}">Retour</a>
 
-    <a href="{{ path('app_stage_c_r_u_d_edit', {'id': stage.id}) }}">edit</a>
+    <a href="{{ path('app_stage_update', {'id': stage.id}) }}">Modification</a>
 
     {{ include('stage_crud/_delete_form.html.twig') }}
 {% endblock %}
