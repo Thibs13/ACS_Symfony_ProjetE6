@@ -40,4 +40,12 @@ class EntrepriseRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+        public function compteEntreprise(): int
+        {
+            return $this->createQueryBuilder('e')
+                ->select('count(e.id)')
+                ->getQuery()
+                ->getSingleScalarResult();
+        }
 }

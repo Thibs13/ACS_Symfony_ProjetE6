@@ -40,4 +40,12 @@ class EtudiantRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+        public function compteEtudiant(): int
+        {
+            return $this->createQueryBuilder('e')
+                ->select('count(e.id)')
+                ->getQuery()
+                ->getSingleScalarResult();
+        }
 }

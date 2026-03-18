@@ -40,4 +40,12 @@ class StageRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function compteStage(): int
+        {
+            return $this->createQueryBuilder('e')
+                ->select('count(e.id)')
+                ->getQuery()
+                ->getSingleScalarResult();
+        }
 }
