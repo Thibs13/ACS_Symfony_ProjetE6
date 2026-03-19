@@ -101,7 +101,7 @@
                     <th>Nom</th>
                     <th>Telephone</th>
                     <th>Email</th>
-                    <th>Adresse</th>
+                    <th>Ville</th>
                     <th>actions</th>
                 </tr>
             </thead>
@@ -112,7 +112,7 @@
                     <td>{{ entreprise.ENTNom }}</td>
                     <td>{{ entreprise.ENTTelephone }}</td>
                     <td>{{ entreprise.ENTEmail }}</td>
-                    <td>{{ entreprise.ENTAdresse }}</td>
+                    <td>{{ entreprise.VILID.VILnom }}</td>
                     <td>
                         <div class="table-actions">
                             <a href="{{ path('app_entreprise_show', {'id': entreprise.id}) }}" class="action-link show">Voir</a>
