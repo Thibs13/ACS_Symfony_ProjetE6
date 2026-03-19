@@ -41,11 +41,20 @@ class StageRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    public function compteStage(): int
+        public function compteStage(): int
         {
             return $this->createQueryBuilder('e')
                 ->select('count(e.id)')
                 ->getQuery()
                 ->getSingleScalarResult();
+        }
+    
+        public function findThreeLatest(): array
+        {
+            return $this->createQueryBuilder('s')
+                ->orderBy('s.id', 'DESC') // Du plus récent au plus ancien
+                ->setMaxResults(3)        // On limite à 3 résultats
+                ->getQuery()
+                ->getResult();
         }
 }

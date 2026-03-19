@@ -22,6 +22,7 @@ class DashboardController extends AbstractController
         $nombreEtudiants = $etudiantRepository->compteEtudiant();
         $nombreStages = $stageRepository->compteStage();
         $nombreEntreprises = $entrepriseRepository->compteEntreprise();
+        $derniersStages = $stageRepository->findThreeLatest();
 
         // Si l'utilisateur n'est pas en session redirection 
         if (!$userSession) {
@@ -33,6 +34,7 @@ class DashboardController extends AbstractController
             'totalEtudiants' => $nombreEtudiants, 
             'totalStages' => $nombreStages,  
             'totalEntreprises' => $nombreEntreprises,
+            'stages' => $derniersStages,
         ]);
     }
 }
