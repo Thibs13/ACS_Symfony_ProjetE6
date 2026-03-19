@@ -24,5 +24,4 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
-    
 }
