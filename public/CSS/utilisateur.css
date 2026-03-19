@@ -159,3 +159,104 @@
 .action-show:hover {
   background: #eff6ff;
 }
+/* =========================================
+   GRILLE DES UTILISATEURS (Cartes)
+   ========================================= */
+
+.users-grid {
+    display: grid;
+    /* Crée des colonnes qui s'adaptent automatiquement, minimum 280px de large */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.user-card {
+    background: var(--campus-surface, #ffffff);
+    border: 1px solid var(--campus-border, #e2e8f0);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(34, 47, 62, 0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.user-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(34, 47, 62, 0.08);
+}
+
+.user-card-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    background-color: #f1f5f9;
+    color: #475569;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.user-info h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--campus-text, #1e293b);
+    line-height: 1.2;
+}
+
+.user-info .user-login {
+    font-size: 0.85rem;
+    color: var(--campus-muted, #64748b);
+}
+
+.user-card-body {
+    flex-grow: 1; /* Pousse le footer vers le bas si les cartes ont des tailles différentes */
+}
+
+.user-card-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 15px;
+    margin-top: 5px;
+}
+
+.btn-view-detail {
+    background-color: #eff6ff;
+    color: #3b82f6;
+    padding: 8px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    flex-grow: 1;
+    text-align: center;
+    transition: background-color 0.2s ease;
+}
+
+.btn-view-detail:hover {
+    background-color: #dbeafe;
+}
+
+.no-users {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    background: #ffffff;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    color: #64748b;
+    font-weight: 500;
+}

@@ -1,194 +1,173 @@
 <!DOCTYPE html>
 <html lang="fr">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Utilisateurs – La Châtaigneraie</title>
-		<link rel="stylesheet" href="{{ asset('CSS/dashboard.css') }}">
-		<link rel="stylesheet" href="{{ asset('CSS/utilisateur.css') }}">
-	</head>
-	<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Utilisateurs – La Châtaigneraie</title>
+        <link rel="stylesheet" href="{{ asset('CSS/dashboard.css') }}">
+        <link rel="stylesheet" href="{{ asset('CSS/utilisateur.css') }}">
+    </head>
+    <body>
 
-		<aside class="sidebar">
-			<div class="sidebar-logo">
-				<div class="logo-badge">
-					<img src="{{ asset('Image/campus-logo.png') }}" alt="Logo Campus La Chataigneraie"/>
-				</div>
-				<h2>La Châtaigneraie</h2>
-				<p>Suivi des stages</p>
-			</div>
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-badge">
+                    <img src="{{ asset('Image/campus-logo.png') }}" alt="Logo Campus La Chataigneraie"/>
+                </div>
+                <h2>La Châtaigneraie</h2>
+                <p>Suivi des stages</p>
+            </div>
 
-			<nav class="sidebar-nav">
-				<a href="{{ path('app_dashboard') }}" class="nav-item">
-					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
-						<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
-						<rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
-					</svg>
-					Tableau de bord
-				</a>
-				<a href="{{ path('app_etudiant_read') }}" class="nav-item">
-					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
-						<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
-						<path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
-					</svg>
-					Étudiants
-				</a>
-				<a href="{{ path('app_entreprise_read') }}" class="nav-item">
-					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
-						<rect x="2" y="7" width="20" height="14" rx="2"/>
-						<path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>
-					</svg>
-					Entreprises
-				</a>
-				<a href="{{ path('app_stage_read') }}" class="nav-item">
-					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
-						<rect x="3" y="3" width="18" height="18" rx="2"/>
-						<path d="M3 9h18M9 21V9"/>
-					</svg>
-					Stages
-				</a>
-				<a href="#" class="nav-item">
-					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
-						<path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/>
-						<rect x="9" y="3" width="6" height="4" rx="1"/>
-						<path d="M9 12h6M9 16h4"/>
-					</svg>
-					Suivi &amp; Visites
-				</a>
-				<a href="{{ path('app_utilisateurs') }}" class="nav-item active">
-					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
-						<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
-						<circle cx="12" cy="7" r="4"/>
-					</svg>
-					Utilisateurs
-				</a>
-				<a href="#" class="nav-item">
-					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
-						<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
-						<polyline points="7 10 12 15 17 10"/>
-						<line x1="12" y1="15" x2="12" y2="3"/>
-					</svg>
-					Exports
-				</a>
-			</nav>
+            <nav class="sidebar-nav">
+                <a href="{{ path('app_dashboard') }}" class="nav-item">
+                    <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+                        <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+                    </svg>
+                    Tableau de bord
+                </a>
+                <a href="{{ path('app_etudiant_read') }}" class="nav-item">
+                    <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+                    </svg>
+                    Étudiants
+                </a>
+                <a href="{{ path('app_entreprise_read') }}" class="nav-item">
+                    <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="7" width="20" height="14" rx="2"/>
+                        <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>
+                    </svg>
+                    Entreprises
+                </a>
+                <a href="{{ path('app_stage_read') }}" class="nav-item">
+                    <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                        <path d="M3 9h18M9 21V9"/>
+                    </svg>
+                    Stages
+                </a>
+                <a href="#" class="nav-item">
+                    <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/>
+                        <rect x="9" y="3" width="6" height="4" rx="1"/>
+                        <path d="M9 12h6M9 16h4"/>
+                    </svg>
+                    Suivi &amp; Visites
+                </a>
+                <a href="{{ path('app_utilisateurs') }}" class="nav-item active">
+                    <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                        Utilisateurs
+                </a>
+                <a href="#" class="nav-item">
+                    <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    Exports
+                </a>
+            </nav>
 
-			<div class="sidebar-footer">
-				<a href="{{ path('app_deco') }}" class="btn-deco">
-					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
-						<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
-						<polyline points="16 17 21 12 16 7"/>
-						<line x1="21" y1="12" x2="9" y2="12"/>
-					</svg>
-					Déconnexion
-				</a>
-			</div>
-		</aside>
+            <div class="sidebar-footer">
+                <a href="{{ path('app_deco') }}" class="btn-deco">
+                    <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+                        <polyline points="16 17 21 12 16 7"/>
+                        <line x1="21" y1="12" x2="9" y2="12"/>
+                    </svg>
+                    Déconnexion
+                </a>
+            </div>
+        </aside>
 
-		<main class="main">
+        <main class="main">
 
-			<div class="page-header-flex">
-				<div>
-					<h1>Gestion des utilisateurs</h1>
-					<p>Gérer les accès à la plateforme</p>
-				</div>
-				<a href="{{ path('app_utilisateur_create') }}" class="btn-add">
-					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
-					</svg>
-					Ajouter un utilisateur
-				</a>
-			</div>
+            <div class="page-header-flex">
+                <div>
+                    <h1>Gestion des utilisateurs</h1>
+                    <p>Gérer les accès à la plateforme</p>
+                </div>
+                <a href="{{ path('app_utilisateur_create') }}" class="btn-add">
+                    <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Ajouter un utilisateur
+                </a>
+            </div>
 
-			<div class="search-container">
-				<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
-					<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-				</svg>
-				<input type="text" placeholder="Rechercher un utilisateur...">
-			</div>
+            <div class="search-container">
+                <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                <input type="text" placeholder="Rechercher un utilisateur...">
+            </div>
 
-			<div class="info-box">
-				<div class="info-box-header">
-					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-					</svg>
-					Rôles et permissions
-				</div>
-				<ul>
-					<li>
-						<strong>Administrateur :</strong>
-						Accès complet, gestion des utilisateurs</li>
-					<li>
-						<strong>Enseignant :</strong>
-						Gestion des étudiants, entreprises et stages</li>
-					<li>
-						<strong>Secrétariat :</strong>
-						Consultation et exports, suivi de certains documents</li>
-				</ul>
-			</div>
+            <div class="info-box">
+                <div class="info-box-header">
+                    <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
+                    Rôles et permissions
+                </div>
+                <ul>
+                    <li>
+                        <strong>Administrateur :</strong>
+                        Accès complet, gestion des utilisateurs</li>
+                    <li>
+                        <strong>Enseignant :</strong>
+                        Gestion des étudiants, entreprises et stages</li>
+                    <li>
+                        <strong>Secrétariat :</strong>
+                        Consultation et exports, suivi de certains documents</li>
+                </ul>
+            </div>
 
-			<div class="section-card" style="padding: 0; overflow: hidden;">
-				<table style="width: 100%; border-collapse: collapse;">
-					<thead>
-						<tr style="border-bottom: 1px solid #e2e8f0; text-align: left;">
-							<th style="padding: 15px 20px;">Id</th>
-							<th style="padding: 15px 20px;">Nom</th>
-							<th style="padding: 15px 20px;">Prénom</th>
-							<th style="padding: 15px 20px;">Login</th>
-							<th style="padding: 15px 20px;">Role</th>
-							<th style="padding: 15px 20px;">Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for utilisateur in utilisateurs %}
-							<tr style="border-bottom: 1px solid #f1f5f9;">
-								<td style="padding: 15px 20px; font-weight: 500;">{{ utilisateur.id }}</td>
-								<td style="padding: 15px 20px;">{{ utilisateur.nom }}</td>
-								<td style="padding: 15px 20px;">{{ utilisateur.prenom }}</td>
-								<td style="padding: 15px 20px; color: #64748b;">{{ utilisateur.login }}</td>
+            <div class="users-grid">
+                {% for utilisateur in utilisateurs %}
+                    <div class="user-card">
+                        <div class="user-card-header">
+                            <div class="user-avatar">
+                                {{ utilisateur.prenom|first|upper }}{{ utilisateur.nom|first|upper }}
+                            </div>
+                            <div class="user-info">
+                                <h3>{{ utilisateur.prenom }} {{ utilisateur.nom }}</h3>
+                                <span class="user-login">@{{ utilisateur.login }}</span>
+                            </div>
+                        </div>
 
-								{# --- LA COLONNE ROLE MODIFIÉE --- #}
-								<td style="padding: 15px 20px;">
-									{% set roleLibelle = utilisateur.role.libelle|lower %}
+                        <div class="user-card-body">
+                            {% set roleLibelle = utilisateur.role.libelle|lower %}
 
-									{% if 'admin' in roleLibelle %}
-										<span class="badge-role badge-admin">{{ utilisateur.role.libelle }}</span>
+                            {% if 'admin' in roleLibelle %}
+                                <span class="badge-role badge-admin">{{ utilisateur.role.libelle }}</span>
+                            {% elseif 'enseignant' in roleLibelle or 'prof' in roleLibelle %}
+                                <span class="badge-role badge-teacher">{{ utilisateur.role.libelle }}</span>
+                            {% else %}
+                                <span class="badge-role badge-readonly">{{ utilisateur.role.libelle }}</span>
+                            {% endif %}
+                        </div>
 
-									{% elseif 'enseignant' in roleLibelle or 'prof' in roleLibelle %}
-										<span class="badge-role badge-teacher">{{ utilisateur.role.libelle }}</span>
-
-									{% else %}
-										<span class="badge-role badge-readonly">{{ utilisateur.role.libelle }}</span>
-									{% endif %}
-								</td>
-								{# -------------------------------- #}
-
-								<td style="padding: 15px 20px;">
-									<div class="table-actions">
-										<a href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}" class="action-icon action-show" title="Voir">
-											<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
-												<path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-												<path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-											</svg>
-										</a>
-										<a href="{{ path('app_utilisateur_update', {'id': utilisateur.id}) }}" class="action-icon action-edit" title="Modifier">
-											<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
-												<path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-											</svg>
-										</a>
-									</div>
-								</td>
-							</tr>
-						{% else %}
-							<tr>
-								<td colspan="6" style="padding: 30px; text-align: center; color: #64748b;">
-									Aucun utilisateur trouvé
-								</td>
-							</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-			</div>
-
-		</main>
-	</body>
+                        <div class="user-card-footer">
+                            <a href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}" class="btn-view-detail">
+                                Vue détaillée
+                            </a>
+                            <a href="{{ path('app_utilisateur_update', {'id': utilisateur.id}) }}" class="action-icon action-edit" title="Modifier">
+                                <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="no-users">
+                        Aucun utilisateur trouvé
+                    </div>
+                {% endfor %}
+            </div>
+            </main>
+    </body>
 </html>
