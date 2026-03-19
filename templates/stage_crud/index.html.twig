@@ -100,13 +100,7 @@
                     <th>Id</th>
                     <th>Date de début</th>
                     <th>Date de fin</th>
-                    <th>Remarque</th>
-                    <th>Remerciement</th>
-                    <th>Bilan</th>
-                    <th>Attestation</th>
-                    <th>Jury</th>
-                    <th>Commentaire</th>
-                    <th>Date retenu</th>
+                    <th>Étudiant</th>
                     <th>actions</th>
                 </tr>
             </thead>
@@ -114,15 +108,9 @@
             {% for stage in stages %}
                 <tr>
                     <td>{{ stage.id }}</td>
-                    <td>{{ stage.STADateDebut ? stage.STADateDebut|date('Y-m-d') : '' }}</td>
-                    <td>{{ stage.STADateFin ? stage.STADateFin|date('Y-m-d') : '' }}</td>
-                    <td>{{ stage.STARemarque }}</td>
-                    <td>{{ stage.STARemerciement }}</td>
-                    <td>{{ stage.STABilan }}</td>
-                    <td>{{ stage.STAAttestation }}</td>
-                    <td>{{ stage.STAJury }}</td>
-                    <td>{{ stage.STACommentaire }}</td>
-                    <td>{{ stage.STADateRetenu ? stage.STADateRetenu|date('Y-m-d') : '' }}</td>
+                    <td>{{ stage.STADateDebut ? stage.STADateDebut|date('d-m-Y') : '' }}</td>
+                    <td>{{ stage.STADateFin ? stage.STADateFin|date('d-m-Y') : '' }}</td>
+                    <td>{{ stage.ETUID.ETUNom }} {{ stage.ETUID.ETUPrenom }}</td>
                     <td>
                         <div class="table-actions">
                             <a href="{{ path('app_stage_show', {'id': stage.id}) }}" class="action-link show">Voir</a>

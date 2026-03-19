@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Doctrine\ORM\EntityRepository;
 
 class StageType extends AbstractType
 {
@@ -28,7 +29,9 @@ class StageType extends AbstractType
             ->add('ETU_ID', EntityType::class, [
                 'class' => Etudiant::class,
                 'label' => 'Étudiant',
-                'choice_label' => 'ETU_Nom',
+                'choice_label' => function (Etudiant $etudiant) {
+                return $etudiant->getETUNom() . ' ' . $etudiant->getETUPrenom();
+                },
             ])
             ->add('ENT_ID', EntityType::class, [
                 'class' => Entreprise::class,
@@ -38,12 +41,28 @@ class StageType extends AbstractType
             ->add('EnseignantVisite', EntityType::class, [
                 'class' => Utilisateur::class,
                 'label' => 'Enseignant de visite',
-                'choice_label' => 'nom',
+                'choice_label' => function (Utilisateur $utilisateur) {
+                return $utilisateur->getNom() . ' ' . $utilisateur->getPrenom();
+                },
+                'query_builder' => function (EntityRepository $enseignant) {
+                    return $enseignant->createQueryBuilder('u')
+                        ->join('u.role', 'r') 
+                        ->where('r.libelle = :role') 
+                        ->setParameter('role', 'Enseignant');
+                },
             ])
             ->add('EnseignantSuivi', EntityType::class, [
                 'class' => Utilisateur::class,
                 'label' => 'Enseignant de suivi',
-                'choice_label' => 'nom',
+                'choice_label' => function (Utilisateur $utilisateur) {
+                return $utilisateur->getNom() . ' ' . $utilisateur->getPrenom();
+                },
+                'query_builder' => function (EntityRepository $enseignant) {
+                    return $enseignant->createQueryBuilder('u')
+                        ->join('u.role', 'r') 
+                        ->where('r.libelle = :role') 
+                        ->setParameter('role', 'Enseignant');
+                },
             ])
         ;
     }
