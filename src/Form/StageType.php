@@ -28,22 +28,22 @@ class StageType extends AbstractType
             ->add('ETU_ID', EntityType::class, [
                 'class' => Etudiant::class,
                 'label' => 'Étudiant',
-                'choice_label' => 'id',
+                'choice_label' => 'ETU_Nom',
             ])
             ->add('ENT_ID', EntityType::class, [
                 'class' => Entreprise::class,
                 'label' => 'Entreprise',
-                'choice_label' => 'id',
+                'choice_label' => 'ENT_Nom',
             ])
             ->add('EnseignantVisite', EntityType::class, [
                 'class' => Utilisateur::class,
                 'label' => 'Enseignant de visite',
-                'choice_label' => 'id',
+                'choice_label' => 'nom',
             ])
             ->add('EnseignantSuivi', EntityType::class, [
                 'class' => Utilisateur::class,
                 'label' => 'Enseignant de suivi',
-                'choice_label' => 'id',
+                'choice_label' => 'nom',
             ])
         ;
     }

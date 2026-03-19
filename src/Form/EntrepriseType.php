@@ -21,7 +21,7 @@ class EntrepriseType extends AbstractType
             ->add('VIL_ID', EntityType::class, [
                 'class' => Ville::class,
                 'label' => 'Ville',
-                'choice_label' => 'id',
+                'choice_label' => 'VIL_Nom',
             ])
         ;
     }
