@@ -20,7 +20,7 @@ class EtudiantType extends AbstractType
             ->add('FIL_ID', EntityType::class, [
                 'class' => Filiere::class,
                 'label' => 'Filière',
-                'choice_label' => 'id',
+                'choice_label' => 'FIL_Libelle',
             ])
         ;
     }
