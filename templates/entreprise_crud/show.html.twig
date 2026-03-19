@@ -8,10 +8,6 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ entreprise.id }}</td>
-            </tr>
-            <tr>
                 <th>Nom</th>
                 <td>{{ entreprise.ENTNom }}</td>
             </tr>
@@ -22,6 +18,14 @@
             <tr>
                 <th>Email</th>
                 <td>{{ entreprise.ENTEmail }}</td>
+            </tr>
+            <tr>
+                <th>Ville</th>
+                <td>{{ entreprise.VILID.VILnom }}</td>
+            </tr>
+            <tr>
+                <th>Code Postal</th>
+                <td>{{ entreprise.VILID.VILCP }}</td>
             </tr>
             <tr>
                 <th>Adresse</th>
