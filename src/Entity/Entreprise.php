@@ -18,8 +18,8 @@ class Entreprise
     #[ORM\Column(length: 50)]
     private ?string $ENT_Nom = null;
 
-    #[ORM\Column]
-    private ?int $ENT_Telephone = null;
+    #[ORM\Column(length: 15)]
+    private ?string $ENT_Telephone = null;
 
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $ENT_Email = null;
@@ -58,12 +58,12 @@ class Entreprise
         return $this;
     }
 
-    public function getENTTelephone(): ?int
+    public function getENTTelephone(): ?string
     {
         return $this->ENT_Telephone;
     }
 
-    public function setENTTelephone(int $ENT_Telephone): static
+    public function setENTTelephone(string $ENT_Telephone): static
     {
         $this->ENT_Telephone = $ENT_Telephone;
 
