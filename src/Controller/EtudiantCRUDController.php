@@ -57,7 +57,7 @@ final class EtudiantCRUDController extends AbstractController
     }
 
     #[Route('/new', name: 'app_etudiant_create', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, EtudiantRepository $etudiantRepository, FiliereRepository $filiereRepository): Response
     {
         $etudiant = new Etudiant();
         $form = $this->createForm(EtudiantType::class, $etudiant);
@@ -70,9 +70,11 @@ final class EtudiantCRUDController extends AbstractController
             return $this->redirectToRoute('app_etudiant_read', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('etudiant_crud/new.html.twig', [
+        return $this->render('etudiant_crud/index.html.twig', [
             'etudiant' => $etudiant,
             'form' => $form,
+            'etudiants' => $etudiantRepository->findAll(),
+            'filieres' => $filiereRepository->findAll(),
         ]);
     }
 
