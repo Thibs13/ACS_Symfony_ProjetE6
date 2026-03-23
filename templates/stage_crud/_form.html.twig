@@ -1,4 +1,29 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_errors(form) }}
+
+    <div class="date-row">
+        {{ form_row(form.STA_DateDebut) }}
+        {{ form_row(form.STA_DateFin) }}
+    </div>
+
+    {{ form_row(form.ETU_ID) }}
+    {{ form_row(form.ENT_ID) }}
+    {{ form_row(form.EnseignantVisite) }}
+    {{ form_row(form.EnseignantSuivi) }}
+    {{ form_row(form.STA_Remarque) }}
+    {{ form_row(form.STA_Commentaire) }}
+
+    <div class="date-row">
+        {{ form_row(form.STA_DateRetenu) }}
+        <div class="form-spacer" aria-hidden="true"></div>
+    </div>
+
+    <div class="short-fields-row">
+        {{ form_row(form.STA_Remerciement) }}
+        {{ form_row(form.STA_Bilan) }}
+        {{ form_row(form.STA_Attestation) }}
+        {{ form_row(form.STA_Jury) }}
+    </div>
+
     <button class="btn">{{ button_label|default('Sauvegarder') }}</button>
 {{ form_end(form) }}

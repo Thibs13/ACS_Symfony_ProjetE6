@@ -1,11 +1,27 @@
 <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un stage - La Chataigneraie</title>
+    <link rel="stylesheet" href="{{ asset('CSS/stage.css') }}">
+</head>
+<body>
+    <main class="stage-page">
+        <section class="stage-form-card">
+            <div class="stage-header">
+                <h1>Ajouter un stage</h1>
+                <p class="stage-subtitle">Completez le formulaire puis enregistrez.</p>
+            </div>
 
-<title>Nouveau Stage</title>
+            <div class="stage-form-wrap">
+                {{ include('stage_crud/_form.html.twig', {'button_label': 'Enregistrer le stage'}) }}
+            </div>
 
-{% block body %}
-    <h1>Ajouter un stage</h1>
-
-    {{ include('stage_crud/_form.html.twig') }}
-
-    <a href="{{ path('app_stage_read') }}">Retour</a>
-{% endblock %}
+            <div class="stage-actions">
+                <a href="{{ path('app_stage_read') }}" class="btn-link">Retour a la liste des stages</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

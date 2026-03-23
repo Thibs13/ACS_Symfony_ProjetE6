@@ -1,0 +1,239 @@
+@import url("campus-theme.css");
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--campus-bg);
+    color: var(--campus-text);
+}
+
+.stage-page {
+    min-height: 100vh;
+    padding: 24px 14px;
+}
+
+.stage-form-card {
+    width: min(720px, 100%);
+    margin: 0 auto;
+    background: var(--campus-surface);
+    border: 1px solid var(--campus-border);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(34, 47, 62, 0.06);
+    padding: 18px;
+}
+
+.stage-header {
+    margin-bottom: 12px;
+}
+
+.stage-header h1 {
+    margin: 0;
+    font-size: 25px;
+    font-weight: 750;
+    color: var(--campus-text);
+}
+
+.stage-subtitle {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: var(--campus-muted);
+}
+
+.stage-form-wrap form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.stage-form-wrap form > div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.date-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.short-fields-row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.form-spacer {
+    visibility: hidden;
+}
+
+.stage-form-wrap label {
+    font-weight: 600;
+    color: var(--campus-text);
+    font-size: 13px;
+}
+
+.stage-form-wrap input,
+.stage-form-wrap select,
+.stage-form-wrap textarea {
+    width: 100%;
+    border: 1px solid var(--campus-border);
+    border-radius: 8px;
+    padding: 8px 10px;
+    background: #ffffff;
+    color: var(--campus-text);
+    font-size: 14px;
+    font-family: inherit;
+}
+
+.stage-form-wrap textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.stage-form-wrap input:focus,
+.stage-form-wrap select:focus,
+.stage-form-wrap textarea:focus {
+    outline: none;
+    border-color: var(--campus-primary);
+    box-shadow: 0 0 0 3px rgba(17, 156, 160, 0.14);
+}
+
+.stage-form-wrap .btn {
+    margin-top: 4px;
+    align-self: flex-start;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(120deg, var(--campus-primary), var(--campus-primary-2));
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 9px 14px;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.stage-form-wrap .btn:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+}
+
+.stage-actions {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--campus-border);
+}
+
+.btn-link {
+    color: var(--campus-primary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.btn-link:hover {
+    text-decoration: underline;
+}
+
+.stage-view-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.stage-view-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px;
+    border: 1px solid var(--campus-border);
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+.stage-view-item-full {
+    grid-column: 1 / -1;
+}
+
+.stage-view-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--campus-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.stage-view-value {
+    font-size: 14px;
+    color: var(--campus-text);
+    white-space: pre-wrap;
+}
+
+.stage-actions-row {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--campus-border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn-secondary,
+.btn-danger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 9px 14px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.btn-secondary {
+    border: 1px solid var(--campus-border);
+    background: #ffffff;
+    color: var(--campus-text);
+}
+
+.btn-danger {
+    border: none;
+    background: var(--campus-red);
+    color: #ffffff;
+}
+
+.btn-secondary:hover,
+.btn-danger:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+}
+
+.stage-delete-form {
+    margin: 0;
+}
+
+@media (max-width: 760px) {
+    .stage-form-card {
+        padding: 14px;
+    }
+
+    .stage-header h1 {
+        font-size: 22px;
+    }
+
+    .date-row,
+    .short-fields-row {
+        grid-template-columns: 1fr;
+    }
+
+    .stage-view-grid {
+        grid-template-columns: 1fr;
+    }
+}

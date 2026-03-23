@@ -1,58 +1,42 @@
 <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voir un stage - La Chataigneraie</title>
+    <link rel="stylesheet" href="{{ asset('CSS/stage.css') }}">
+</head>
+<body>
+    <main class="stage-page">
+        <section class="stage-form-card">
+            <div class="stage-header">
+                <h1>Fiche stage</h1>
+                <p class="stage-subtitle">Consultez les informations en detail.</p>
+            </div>
 
-<title>Stage</title>
+            <div class="stage-view-grid">
+                <div class="stage-view-item"><span class="stage-view-label">ID</span><span class="stage-view-value">{{ stage.id }}</span></div>
+                <div class="stage-view-item"><span class="stage-view-label">Date de debut</span><span class="stage-view-value">{{ stage.STADateDebut ? stage.STADateDebut|date('d-m-Y') : '-' }}</span></div>
+                <div class="stage-view-item"><span class="stage-view-label">Date de fin</span><span class="stage-view-value">{{ stage.STADateFin ? stage.STADateFin|date('d-m-Y') : '-' }}</span></div>
+                <div class="stage-view-item"><span class="stage-view-label">Date retenu</span><span class="stage-view-value">{{ stage.STADateRetenu ? stage.STADateRetenu|date('d-m-Y') : '-' }}</span></div>
+                <div class="stage-view-item"><span class="stage-view-label">Etudiant</span><span class="stage-view-value">{{ stage.ETUID.ETUNom }} {{ stage.ETUID.ETUPrenom }}</span></div>
+                <div class="stage-view-item"><span class="stage-view-label">Entreprise</span><span class="stage-view-value">{{ stage.ENTID.ENTNom }}</span></div>
+                <div class="stage-view-item"><span class="stage-view-label">Enseignant visite</span><span class="stage-view-value">{{ stage.EnseignantVisite.nom }} {{ stage.EnseignantVisite.prenom }}</span></div>
+                <div class="stage-view-item"><span class="stage-view-label">Enseignant suivi</span><span class="stage-view-value">{{ stage.EnseignantSuivi.nom }} {{ stage.EnseignantSuivi.prenom }}</span></div>
+                <div class="stage-view-item stage-view-item-full"><span class="stage-view-label">Remarque</span><span class="stage-view-value">{{ stage.STARemarque|default('-') }}</span></div>
+                <div class="stage-view-item"><span class="stage-view-label">Remerciement</span><span class="stage-view-value">{{ stage.STARemerciement|default('-') }}</span></div>
+                <div class="stage-view-item"><span class="stage-view-label">Bilan</span><span class="stage-view-value">{{ stage.STABilan|default('-') }}</span></div>
+                <div class="stage-view-item"><span class="stage-view-label">Attestation</span><span class="stage-view-value">{{ stage.STAAttestation|default('-') }}</span></div>
+                <div class="stage-view-item"><span class="stage-view-label">Jury</span><span class="stage-view-value">{{ stage.STAJury|default('-') }}</span></div>
+                <div class="stage-view-item stage-view-item-full"><span class="stage-view-label">Commentaire</span><span class="stage-view-value">{{ stage.STACommentaire|default('-') }}</span></div>
+            </div>
 
-{% block body %}
-    <h1>Stage</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id </th>
-                <td>{{ stage.id }}</td>
-            </tr>
-            <tr>
-                <th>Date de début </th>
-                <td>{{ stage.STADateDebut ? stage.STADateDebut|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Date de fin</th>
-                <td>{{ stage.STADateFin ? stage.STADateFin|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Remarque </th>
-                <td>{{ stage.STARemarque }}</td>
-            </tr>
-            <tr>
-                <th>Remerciement </th>
-                <td>{{ stage.STARemerciement }}</td>
-            </tr>
-            <tr>
-                <th>Bilan </th>
-                <td>{{ stage.STABilan }}</td>
-            </tr>
-            <tr>
-                <th>Attestation </th>
-                <td>{{ stage.STAAttestation }}</td>
-            </tr>
-            <tr>
-                <th>Jury </th>
-                <td>{{ stage.STAJury }}</td>
-            </tr>
-            <tr>
-                <th>Commentaire </th>
-                <td>{{ stage.STACommentaire }}</td>
-            </tr>
-            <tr>
-                <th>Date Retenu </th>
-                <td>{{ stage.STADateRetenu ? stage.STADateRetenu|date('Y-m-d') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_stage_read') }}">Retour</a>
-
-    <a href="{{ path('app_stage_update', {'id': stage.id}) }}">Modification</a>
-
-    {{ include('stage_crud/_delete_form.html.twig') }}
-{% endblock %}
+            <div class="stage-actions-row">
+                <a href="{{ path('app_stage_read') }}" class="btn-secondary">Retour</a>
+                <a href="{{ path('app_stage_update', {'id': stage.id}) }}" class="btn-secondary">Modifier</a>
+                {{ include('stage_crud/_delete_form.html.twig') }}
+            </div>
+        </section>
+    </main>
+</body>
+</html>

@@ -9,6 +9,7 @@ use App\Entity\Utilisateur;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
 
@@ -17,15 +18,28 @@ class StageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('STA_DateDebut', null, ['label' => 'Date de début'])
-            ->add('STA_DateFin', null, ['label' => 'Date de fin'])
+            ->add('STA_DateDebut', DateType::class, [
+                'label' => 'Date de debut',
+                'widget' => 'single_text',
+                'html5' => true,
+            ])
+            ->add('STA_DateFin', DateType::class, [
+                'label' => 'Date de fin',
+                'widget' => 'single_text',
+                'html5' => true,
+            ])
             ->add('STA_Remarque', null, ['label' => 'Remarque'])
             ->add('STA_Remerciement', null, ['label' => 'Remerciement'])
             ->add('STA_Bilan', null, ['label' => 'Bilan'])
             ->add('STA_Attestation', null, ['label' => 'Attestation'])
             ->add('STA_Jury', null, ['label' => 'Jury'])
             ->add('STA_Commentaire', null, ['label' => 'Commentaire'])
-            ->add('STA_DateRetenu', null, ['label' => 'Date retenu'])
+            ->add('STA_DateRetenu', DateType::class, [
+                'label' => 'Date retenu',
+                'widget' => 'single_text',
+                'html5' => true,
+                'required' => false,
+            ])
             ->add('ETU_ID', EntityType::class, [
                 'class' => Etudiant::class,
                 'label' => 'Étudiant',
