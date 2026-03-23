@@ -10,15 +10,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Repository\VilleRepository;
 
 #[Route('/entreprise')]
 final class EntrepriseCRUDController extends AbstractController
 {
     #[Route(name: 'app_entreprise_read', methods: ['GET'])]
-    public function index(EntrepriseRepository $entrepriseRepository): Response
+    public function index(EntrepriseRepository $entrepriseRepository, VilleRepository $villeRepository): Response
     {
         return $this->render('entreprise_crud/index.html.twig', [
             'entreprises' => $entrepriseRepository->findAll(),
+            'villes' => $villeRepository->findAll(),
         ]);
     }
 
