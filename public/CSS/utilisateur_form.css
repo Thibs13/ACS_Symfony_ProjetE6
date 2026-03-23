@@ -1,0 +1,177 @@
+/* =========================================
+   MISE EN PAGE DU FORMULAIRE
+   ========================================= */
+
+.form-wrapper {
+    max-width: 800px; /* Limite la largeur du formulaire pour qu'il soit lisible */
+    margin: 0 auto;   /* Centre le formulaire */
+    padding-top: 10px;
+}
+
+.form-card {
+    background: var(--campus-surface, #ffffff);
+    border: 1px solid var(--campus-border, #e2e8f0);
+    border-radius: 12px;
+    padding: 35px;
+    box-shadow: 0 4px 10px rgba(34, 47, 62, 0.04);
+}
+
+/* =========================================
+   STYLE DU BOUTON RETOUR
+   ========================================= */
+
+.btn-outline-back {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.95rem;
+    background: white;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+    transition: all 0.2s ease;
+}
+
+.btn-outline-back:hover {
+    background: #f1f5f9;
+    color: #1e293b;
+    border-color: #94a3b8;
+}
+
+.btn-outline-back svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* =========================================
+   STYLE GÉNÉRIQUE DES CHAMPS SYMFONY
+   ========================================= */
+
+/* On cible les div générées par le form_row de Symfony */
+.form-card div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+/* Labels */
+.form-card label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+/* Champs de texte, emails, mots de passe et listes déroulantes */
+.form-card input[type="text"],
+.form-card input[type="email"],
+.form-card input[type="password"],
+.form-card select,
+.form-card textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #334155;
+    background-color: #f8fafc;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    font-family: inherit;
+}
+
+/* Effet lors du clic sur un champ (Focus) */
+.form-card input:focus,
+.form-card select:focus,
+.form-card textarea:focus {
+    outline: none;
+    border-color: #6fc2a6; /* Vert du bouton "Ajouter" */
+    box-shadow: 0 0 0 3px rgba(111, 194, 166, 0.2);
+    background-color: #ffffff;
+}
+
+/* =========================================
+   BOUTON DE SOUMISSION DU FORMULAIRE
+   ========================================= */
+
+.form-card button[type="submit"],
+.form-card input[type="submit"],
+.btn-submit {
+    background-color: #6fc2a6;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-top: 10px;
+    align-self: flex-start;
+    display: inline-block;
+    width: auto;
+}
+
+.form-card button[type="submit"]:hover,
+.form-card input[type="submit"]:hover {
+    background-color: #5ba88f;
+}
+
+.form-card button[type="submit"]:active,
+.form-card input[type="submit"]:active {
+    transform: translateY(1px);
+}
+
+/* Messages d'erreur de validation Symfony (s'il y en a) */
+.form-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: #ef4444; /* Rouge */
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+/* =========================================
+   STYLE DU BOUTON DE SAUVEGARDE (.btn)
+   ========================================= */
+
+.btn {
+    background-color: #6fc2a6; /* Vert principal de votre charte */
+    color: #ffffff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px; /* Sépare le bouton du dernier champ du formulaire */
+}
+
+.btn:hover {
+    background-color: #5ba88f; /* Vert plus sombre au survol */
+}
+
+.btn:active {
+    transform: translateY(1px); /* Petit effet visuel d'enfoncement au clic */
+}
+/* On s'assure que le bouton de base de Symfony dans la vue delete prend bien l'icône et le style (déjà défini dans utilisateur.css) */
+.delete-form-wrapper form {
+    margin: 0;
+}
+
+/* =========================================
+   BOUTON DE SUPPRESSION SIMPLE
+   ========================================= */
+.delete-simple-wrapper {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: flex-end; /* Aligne le bouton de suppression à droite */
+}
