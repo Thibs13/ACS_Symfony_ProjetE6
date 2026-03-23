@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+
+<title>Nouvelle Entreprise</title>
+
+{% block body %}
+    <h1>Ajouter une entreprise</h1>
+
+    {{ include('entreprise_crud/_form.html.twig') }}
+
+    <a href="{{ path('app_entreprise_read') }}">Retour</a>
+{% endblock %}
