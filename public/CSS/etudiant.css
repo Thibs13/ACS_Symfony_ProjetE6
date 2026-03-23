@@ -251,3 +251,171 @@
     font-weight: 600;
     cursor: pointer;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- Page Détail Générale --- */
+
+/* La carte principale qui englobe tout */
+.detail-card {
+    padding: 3rem; /* Padding généreux pour faire respirer les infos */
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* Grille pour les deux colonnes (Coordonnées / Contact) */
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Deux colonnes égales */
+    gap: 4rem; /* Grand espace entre les colonnes */
+    margin-bottom: 3rem;
+}
+
+/* Style des titres de section (h3) */
+.detail-group h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 2rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #edf2f7; /* Ligne de séparation subtile */
+    letter-spacing: -0.015em;
+}
+
+/* Le bloc contenant les info-items */
+.info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Espace vertical entre chaque info */
+}
+
+/* Style de chaque item d'information */
+.info-item {
+    display: block; /* Label au-dessus de la valeur */
+}
+
+/* Le Label : Petit, gris, majuscules pour ne pas gêner */
+.info-label {
+    display: block;
+    font-size: 0.8rem;
+    color: #a0aec0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+}
+
+/* La Valeur : Plus grande, noire, grasse pour ressortir */
+.info-value {
+    display: block;
+    font-size: 1.1rem;
+    color: #1a202c;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+/* Style spécifique pour le nom de l'entreprise (encore plus grand) */
+.company-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a202c;
+    letter-spacing: -0.025em;
+}
+
+/* Amélioration des liens */
+.phone-link, .email-link {
+    color: #3182ce; /* Bleu élégant pour les liens */
+    text-decoration: none;
+    transition: color 0.1s ease;
+}
+
+.phone-link:hover, .email-link:hover {
+    color: #2b6cb0;
+    text-decoration: underline;
+}
+
+/* --- Danger Zone --- */
+
+.danger-zone-wrapper {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px dashed #e2e8f0; /* Séparation dashed avec le haut */
+}
+
+.danger-zone-card {
+    background-color: #fff5f5; /* Fond rouge très clair */
+    border: 1px solid #feb2b2; /* Bordure rouge */
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start; /* Aligne le formulaire à gauche */
+}
+
+.danger-zone-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.danger-zone-card h4 {
+    color: #c53030; /* Rouge d'erreur */
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.danger-zone-card p {
+    color: #c53030;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* Style pour le bouton "Supprimer" de ton delete_form */
+.danger-zone-action input[type="submit"], 
+.danger-zone-action button {
+    background-color: #c53030;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+}
+
+.danger-zone-action input[type="submit"]:hover,
+.danger-zone-action button:hover {
+    background-color: #a71a1a;
+}
