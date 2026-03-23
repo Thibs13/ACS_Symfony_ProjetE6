@@ -31,7 +31,7 @@
                 <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
                 <path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
             </svg>
-            Etudiants
+            Étudiants
         </a>
         <a href="{{ path('app_entreprise_read') }}" class="nav-item active">
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -122,7 +122,8 @@
                                data-nom="{{ entreprise.ENTNom }}"
                                data-telephone="{{ entreprise.ENTTelephone }}"
                                data-email="{{ entreprise.ENTEmail }}"
-                               data-ville="{{ entreprise.VILID.VILnom }}">
+                               data-ville="{{ entreprise.VILID.VILnom }}"
+                               data-cp="{{ entreprise.VILID.VILCP }}">
                                 <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
@@ -153,6 +154,9 @@
         </table>
     </div>
 </main>
+
+
+
 
 
 
@@ -196,6 +200,13 @@
     </div>
 </div>
 
+
+
+
+
+
+
+
 <!-- Modal de visualisation d'etudiant -->
 <div id="viewEntrepriseModal" class="modal-overlay" style="display: none;">
     <div class="modal-popup">
@@ -210,6 +221,8 @@
             <p><strong>Téléphone :</strong> <span id="viewTelephone">-</span></p>
             <p><strong>Email :</strong> <span id="viewEmail">-</span></p>
             <p><strong>Ville :</strong> <span id="viewVille">-</span></p>
+            <p><strong>Code Postal :</strong> <span id="viewCP">-</span></p>
+
         </div>
 
         <div class="modal-actions">
@@ -217,6 +230,12 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
 
 <!-- Modal de modification d'etudiant -->
 <div id="editEntrepriseModal" class="modal-overlay" style="display: none;">
@@ -262,6 +281,11 @@
     </div>
 </div>
 
+
+
+
+
+
 <script>
 // Recupere les 3 modals
 const addModal = document.getElementById('entrepriseModal');
@@ -301,6 +325,7 @@ document.querySelectorAll('.js-view-btn').forEach(function(button) {
         document.getElementById('viewTelephone').textContent = this.dataset.telephone;
         document.getElementById('viewEmail').textContent = this.dataset.email;
         document.getElementById('viewVille').textContent = this.dataset.ville;
+        document.getElementById('viewCP').textContent = this.dataset.cp;
 
         openModal(viewModal);
     });
