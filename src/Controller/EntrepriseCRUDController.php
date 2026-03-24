@@ -20,7 +20,7 @@ final class EntrepriseCRUDController extends AbstractController
     {
 
         return $this->render('entreprise_crud/index.html.twig', [
-            'entreprises' => $entrepriseRepository->findAllSorted(),
+            'entreprises' => $entrepriseRepository->findAll(),
             'villes' => $villeRepository->findAll(),
         ]);
     }
