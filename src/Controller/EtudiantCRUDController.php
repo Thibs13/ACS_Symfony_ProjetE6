@@ -92,7 +92,7 @@ final class EtudiantCRUDController extends AbstractController
     public function delete(Request $request, Etudiant $etudiant, EntityManagerInterface $entityManager): Response
     {
         // on vérifie que la requête contient un token de sécurité valide pour éviter les attaques CSRF
-        if ($this->isCsrfTokenValid('delete_etudiant_' . $etudiant->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $etudiant->getId(), $request->request->get('_token'))) {
             // si le token est valide, on dit à l'outil de gestion de base de données de supprimer l'étudiant
             $entityManager->remove($etudiant);
             $entityManager->flush();

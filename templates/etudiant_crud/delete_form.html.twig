@@ -1,8 +1,12 @@
-<form method="post"
-        action="{{ path('app_etudiant_delete', {'id': etudiant.id}) }}"
-        onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet étudiant ?');">
-        
-        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ etudiant.id) }}">
-        
-        <button class="btn">Delete</button>
+{# ce formulaire permet d'envoyer une demande de suppression au contrôleur #}
+<form method="post" 
+      action="{{ path('app_etudiant_delete', {'id': etudiant.id}) }}" 
+      onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet étudiant ?');">
+    
+    {# cette ligne crée un jeton de sécurité invisible pour éviter les suppressions accidentelles ou malveillantes #}
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ etudiant.id) }}">
+    
+    {# le bouton qui déclenche l'action de suppression #}
+    <button class="btn">Supprimer</button>
+
 </form>
