@@ -17,7 +17,6 @@ class UtilisateurType extends AbstractType
             ->add('nom')
             ->add('prenom')
             ->add('login')
-            ->add('password')
             ->add('role', EntityType::class, [
                 'class' => Role::class,
                 'choice_label' => 'libelle',
