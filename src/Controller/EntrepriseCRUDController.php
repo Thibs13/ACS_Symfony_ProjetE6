@@ -18,8 +18,9 @@ final class EntrepriseCRUDController extends AbstractController
     #[Route(name: 'app_entreprise_read', methods: ['GET'])]
     public function index(EntrepriseRepository $entrepriseRepository, VilleRepository $villeRepository): Response
     {
+
         return $this->render('entreprise_crud/index.html.twig', [
-            'entreprises' => $entrepriseRepository->findAll(),
+            'entreprises' => $entrepriseRepository->findAllSorted(),
             'villes' => $villeRepository->findAll(),
         ]);
     }
