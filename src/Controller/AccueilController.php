@@ -31,9 +31,9 @@ class AccueilController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             
-            // IMPORTANT : Utilise les mêmes noms que dans ton AccueilType (minuscules)
-            $login = $data['login'] ?? null;     // 'login' au lieu de 'Login'
-            $mdp = $data['password'] ?? null;   // 'password' au lieu de 'MotDePasse'
+            
+            $login = $data['login'] ?? null;     
+            $mdp = $data['password'] ?? null;   
 
             if (empty($login) || empty($mdp)) {
                 $erreur = 'Veuillez remplir tous les champs.';
@@ -41,7 +41,7 @@ class AccueilController extends AbstractController
                 $compte = $compteRepository->findOneBy(['login' => $login]);
 
                 if ($compte) {
-                    // Utilisation directe du service injecté en paramètre
+                    
                     if ($passwordHasher->isPasswordValid($compte, $mdp)) {
                         $session->set('user', [
                             'id' => $compte->getId(),

@@ -18,8 +18,8 @@
             }
             // Détruire la session pour déconnecter l'utilisateur
             $session->invalidate();
-            $session->clear(); // Optionnel : efface toutes les données de session
-            return $this->redirectToRoute('app_accueil'); // Redirige vers la page d'acc
+            $session->clear(); // Efface toutes les données de session
+            return $this->redirectToRoute('app_accueil'); // Redirige vers la page d'accueil
         }
     }
 ?>
