@@ -14,25 +14,32 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/stage')]
 final class StageCRUDController extends AbstractController
 {
+    // affiche la liste de tous les stages enregistrés dans le système
     #[Route(name: 'app_stage_read', methods: ['GET'])]
     public function index(StageRepository $stageRepository): Response
     {
+        // on va chercher l'intégralité des stages via le repository
         return $this->render('stage_crud/index.html.twig', [
             'stages' => $stageRepository->findAll(),
         ]);
     }
 
+    // permet de créer un nouveau stage via un formulaire
     #[Route('/new', name: 'app_stage_create', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        // on initialise un nouvel objet Stage et on génère le formulaire correspondant
         $stage = new Stage();
         $form = $this->createForm(StageType::class, $stage);
         $form->handleRequest($request);
 
+        // si l'utilisateur a cliqué sur valider et que les infos sont correctes
         if ($form->isSubmitted() && $form->isValid()) {
+            // on demande à Doctrine de préparer l'ajout en base de données
             $entityManager->persist($stage);
-            $entityManager->flush();
+            $entityManager->flush(); // on valide définitivement l'écriture en base
 
+            // une fois enregistré, on redirige vers la liste des stages
             return $this->redirectToRoute('app_stage_read', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -42,21 +49,27 @@ final class StageCRUDController extends AbstractController
         ]);
     }
 
+    // affiche le détail complet d'un stage (entreprise, étudiant, dates, etc.)
     #[Route('/{id}', name: 'app_stage_show', methods: ['GET'])]
     public function show(Stage $stage): Response
     {
+        // Symfony trouve tout seul le bon stage grâce à l'ID présent dans l'adresse
         return $this->render('stage_crud/show.html.twig', [
             'stage' => $stage,
         ]);
     }
 
+    // permet de modifier les informations d'un stage déjà existant
     #[Route('/{id}/edit', name: 'app_stage_update', methods: ['GET', 'POST'])]
     public function edit(Request $request, Stage $stage, EntityManagerInterface $entityManager): Response
     {
+        // on charge le formulaire avec les données actuelles du stage
         $form = $this->createForm(StageType::class, $stage);
         $form->handleRequest($request);
 
+        // si on valide les changements
         if ($form->isSubmitted() && $form->isValid()) {
+            // on applique les modifications directement en base de données
             $entityManager->flush();
 
             return $this->redirectToRoute('app_stage_read', [], Response::HTTP_SEE_OTHER);
@@ -68,14 +81,18 @@ final class StageCRUDController extends AbstractController
         ]);
     }
 
+    // gère la suppression d'un stage
     #[Route('/{id}', name: 'app_stage_delete', methods: ['POST'])]
     public function delete(Request $request, Stage $stage, EntityManagerInterface $entityManager): Response
     {
+        // petite vérification de sécurité pour être sûr que la demande de suppression est légitime
         if ($this->isCsrfTokenValid('delete'.$stage->getId(), $request->getPayload()->getString('_token'))) {
+            // on donne l'ordre de supprimer le stage et on valide
             $entityManager->remove($stage);
             $entityManager->flush();
         }
 
+        // on revient à la liste principale une fois l'action terminée
         return $this->redirectToRoute('app_stage_read', [], Response::HTTP_SEE_OTHER);
     }
 }

@@ -12,16 +12,18 @@ class UtilisateurController extends AbstractController
     #[Route('/utilisateurs', name: 'app_utilisateurs')]
     public function index(RequestStack $requestStack): Response
     {
+        // on récupère les informations de la session actuelle pour savoir qui est connecté
         $session = $requestStack->getSession();
         $userSession = $session->get('user');
 
+        // si on ne trouve aucune session (utilisateur non connecté), on le renvoie vers la page d'accueil
         if (!$userSession) {
             return $this->redirectToRoute('app_accueil');
         }
-        // On retourne la vue en lui passant le tableau d'utilisateurs
+
+        // on affiche la page de profil en envoyant les informations de l'utilisateur stockées en session
         return $this->render('utilisateur/index.html.twig', [
             'utilisateurs' => $userSession,
         ]);
     }
-
 }

@@ -15,51 +15,64 @@ use App\Repository\VilleRepository;
 #[Route('/entreprise')]
 final class EntrepriseCRUDController extends AbstractController
 {
+    // affiche la liste de toutes les entreprises enregistrées
     #[Route(name: 'app_entreprise_read', methods: ['GET'])]
     public function index(EntrepriseRepository $entrepriseRepository, VilleRepository $villeRepository): Response
     {
-
+        // on demande au repository de nous donner absolument toutes les entreprises et les villes 
         return $this->render('entreprise_crud/index.html.twig', [
             'entreprises' => $entrepriseRepository->findAll(),
             'villes' => $villeRepository->findAll(),
         ]);
     }
 
+    // gère la création d'une nouvelle fiche entreprise
     #[Route('/new', name: 'app_entreprise_create', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        // on prépare un objet vide et le formulaire qui va avec
         $entreprise = new Entreprise();
         $form = $this->createForm(EntrepriseType::class, $entreprise);
         $form->handleRequest($request);
 
+        // si le formulaire est envoyé et que les données sont correctes
         if ($form->isSubmitted() && $form->isValid()) {
+            // on dit à l'outil de gestion de base de données de "préparer" puis "d'enregistrer" la nouvelle entreprise
             $entityManager->persist($entreprise);
             $entityManager->flush();
 
+            // une fois fini, on repart sur la liste globale
             return $this->redirectToRoute('app_entreprise_read', [], Response::HTTP_SEE_OTHER);
         }
 
+        // sinon, on affiche juste la page avec le formulaire à remplir
         return $this->render('entreprise_crud/new.html.twig', [
             'entreprise' => $entreprise,
             'form' => $form,
         ]);
     }
 
+    // affiche les détails d'une entreprise spécifique (via son id dans l'URL)
     #[Route('/{id}', name: 'app_entreprise_show', methods: ['GET'])]
     public function show(Entreprise $entreprise): Response
     {
+        // Symfony récupère automatiquement l'entreprise correspondante grâce à l'id
         return $this->render('entreprise_crud/show.html.twig', [
             'entreprise' => $entreprise,
         ]);
     }
 
+    // permet de modifier les informations d'une entreprise existante
     #[Route('/{id}/edit', name: 'app_entreprise_update', methods: ['GET', 'POST'])]
     public function edit(Request $request, Entreprise $entreprise, EntityManagerInterface $entityManager): Response
     {
+        // on crée le formulaire pré-rempli avec les données actuelles de l'entreprise
         $form = $this->createForm(EntrepriseType::class, $entreprise);
         $form->handleRequest($request);
 
+        // si on valide les modifications
         if ($form->isSubmitted() && $form->isValid()) {
+            // on met à jour la base de données (pas besoin de persist ici, l'objet existe déjà)
             $entityManager->flush();
 
             return $this->redirectToRoute('app_entreprise_read', [], Response::HTTP_SEE_OTHER);
@@ -71,14 +84,18 @@ final class EntrepriseCRUDController extends AbstractController
         ]);
     }
 
+    // supprime définitivement une entreprise
     #[Route('/{id}', name: 'app_entreprise_delete', methods: ['POST'])]
     public function delete(Request $request, Entreprise $entreprise, EntityManagerInterface $entityManager): Response
     {
+        // par sécurité, on vérifie que le jeton (token) de suppression est valide
         if ($this->isCsrfTokenValid('delete'.$entreprise->getId(), $request->getPayload()->getString('_token'))) {
+            // on retire l'entreprise de la base de données et on valide le changement
             $entityManager->remove($entreprise);
             $entityManager->flush();
         }
 
+        // on revient à la liste après la suppression
         return $this->redirectToRoute('app_entreprise_read', [], Response::HTTP_SEE_OTHER);
     }
 }
