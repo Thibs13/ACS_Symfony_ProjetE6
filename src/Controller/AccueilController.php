@@ -53,6 +53,7 @@ class AccueilController extends AbstractController
                             'id' => $compte->getId(),
                             'login' => $compte->getLogin(),
                             'nom' => $compte->getNom(),
+                            'role' => $compte->getRole()->getID(),
                         ]);
 
                         // On redirige vers la page d'accueil du site

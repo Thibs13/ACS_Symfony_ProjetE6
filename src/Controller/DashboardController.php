@@ -36,6 +36,7 @@ class DashboardController extends AbstractController
         // on transmet toutes les données récupérées à la vue pour construire la page
         return $this->render('Dashboard/index.html.twig', [
             'user' => $userSession,
+            'role' => $userSession['role'] ?? 0,
             'totalEtudiants' => $nombreEtudiants, 
             'totalStages' => $nombreStages,  
             'totalEntreprises' => $nombreEntreprises,
