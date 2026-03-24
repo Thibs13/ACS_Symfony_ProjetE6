@@ -15,12 +15,12 @@
             </div>
 
             <div class="stage-form-wrap">
-                {{ include('stage_crud/_form.html.twig', {'button_label': 'Enregistrer les modifications'}) }}
+                {{ include('stage_crud/form.html.twig', {'button_label': 'Enregistrer les modifications'}) }}
             </div>
 
             <div class="stage-actions-row">
                 <a href="{{ path('app_stage_read') }}" class="btn-secondary">Retour</a>
-                {{ include('stage_crud/_delete_form.html.twig') }}
+                {{ include('stage_crud/delete_form.html.twig') }}
             </div>
         </section>
     </main>
