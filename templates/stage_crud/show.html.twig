@@ -1,42 +1,181 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voir un stage - La Chataigneraie</title>
-    <link rel="stylesheet" href="{{ asset('CSS/stage.css') }}">
-</head>
-<body>
-    <main class="stage-page">
-        <section class="stage-form-card">
-            <div class="stage-header">
-                <h1>Fiche stage</h1>
-                <p class="stage-subtitle">Consultez les informations en detail.</p>
-            </div>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Détails Utilisateur – La Châtaigneraie</title>
+		<link rel="stylesheet" href="{{ asset('CSS/dashboard.css') }}">
+		<link rel="stylesheet" href="{{ asset('CSS/utilisateur.css') }}">
+	</head>
+	<body>
 
-            <div class="stage-view-grid">
-                <div class="stage-view-item"><span class="stage-view-label">ID</span><span class="stage-view-value">{{ stage.id }}</span></div>
-                <div class="stage-view-item"><span class="stage-view-label">Date de debut</span><span class="stage-view-value">{{ stage.STADateDebut ? stage.STADateDebut|date('d-m-Y') : '-' }}</span></div>
-                <div class="stage-view-item"><span class="stage-view-label">Date de fin</span><span class="stage-view-value">{{ stage.STADateFin ? stage.STADateFin|date('d-m-Y') : '-' }}</span></div>
-                <div class="stage-view-item"><span class="stage-view-label">Date retenu</span><span class="stage-view-value">{{ stage.STADateRetenu ? stage.STADateRetenu|date('d-m-Y') : '-' }}</span></div>
-                <div class="stage-view-item"><span class="stage-view-label">Etudiant</span><span class="stage-view-value">{{ stage.ETUID.ETUNom }} {{ stage.ETUID.ETUPrenom }}</span></div>
-                <div class="stage-view-item"><span class="stage-view-label">Entreprise</span><span class="stage-view-value">{{ stage.ENTID.ENTNom }}</span></div>
-                <div class="stage-view-item"><span class="stage-view-label">Enseignant visite</span><span class="stage-view-value">{{ stage.EnseignantVisite.nom }} {{ stage.EnseignantVisite.prenom }}</span></div>
-                <div class="stage-view-item"><span class="stage-view-label">Enseignant suivi</span><span class="stage-view-value">{{ stage.EnseignantSuivi.nom }} {{ stage.EnseignantSuivi.prenom }}</span></div>
-                <div class="stage-view-item stage-view-item-full"><span class="stage-view-label">Remarque</span><span class="stage-view-value">{{ stage.STARemarque|default('-') }}</span></div>
-                <div class="stage-view-item"><span class="stage-view-label">Remerciement</span><span class="stage-view-value">{{ stage.STARemerciement|default('-') }}</span></div>
-                <div class="stage-view-item"><span class="stage-view-label">Bilan</span><span class="stage-view-value">{{ stage.STABilan|default('-') }}</span></div>
-                <div class="stage-view-item"><span class="stage-view-label">Attestation</span><span class="stage-view-value">{{ stage.STAAttestation|default('-') }}</span></div>
-                <div class="stage-view-item"><span class="stage-view-label">Jury</span><span class="stage-view-value">{{ stage.STAJury|default('-') }}</span></div>
-                <div class="stage-view-item stage-view-item-full"><span class="stage-view-label">Commentaire</span><span class="stage-view-value">{{ stage.STACommentaire|default('-') }}</span></div>
-            </div>
+		<aside class="sidebar">
+			<div class="sidebar-logo">
+				<div class="logo-badge">
+					<img src="{{ asset('Image/campus-logo.png') }}" alt="Logo Campus La Chataigneraie"/>
+				</div>
+				<h2>La Châtaigneraie</h2>
+				<p>Suivi des stages</p>
+			</div>
 
-            <div class="stage-actions-row">
-                <a href="{{ path('app_stage_read') }}" class="btn-secondary">Retour</a>
-                <a href="{{ path('app_stage_update', {'id': stage.id}) }}" class="btn-secondary">Modifier</a>
-                {{ include('stage_crud/_delete_form.html.twig') }}
-            </div>
-        </section>
-    </main>
-</body>
+			<nav class="sidebar-nav">
+				<a href="{{ path('app_dashboard') }}" class="nav-item">
+					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+						<rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+					</svg>
+					Tableau de bord
+				</a>
+				<a href="{{ path('app_etudiant_read') }}" class="nav-item">
+					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+						<path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+					</svg>
+					Étudiants
+				</a>
+				<a href="{{ path('app_entreprise_read') }}" class="nav-item active">
+					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<rect x="2" y="7" width="20" height="14" rx="2"/>
+						<path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>
+					</svg>
+					Entreprises
+				</a>
+				<a href="{{ path('app_stage_read') }}" class="nav-item">
+					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<rect x="3" y="3" width="18" height="18" rx="2"/>
+						<path d="M3 9h18M9 21V9"/>
+					</svg>
+					Stages
+				</a>
+				<a href="#" class="nav-item">
+					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/>
+						<rect x="9" y="3" width="6" height="4" rx="1"/>
+						<path d="M9 12h6M9 16h4"/>
+					</svg>
+					Suivi &amp; Visites
+				</a>
+				<a href="{{ path('app_utilisateurs') }}" class="nav-item">
+					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+						<circle cx="12" cy="7" r="4"/>
+					</svg>
+					Utilisateurs
+				</a>
+				<a href="#" class="nav-item">
+					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+						<polyline points="7 10 12 15 17 10"/>
+						<line x1="12" y1="15" x2="12" y2="3"/>
+					</svg>
+					Exports
+				</a>
+			</nav>
+
+			<div class="sidebar-footer">
+				<a href="{{ path('app_deco') }}" class="btn-deco">
+					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+						<polyline points="16 17 21 12 16 7"/>
+						<line x1="21" y1="12" x2="9" y2="12"/>
+					</svg>
+					Déconnexion
+				</a>
+			</div>
+		</aside>
+
+        <main class="main">
+
+            <div class="page-header-flex">
+                <div>
+                    <h1>Détails de l'étudiant</h1>
+                    <p>Informations complètes sur l'étudiant.</p>
+                </div>
+			</div>
+            
+			<div class="profil-wrapper">
+				<div class="profile-banner-card">
+				</div>
+			
+
+				<div class="profile-details-card">
+					<div class="section-header">
+
+					<div class="info-grid">
+						<div class="info-group">
+							<h4>Date de début</h4>
+							<p>{{ stage.STADateDebut ? stage.STADateDebut|date('d-m-Y') : '-' }}</p>
+						</div>
+						<div class="info-group">
+							<h4>Date de fin</h4>
+							<p>{{ stage.STADateFin ? stage.STADateFin|date('d-m-Y') : '-' }}</p>
+						</div>
+						<div class="info-group">
+							<h4>Date de retenu</h4>
+                            <p>{{ stage.STADateRetenu ? stage.STADateRetenu|date('d-m-Y') : '-' }}</p>
+						</div>
+						<div class="info-group">
+							<h4>Étudiant</h4>
+                            <p>{{ stage.ETUID.ETUNom }} {{ stage.ETUID.ETUPrenom }}</p>
+						</div>
+                        <div class="info-group">
+							<h4>Entreprise</h4>
+							<p>{{ stage.ENTID.ENTNom }}</p>
+						</div>
+						<div class="info-group">
+							<h4>Enseignant visite</h4>
+							<p>{{ stage.EnseignantVisite.nom }} {{ stage.EnseignantVisite.prenom }}</p>
+						</div>
+						<div class="info-group">
+							<h4>Enseignant suivi</h4>
+                            <p>{{ stage.EnseignantSuivi.nom }} {{ stage.EnseignantSuivi.prenom }}</p>
+						</div>
+						<div class="info-group">
+							<h4>Remarque</h4>
+                            <p>{{ stage.STARemarque|default('-') }}</p>
+						</div>
+                        <div class="info-group">
+							<h4>Remerciement</h4>
+                            <p>{{ stage.STARemerciement|default('-') }}</p>
+						</div>
+                        <div class="info-group">
+							<h4>Bilan</h4>
+							<p>{{ stage.STABilan|default('-') }}</p>
+						</div>
+						<div class="info-group">
+							<h4>Attestation</h4>
+							<p>{{ stage.STAAttestation|default('-') }}</p>
+						</div>
+						<div class="info-group">
+							<h4>Jury</h4>
+                            <p>{{ stage.STAJury|default('-') }}</p>
+						</div>
+						<div class="info-group">
+							<h4>Commentaire</h4>
+                            <p>{{ stage.STACommentaire|default('-') }}</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="profile-actions-bar">
+					<a href="{{ path('app_stage_read') }}" class="btn-action btn-outline">
+						Retour à la liste
+					</a>
+
+					<div class="actions-right">
+						<a href="{{ path('app_stage_update', {'id': stage.id}) }}" class="btn-action btn-primary">
+							Modifier
+						</a>
+
+						<div class="delete-form-wrapper">
+							{{ include('stage_crud/delete_form.html.twig') }}
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+        </main>
+    </body>
 </html>
+
