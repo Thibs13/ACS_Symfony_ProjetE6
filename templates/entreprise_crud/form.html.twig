@@ -1,4 +1,11 @@
+{# cette balise ouvre le formulaire et gère automatiquement l'envoi des données (POST) #}
 {{ form_start(form) }}
+
+    {# cette ligne est "magique" : elle génère d'un coup tous les champs (input, labels, erreurs) définis dans ton EntrepriseType #}
     {{ form_widget(form) }}
+
+    {# le bouton de validation dont le texte change selon qu'on crée ou qu'on modifie #}
     <button class="btn">{{ button_label|default('Sauvegarder') }}</button>
+
+{# cette balise ferme le formulaire et ajoute discrètement des champs de sécurité (CSRF) #}
 {{ form_end(form) }}
