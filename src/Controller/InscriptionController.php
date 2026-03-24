@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\InscriptionType;
 use App\Entity\Utilisateur;
-use App\Entity\Role; // Correction de l'import (minuscule sur app)
+use App\Entity\Role; 
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher;
 
@@ -19,11 +19,7 @@ class InscriptionController extends AbstractController
     
     public function index(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
-        /* On vérifie si l'utilisateur est déjà en session
-        $userSession = $session->get('user');
-        if ($userSession) {
-            return $this->redirectToRoute('app_dashboard');
-        }*/
+        
 
         $form = $this->createForm(InscriptionType::class);
         $form->handleRequest($request);
@@ -34,13 +30,13 @@ class InscriptionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             
-            // On aligne les clés sur ton InscriptionType
-            $login  = $data['login'] ?? null;      // minuscule
-            $mdp    = $data['MotDePasse'] ?? null; // Majuscule
-            $nom    = $data['Nom'] ?? null;        // Majuscule
-            $prenom = $data['Prenom'] ?? null;     // Majuscule
+            
+            $login  = $data['login'] ?? null;      
+            $mdp    = $data['MotDePasse'] ?? null; 
+            $nom    = $data['Nom'] ?? null;        
+            $prenom = $data['Prenom'] ?? null;     
 
-            // On vérifie si l'un d'eux est vide
+            
             if (empty($login) || empty($mdp) || empty($nom) || empty($prenom)) {
                 $erreur = 'Veuillez remplir tous les champs.';
             } 
