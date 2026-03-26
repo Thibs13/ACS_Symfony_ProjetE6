@@ -26,7 +26,7 @@ final class UtilisateurCRUDController extends AbstractController
         $userSession = $session->get('user');
 
         // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
-        if (!$userSession) {
+        if (!$userSession OR $userSession['role'] != 1) {
             return $this->redirectToRoute('app_accueil');
         }
         
@@ -45,7 +45,7 @@ final class UtilisateurCRUDController extends AbstractController
         $userSession = $session->get('user');
 
         // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
-        if (!$userSession) {
+        if (!$userSession OR $userSession['role'] != 1) {
             return $this->redirectToRoute('app_accueil');
         }
         // on prépare un nouvel objet utilisateur et son formulaire
@@ -78,7 +78,7 @@ final class UtilisateurCRUDController extends AbstractController
         $userSession = $session->get('user');
 
         // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
-        if (!$userSession) {
+        if (!$userSession OR $userSession['role'] != 1) {
             return $this->redirectToRoute('app_accueil');
         }
 
@@ -97,7 +97,7 @@ final class UtilisateurCRUDController extends AbstractController
         $userSession = $session->get('user');
 
         // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
-        if (!$userSession) {
+        if (!$userSession OR $userSession['role'] != 1) {
             return $this->redirectToRoute('app_accueil');
         }
 
@@ -128,10 +128,10 @@ final class UtilisateurCRUDController extends AbstractController
         $userSession = $session->get('user');
 
         // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
-        if (!$userSession) {
+        if (!$userSession OR $userSession['role'] != 1) {
             return $this->redirectToRoute('app_accueil');
         }
-        
+
         // on vérifie que la demande de suppression est sécurisée par un jeton (token)
         if ($this->isCsrfTokenValid('delete'.$utilisateur->getId(), $request->getPayload()->getString('_token'))) {
             // on supprime l'utilisateur et on valide le changement
