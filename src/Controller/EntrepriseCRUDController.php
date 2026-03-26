@@ -11,13 +11,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Repository\VilleRepository;
+use \Symfony\Component\HttpFoundation\RequestStack; 
 
 #[Route('/entreprise')]
 final class EntrepriseCRUDController extends AbstractController
 {
     // affiche la liste de toutes les entreprises enregistrées
     #[Route(name: 'app_entreprise_read', methods: ['GET'])]
-    public function index(EntrepriseRepository $entrepriseRepository, VilleRepository $villeRepository, \Symfony\Component\HttpFoundation\RequestStack $requestStack, Request $request): Response
+    public function index(EntrepriseRepository $entrepriseRepository, VilleRepository $villeRepository, RequestStack $requestStack, Request $request): Response
     {
 
         // on récupère la session en cours pour vérifier qui navigue sur le site
@@ -35,7 +36,7 @@ final class EntrepriseCRUDController extends AbstractController
         return $this->render('entreprise_crud/index.html.twig', [
             'entreprises' => $entrepriseRepository->findAllSorted($sort, $order),
             'villes' => $villeRepository->findAll(),
-            'role' => $session->get('user')['role'] ?? 0,
+            'role' => $userSession['role'] ?? 0,
             'sort' => $sort,
             'order' => $order,
         ]);
@@ -43,8 +44,17 @@ final class EntrepriseCRUDController extends AbstractController
 
     // gère la création d'une nouvelle fiche entreprise
     #[Route('/new', name: 'app_entreprise_create', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, RequestStack $requestStack): Response
     {
+        // on récupère la session en cours pour vérifier qui navigue sur le site
+        $session = $requestStack->getSession();
+        $userSession = $session->get('user');
+
+        // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
+        if (!$userSession) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
         // on prépare un objet vide et le formulaire qui va avec
         $entreprise = new Entreprise();
         $form = $this->createForm(EntrepriseType::class, $entreprise);
@@ -69,8 +79,17 @@ final class EntrepriseCRUDController extends AbstractController
 
     // affiche les détails d'une entreprise spécifique (via son id dans l'URL)
     #[Route('/{id}', name: 'app_entreprise_show', methods: ['GET'])]
-    public function show(Entreprise $entreprise): Response
+    public function show(Entreprise $entreprise, RequestStack $requestStack): Response
     {
+        // on récupère la session en cours pour vérifier qui navigue sur le site
+        $session = $requestStack->getSession();
+        $userSession = $session->get('user');
+
+        // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
+        if (!$userSession) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
         // Symfony récupère automatiquement l'entreprise correspondante grâce à l'id
         return $this->render('entreprise_crud/show.html.twig', [
             'entreprise' => $entreprise,
@@ -79,8 +98,17 @@ final class EntrepriseCRUDController extends AbstractController
 
     // permet de modifier les informations d'une entreprise existante
     #[Route('/{id}/edit', name: 'app_entreprise_update', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Entreprise $entreprise, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Entreprise $entreprise, EntityManagerInterface $entityManager, RequestStack $requestStack): Response
     {
+        // on récupère la session en cours pour vérifier qui navigue sur le site
+        $session = $requestStack->getSession();
+        $userSession = $session->get('user');
+
+        // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
+        if (!$userSession) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
         // on crée le formulaire pré-rempli avec les données actuelles de l'entreprise
         $form = $this->createForm(EntrepriseType::class, $entreprise);
         $form->handleRequest($request);
@@ -101,8 +129,17 @@ final class EntrepriseCRUDController extends AbstractController
 
     // supprime définitivement une entreprise
     #[Route('/{id}', name: 'app_entreprise_delete', methods: ['POST'])]
-    public function delete(Request $request, Entreprise $entreprise, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Entreprise $entreprise, EntityManagerInterface $entityManager, RequestStack $requestStack): Response
     {
+        // on récupère la session en cours pour vérifier qui navigue sur le site
+        $session = $requestStack->getSession();
+        $userSession = $session->get('user');
+
+        // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
+        if (!$userSession) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
         // par sécurité, on vérifie que le jeton (token) de suppression est valide
         if ($this->isCsrfTokenValid('delete'.$entreprise->getId(), $request->getPayload()->getString('_token'))) {
             // on retire l'entreprise de la base de données et on valide le changement
