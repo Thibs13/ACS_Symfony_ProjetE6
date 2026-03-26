@@ -10,14 +10,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 #[Route('/utilisateurs')]
 final class UtilisateurCRUDController extends AbstractController
 {
+    
+
     // affiche la liste complète des utilisateurs enregistrés en base de données
     #[Route(name: 'app_utilisateur_read', methods: ['GET'])]
-    public function index(UtilisateurRepository $utilisateurRepository): Response
+    public function index(UtilisateurRepository $utilisateurRepository,RequestStack $requestStack): Response
     {
+        // on récupère la session en cours pour vérifier qui navigue sur le site
+        $session = $requestStack->getSession();
+        $userSession = $session->get('user');
+
+        // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
+        if (!$userSession) {
+            return $this->redirectToRoute('app_accueil');
+        }
         // on récupère tous les utilisateurs pour les envoyer à la vue
         return $this->render('utilisateur_crud/index.html.twig', [
             'utilisateurs' => $utilisateurRepository->findAll(),
@@ -26,8 +37,16 @@ final class UtilisateurCRUDController extends AbstractController
 
     // permet de créer un tout nouvel utilisateur
     #[Route('/new', name: 'app_utilisateur_create', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,RequestStack $requestStack): Response
     {
+        // on récupère la session en cours pour vérifier qui navigue sur le site
+        $session = $requestStack->getSession();
+        $userSession = $session->get('user');
+
+        // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
+        if (!$userSession) {
+            return $this->redirectToRoute('app_accueil');
+        }
         // on prépare un nouvel objet utilisateur et son formulaire
         $utilisateur = new Utilisateur();
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
@@ -51,8 +70,17 @@ final class UtilisateurCRUDController extends AbstractController
 
     // affiche les informations détaillées d'un utilisateur précis
     #[Route('/{id}', name: 'app_utilisateur_show', methods: ['GET'])]
-    public function show(Utilisateur $utilisateur): Response
+    public function show(Utilisateur $utilisateur,RequestStack $requestStack): Response
     {
+        // on récupère la session en cours pour vérifier qui navigue sur le site
+        $session = $requestStack->getSession();
+        $userSession = $session->get('user');
+
+        // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
+        if (!$userSession) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
         // symfony retrouve l'utilisateur tout seul grâce à l'identifiant dans l'adresse
         return $this->render('utilisateur_crud/show.html.twig', [
             'utilisateur' => $utilisateur,
@@ -61,8 +89,17 @@ final class UtilisateurCRUDController extends AbstractController
 
     // permet de modifier les informations d'un utilisateur existant
     #[Route('/{id}/edit', name: 'app_utilisateur_update', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Utilisateur $utilisateur, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Utilisateur $utilisateur, EntityManagerInterface $entityManager,RequestStack $requestStack): Response
     {
+        // on récupère la session en cours pour vérifier qui navigue sur le site
+        $session = $requestStack->getSession();
+        $userSession = $session->get('user');
+
+        // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
+        if (!$userSession) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
         // on charge le formulaire avec les données actuelles de l'utilisateur
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
         $form->handleRequest($request);
@@ -83,8 +120,17 @@ final class UtilisateurCRUDController extends AbstractController
 
     // supprime un utilisateur de la base de données
     #[Route('/{id}', name: 'app_utilisateur_delete', methods: ['POST'])]
-    public function delete(Request $request, Utilisateur $utilisateur, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Utilisateur $utilisateur, EntityManagerInterface $entityManager,RequestStack $requestStack): Response
     {
+        // on récupère la session en cours pour vérifier qui navigue sur le site
+        $session = $requestStack->getSession();
+        $userSession = $session->get('user');
+
+        // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
+        if (!$userSession) {
+            return $this->redirectToRoute('app_accueil');
+        }
+        
         // on vérifie que la demande de suppression est sécurisée par un jeton (token)
         if ($this->isCsrfTokenValid('delete'.$utilisateur->getId(), $request->getPayload()->getString('_token'))) {
             // on supprime l'utilisateur et on valide le changement
