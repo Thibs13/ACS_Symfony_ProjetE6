@@ -17,14 +17,19 @@ final class EntrepriseCRUDController extends AbstractController
 {
     // affiche la liste de toutes les entreprises enregistrées
     #[Route(name: 'app_entreprise_read', methods: ['GET'])]
-    public function index(EntrepriseRepository $entrepriseRepository, VilleRepository $villeRepository, \Symfony\Component\HttpFoundation\RequestStack $requestStack): Response
+    public function index(EntrepriseRepository $entrepriseRepository, VilleRepository $villeRepository, \Symfony\Component\HttpFoundation\RequestStack $requestStack, Request $request): Response
     {
         $session = $requestStack->getSession();
+
+        $sort = $request->query->get('sort', 'id');
+        $order = $request->query->get('order', 'asc');
         // on demande au repository de nous donner absolument toutes les entreprises et les villes 
         return $this->render('entreprise_crud/index.html.twig', [
-            'entreprises' => $entrepriseRepository->findAll(),
+            'entreprises' => $entrepriseRepository->findAllSorted($sort, $order),
             'villes' => $villeRepository->findAll(),
             'role' => $session->get('user')['role'] ?? 0,
+            'sort' => $sort,
+            'order' => $order,
         ]);
     }
 

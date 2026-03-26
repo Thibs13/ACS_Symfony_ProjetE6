@@ -109,11 +109,20 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Nom</th>
+                    <th><a href="?sort=id&order={{ (sort == 'id' and order == 'asc') ? 'desc' : 'asc' }}">
+                            ID {{ sort == 'id' ? (order == 'asc' ? '🔽' : '🔼') : '' }}
+                        </a>
+                    </th>
+                    <th>
+                        <a href="?sort=ENT_Nom&order={{ (sort == 'ENT_Nom' and order == 'asc') ? 'desc' : 'asc' }}">
+                            Nom {{ sort == 'ENT_Nom' ? (order == 'asc' ? '🔽' : '🔼') : '' }}
+                        </a>
+                    </th>
                     <th>Telephone</th>
                     <th>Email</th>
-                    <th>Ville</th>
+                    <th><a href="?sort=VIL_Nom&order={{ (sort == 'VIL_Nom' and order == 'asc') ? 'desc' : 'asc' }}">
+                            Ville {{ sort == 'VIL_Nom' ? (order == 'asc' ? '🔽' : '🔼') : '' }}
+                        </a></th>
                     <th>actions</th>
                 </tr>
             </thead>
