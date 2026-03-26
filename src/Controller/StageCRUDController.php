@@ -68,6 +68,7 @@ final class StageCRUDController extends AbstractController
         return $this->render('stage_crud/new.html.twig', [
             'stage' => $stage,
             'form' => $form,
+            'role' => $userSession['role'] ?? 0,
         ]);
     }
 
@@ -87,6 +88,7 @@ final class StageCRUDController extends AbstractController
         // Symfony trouve tout seul le bon stage grâce à l'ID présent dans l'adresse
         return $this->render('stage_crud/show.html.twig', [
             'stage' => $stage,
+            'role' => $userSession['role'] ?? 0,
         ]);
     }
 
@@ -118,6 +120,7 @@ final class StageCRUDController extends AbstractController
         return $this->render('stage_crud/edit.html.twig', [
             'stage' => $stage,
             'form' => $form,
+            'role' => $userSession['role'] ?? 0,
         ]);
     }
 
@@ -142,6 +145,8 @@ final class StageCRUDController extends AbstractController
         }
 
         // on revient à la liste principale une fois l'action terminée
-        return $this->redirectToRoute('app_stage_read', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_stage_read', [
+            'role' => $userSession['role'] ?? 0,
+        ], Response::HTTP_SEE_OTHER);
     }
 }

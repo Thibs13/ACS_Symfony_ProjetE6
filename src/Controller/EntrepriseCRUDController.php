@@ -93,6 +93,7 @@ final class EntrepriseCRUDController extends AbstractController
         // Symfony récupère automatiquement l'entreprise correspondante grâce à l'id
         return $this->render('entreprise_crud/show.html.twig', [
             'entreprise' => $entreprise,
+            'role' => $userSession['role'] ?? 0,
         ]);
     }
 
@@ -124,6 +125,7 @@ final class EntrepriseCRUDController extends AbstractController
         return $this->render('entreprise_crud/edit.html.twig', [
             'entreprise' => $entreprise,
             'form' => $form,
+            'role' => $userSession['role'] ?? 0,
         ]);
     }
 
@@ -148,6 +150,8 @@ final class EntrepriseCRUDController extends AbstractController
         }
 
         // on revient à la liste après la suppression
-        return $this->redirectToRoute('app_entreprise_read', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_entreprise_read', [
+            'role' => $userSession['role'] ?? 0,
+        ], Response::HTTP_SEE_OTHER);
     }
 }
