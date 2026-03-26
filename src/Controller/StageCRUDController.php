@@ -21,6 +21,7 @@ final class StageCRUDController extends AbstractController
         // on va chercher l'intégralité des stages via le repository
         return $this->render('stage_crud/index.html.twig', [
             'stages' => $stageRepository->findAll(),
+            'role' => $userSession['role'] ?? 0,
         ]);
     }
 
