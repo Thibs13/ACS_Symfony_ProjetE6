@@ -19,7 +19,15 @@ final class EntrepriseCRUDController extends AbstractController
     #[Route(name: 'app_entreprise_read', methods: ['GET'])]
     public function index(EntrepriseRepository $entrepriseRepository, VilleRepository $villeRepository, \Symfony\Component\HttpFoundation\RequestStack $requestStack, Request $request): Response
     {
+
+        // on récupère la session en cours pour vérifier qui navigue sur le site
         $session = $requestStack->getSession();
+        $userSession = $session->get('user');
+
+        // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
+        if (!$userSession) {
+            return $this->redirectToRoute('app_accueil');
+        }
 
         $sort = $request->query->get('sort', 'id');
         $order = $request->query->get('order', 'asc');
