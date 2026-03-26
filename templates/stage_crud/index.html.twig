@@ -92,7 +92,9 @@
             <h1>Gestion des stages</h1>
             <p>Consulter, modifier et creer les fiches de stage.</p>
         </div>
-        <a href="{{ path('app_stage_create') }}" class="btn-add">Ajouter un stage</a>
+        {% if role == 1 %}
+            <a href="{{ path('app_stage_create') }}" class="btn-add">Ajouter un stage</a>
+        {% endif %}
     </div>
 
     <div class="section-card table-wrapper">

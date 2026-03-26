@@ -101,7 +101,9 @@
             <h1>Gestion des entreprises</h1>
             <p>Consulter, modifier et creer les fiches d'entreprises.</p>
         </div>
-        <a href="{{ path('app_entreprise_create') }}" class="btn-add">Ajouter une entreprise</a>
+        {% if role == 1 %}
+            <a href="{{ path('app_entreprise_create') }}" class="btn-add">Ajouter une entreprise</a>
+        {% endif %}
     </div>
 
     {# tableau affichant les données #}
