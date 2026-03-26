@@ -18,11 +18,14 @@ final class EtudiantCRUDController extends AbstractController
 {
     // affiche la liste de tous les étudiants enregistrés
     #[Route(name: 'app_etudiant_read', methods: ['GET'])]
-    public function index(EtudiantRepository $etudiantRepository, FiliereRepository $filiereRepository, RequestStack $requestStack): Response
+    public function index(EtudiantRepository $etudiantRepository, FiliereRepository $filiereRepository, RequestStack $requestStack, Request $request): Response
     {
         // on récupère la session en cours pour vérifier qui navigue sur le site
         $session = $requestStack->getSession();
         $userSession = $session->get('user');
+
+        $sort = $request->query->get('sort', 'id');
+        $order = $request->query->get('order', 'asc');
 
         // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
         if (!$userSession OR $userSession['role'] != 1) {
@@ -31,8 +34,10 @@ final class EtudiantCRUDController extends AbstractController
 
         // on demande au repository de nous donner absolument tous les étudiants et les filières 
         return $this->render('etudiant_crud/index.html.twig', [
-            'etudiants' => $etudiantRepository->findAll(),
+            'etudiants' => $etudiantRepository->findAllSorted($sort, $order),
             'filieres' => $filiereRepository->findAll(),
+            'sort' => $sort,
+            'order' => $order,
         ]);
     }
 

@@ -98,7 +98,10 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nom</th>
+                    <th><a href="?sort=ETU_Nom&order={{ (sort == 'ETU_Nom' and order == 'asc') ? 'desc' : 'asc' }}">
+                            Nom {{ sort == 'ETU_Nom' ? (order == 'asc' ? '🔽' : '🔼') : '' }}
+                        </a>
+                    </th>
                     <th>Prenom</th>
                     <th>Filière</th>
                     <th>Promotion</th>

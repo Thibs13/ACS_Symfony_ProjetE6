@@ -20,7 +20,6 @@ final class EntrepriseCRUDController extends AbstractController
     #[Route(name: 'app_entreprise_read', methods: ['GET'])]
     public function index(EntrepriseRepository $entrepriseRepository, VilleRepository $villeRepository, RequestStack $requestStack, Request $request): Response
     {
-
         // on récupère la session en cours pour vérifier qui navigue sur le site
         $session = $requestStack->getSession();
         $userSession = $session->get('user');
