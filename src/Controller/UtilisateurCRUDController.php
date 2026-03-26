@@ -33,6 +33,7 @@ final class UtilisateurCRUDController extends AbstractController
         // on récupère tous les utilisateurs pour les envoyer à la vue
         return $this->render('utilisateur_crud/index.html.twig', [
             'utilisateurs' => $utilisateurRepository->findAll(),
+            'role' => $userSession['role'] ?? 0,
         ]);
     }
 

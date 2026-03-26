@@ -26,13 +26,15 @@
 					</svg>
 					Tableau de bord
 				</a>
-				<a href="{{ path('app_etudiant_read') }}" class="nav-item">
-					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
-						<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
-						<path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
-					</svg>
-					Étudiants
-				</a>
+				{% if role == 1 %}
+					<a href="{{ path('app_etudiant_read') }}" class="nav-item">
+						<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+							<path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+						</svg>
+						Étudiants
+					</a>
+				{% endif %}
 				<a href="{{ path('app_entreprise_read') }}" class="nav-item active">
 					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
 						<rect x="2" y="7" width="20" height="14" rx="2"/>
@@ -145,16 +147,17 @@
 					<a href="{{ path('app_entreprise_read') }}" class="btn-action btn-outline">
 						Retour à la liste
 					</a>
+					{% if role == 1 %}
+						<div class="actions-right">
+							<a href="{{ path('app_entreprise_update', {'id': entreprise.id}) }}" class="btn-action btn-primary">
+								Modifier
+							</a>
 
-					<div class="actions-right">
-						<a href="{{ path('app_entreprise_update', {'id': entreprise.id}) }}" class="btn-action btn-primary">
-							Modifier
-						</a>
-
-						<div class="delete-form-wrapper">
-							{{ include('entreprise_crud/delete_form.html.twig') }}
+							<div class="delete-form-wrapper">
+								{{ include('entreprise_crud/delete_form.html.twig') }}
+							</div>
 						</div>
-					</div>
+					{% endif %}
 				</div>
 			</div>
 
