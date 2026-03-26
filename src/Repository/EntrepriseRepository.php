@@ -48,4 +48,24 @@ class EntrepriseRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getSingleScalarResult();
         }
+
+        public function findAllSorted(string $sort, string $order): array
+        {
+            $qb = $this->createQueryBuilder('e');
+
+            // Cas spécifique : Tri par le NOM de la ville
+            if ($sort === 'ville' || $sort === 'VIL_Nom') {
+                return $qb->leftJoin('e.VIL_ID', 'v') // 'e.VIL_ID' est le nom de la propriété dans Entreprise.php
+                        ->orderBy('v.VIL_Nom', $order) // 'VIL_Nom' est le nom de la propriété dans Ville.php
+                        ->getQuery()
+                        ->getResult();
+            }
+
+            // Cas général : Tri sur les champs directs (ex: ENT_Nom)
+            // On ajoute un 'e.' devant pour être sûr que Doctrine sache de quoi on parle
+            return $qb->orderBy('e.' . $sort, $order)
+                    ->getQuery()
+                    ->getResult();
+        }
+
 }
