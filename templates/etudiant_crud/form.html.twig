@@ -1,4 +1,13 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    
+    {{ form_errors(form) }}
+
+    <div class="date-row">
+        {{ form_row(form.ETU_Nom, {'label': 'Nom *'}) }}
+        {{ form_row(form.ETU_Prenom, {'label': 'Prénom *'}) }}
+        {{ form_row(form.promo, {'label': 'Promotion *', 'placeholder': 'Sélectionnez une promotion'}) }}
+    </div>
+
     <button class="btn">{{ button_label|default('Sauvegarder') }}</button>
+
 {{ form_end(form) }}
