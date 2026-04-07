@@ -119,7 +119,6 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Id</th>
                     <th>Date de début*</th>
                     <th>Date de fin*</th>
                     <th>Étudiant*</th>
@@ -130,7 +129,6 @@
             <tbody>
             {% for stage in stages %}
                 <tr>
-                    <td>{{ stage.id }}</td>
                     <td>{{ stage.STADateDebut ? stage.STADateDebut|date('d-m-Y') : '' }}</td>
                     <td>{{ stage.STADateFin ? stage.STADateFin|date('d-m-Y') : '' }}</td>
                     <td>{{ stage.ETUID.ETUNom }} {{ stage.ETUID.ETUPrenom }}</td>

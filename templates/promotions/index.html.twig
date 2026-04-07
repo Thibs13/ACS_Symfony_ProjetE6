@@ -111,7 +111,6 @@
         <table class="students-table">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Classe</th>
                     <th>Session</th>
                     <th>Date de début</th>
@@ -122,7 +121,6 @@
             <tbody>
             {% for promotion in promotions %}
                 <tr>
-                    <td>{{ promotion.id }}</td>
                     <td>{{ promotion.proLibelle }}</td>
                     <td>{{ promotion.proSession }}</td>
                     <td>{{ promotion.proDatedebut ? promotion.proDatedebut|date('Y-m-d') : '' }}</td>

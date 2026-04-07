@@ -129,10 +129,6 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th><a href="?sort=id&order={{ (sort == 'id' and order == 'asc') ? 'desc' : 'asc' }}">
-                            ID {{ sort == 'id' ? (order == 'asc' ? '🔽' : '🔼') : '' }}
-                        </a>
-                    </th>
                     <th>
                         <a href="?sort=ENT_Nom&order={{ (sort == 'ENT_Nom' and order == 'asc') ? 'desc' : 'asc' }}">
                             Nom {{ sort == 'ENT_Nom' ? (order == 'asc' ? '🔽' : '🔼') : '' }}
@@ -151,7 +147,6 @@
             {# on parcourt la liste des entreprises envoyée par le contrôleur #}
             {% for entreprise in entreprises %}
                 <tr>
-                    <td>{{ entreprise.id }}</td>
                     <td>{{ entreprise.ENTNom }}</td>
                     <td>{{ entreprise.ENTTelephone }}</td>
                     <td>{{ entreprise.ENTEmail }}</td>
