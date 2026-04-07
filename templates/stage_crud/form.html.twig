@@ -6,10 +6,10 @@
         {{ form_row(form.STA_DateFin) }}
     </div>
 
-    {{ form_row(form.ETU_ID) }}
-    {{ form_row(form.ENT_ID) }}
-    {{ form_row(form.EnseignantVisite) }}
-    {{ form_row(form.EnseignantSuivi) }}
+    {{ form_row(form.ETU_ID, {'label': 'Étudiant *', 'placeholder': 'Sélectionnez un étudiant'}) }}
+    {{ form_row(form.ENT_ID, {'label': 'Entreprise *', 'placeholder': 'Sélectionnez une entreprise'}) }}
+    {{ form_row(form.EnseignantVisite, {'label': 'Enseignant de visite', 'placeholder': 'Sélectionnez un enseignant de visite'}) }}
+    {{ form_row(form.EnseignantSuivi, {'label': 'Enseignant de suivi', 'placeholder': 'Sélectionnez un enseignant de suivi'}) }}
     {{ form_row(form.STA_Remarque) }}
     {{ form_row(form.STA_Commentaire) }}
 
