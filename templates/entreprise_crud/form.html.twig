@@ -1,8 +1,16 @@
 {# cette balise ouvre le formulaire et gère automatiquement l'envoi des données (POST) #}
 {{ form_start(form) }}
 
-    {# cette ligne est "magique" : elle génère d'un coup tous les champs (input, labels, erreurs) définis dans ton EntrepriseType #}
-    {{ form_widget(form) }}
+    {{ form_errors(form) }}
+
+    <div class="date-row">
+        {{ form_row(form.ENT_Nom, {'label': 'Nom de l\'entreprise *'}) }}
+        {{ form_row(form.ENT_Telephone, {'label': 'Téléphone *'}) }}
+        {{ form_row(form.ENT_Email, {'label': 'Email *'}) }}
+        {{ form_row(form.ENT_Adresse, {'label': 'Adresse *'}) }}
+        {{ form_row(form.VIL_ID, {'label': 'Ville *', 'placeholder': 'Sélectionnez une ville'}) }}
+        {{ form_row(form.secteur, {'label': 'Secteur d\'activité *', 'placeholder': 'Sélectionnez un secteur'}) }}
+    </div>
 
     {# le bouton de validation dont le texte change selon qu'on crée ou qu'on modifie #}
     <button class="btn">{{ button_label|default('Sauvegarder') }}</button>

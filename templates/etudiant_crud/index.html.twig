@@ -116,6 +116,7 @@
                             Nom {{ sort == 'ETU_Nom' ? (order == 'asc' ? '🔽' : '🔼') : '' }}
                         </a>
                     </th>
+                    <th>Trigramme</th>
                     <th>Prenom</th>
                     <th>Classe</th>
                     <th>Session</th>
@@ -126,6 +127,7 @@
             {% for etudiant in etudiants %}
                 <tr>
                     <td>{{ etudiant.id }}</td>
+                    <td>{{ etudiant.ETUPrenom|slice(0, 1)|upper }}{{ etudiant.ETUNom|slice(0, 2)|upper }} </td>
                     <td>{{ etudiant.ETUNom }}</td>
                     <td>{{ etudiant.ETUPrenom }}</td>
                     <td>{{ etudiant.Promo.prolibelle }}</td>
@@ -148,7 +150,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="6">Aucun étudiant trouve.</td>
+                    <td colspan="7">Aucun étudiant trouve.</td>
                 </tr>
             {% endfor %}
             </tbody>

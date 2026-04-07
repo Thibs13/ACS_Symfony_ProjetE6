@@ -110,7 +110,7 @@
 			<div class="profil-wrapper">
 				<div class="profile-banner-card">
 					<div class="profile-banner-avatar">
-						{{ etudiant.ETUPrenom|first|upper }}{{ etudiant.ETUNom|first|upper }}
+						{{ etudiant.ETUPrenom|slice(0, 1)|upper }}{{ etudiant.ETUNom|slice(0, 2)|upper }}
 					</div>
 				</div>
 			
