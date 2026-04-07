@@ -34,6 +34,9 @@ class Etudiant
     #[ORM\OneToMany(targetEntity: Stage::class, mappedBy: 'ETU_ID', orphanRemoval: true)]
     private Collection $Stages;
 
+    #[ORM\ManyToOne(inversedBy: 'EtudiantsPromo')]
+    private ?Promotions $Promo = null;
+
     public function __construct()
     {
         $this->Stages = new ArrayCollection();
@@ -118,6 +121,18 @@ class Etudiant
                 $stage->setETUID(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPromo(): ?Promotions
+    {
+        return $this->Promo;
+    }
+
+    public function setPromo(?Promotions $Promo): static
+    {
+        $this->Promo = $Promo;
 
         return $this;
     }

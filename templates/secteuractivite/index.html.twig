@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Etudiants - La Chataigneraie</title>
+    <title>Secteur d'activité - La Chataigneraie</title>
     <link rel="stylesheet" href="{{ asset('CSS/dashboard.css') }}">
     <link rel="stylesheet" href="{{ asset('CSS/etudiant.css') }}">
 </head>
@@ -26,7 +26,7 @@
             </svg>
             Tableau de bord
         </a>
-        <a href="{{ path('app_etudiant_read') }}" class="nav-item active">
+        <a href="{{ path('app_etudiant_read') }}" class="nav-item">
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
                 <path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
@@ -47,7 +47,7 @@
             </svg>
             Entreprises
         </a>
-        <a href="{{ path('app_secteuractivite_read') }}" class="nav-item">
+        <a href="{{ path('app_secteuractivite_read') }}" class="nav-item active">
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <rect x="2" y="7" width="20" height="14" rx="2"/>
                 <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>
@@ -101,10 +101,10 @@
 <main class="main">
     <div class="page-header-flex">
         <div>
-            <h1>Gestion des etudiants</h1><h2> - {{ totalEtudiants }} étudiants</h2>
-            <p>Consulter, modifier et creer les fiches etudiants.</p>
+            <h1>Gestion des secteurs d'activité</h1>
+            <p>Consulter, modifier et creer les fiches de secteur d'activité.</p>
         </div>
-        <a href="{{ path('app_etudiant_create') }}" class="btn-add">Ajouter un etudiant</a>
+        <a href="{{ path('app_secteuractivite_new') }}" class="btn-add">Ajouter un secteur d'activité</a>
     </div>
 
     <div class="section-card table-wrapper">
@@ -112,33 +112,23 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th><a href="?sort=ETU_Nom&order={{ (sort == 'ETU_Nom' and order == 'asc') ? 'desc' : 'asc' }}">
-                            Nom {{ sort == 'ETU_Nom' ? (order == 'asc' ? '🔽' : '🔼') : '' }}
-                        </a>
-                    </th>
-                    <th>Prenom</th>
-                    <th>Classe</th>
-                    <th>Session</th>
-                    <th>Actions</th>
+                    <th>Libelle</th>
                 </tr>
             </thead>
             <tbody>
-            {% for etudiant in etudiants %}
+            {% for secteuractivite in secteuractivites %}
                 <tr>
-                    <td>{{ etudiant.id }}</td>
-                    <td>{{ etudiant.ETUNom }}</td>
-                    <td>{{ etudiant.ETUPrenom }}</td>
-                    <td>{{ etudiant.Promo.prolibelle }}</td>
-                    <td>{{ etudiant.Promo.prosession }}</td>
+                    <td>{{ secteuractivite.id }}</td>
+                    <td>{{ secteuractivite.saLibelle }}</td>
                     <td>
                         <div class="table-actions">
-                            <a href="{{ path('app_etudiant_show', {'id': etudiant.id}) }}" class="action-link show" title="Voir">
+                            <a href="{{ path('app_secteuractivite_show', {'id': secteuractivite.id}) }}" class="action-link show" title="Voir">
                                 <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                                 </svg>
                             </a>
-                            <a href="{{ path('app_etudiant_update', {'id': etudiant.id}) }}"class="action-link edit" title="Modifier">
+                            <a href="{{ path('app_secteuractivite_edit', {'id': secteuractivite.id}) }}"class="action-link edit" title="Modifier">
                                 <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                 </svg>
@@ -148,7 +138,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="6">Aucun étudiant trouve.</td>
+                    <td colspan="6">Aucun secteur d'activité trouve.</td>
                 </tr>
             {% endfor %}
             </tbody>

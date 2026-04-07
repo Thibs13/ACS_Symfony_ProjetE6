@@ -36,6 +36,9 @@ class Entreprise
     #[ORM\OneToMany(targetEntity: Stage::class, mappedBy: 'ENT_ID', orphanRemoval: true)]
     private Collection $Stages;
 
+    #[ORM\ManyToOne(inversedBy: 'EntreprisesSecteur')]
+    private ?Secteuractivite $secteur = null;
+
     public function __construct()
     {
         $this->Stages = new ArrayCollection();
@@ -132,6 +135,18 @@ class Entreprise
                 $stage->setENTID(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSecteur(): ?Secteuractivite
+    {
+        return $this->secteur;
+    }
+
+    public function setSecteur(?Secteuractivite $secteur): static
+    {
+        $this->secteur = $secteur;
 
         return $this;
     }

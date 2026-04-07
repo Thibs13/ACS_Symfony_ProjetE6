@@ -1,12 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Modifier l'utilisateur – La Châtaigneraie</title>
+		<title>Détails Utilisateur – La Châtaigneraie</title>
 		<link rel="stylesheet" href="{{ asset('CSS/dashboard.css') }}">
 		<link rel="stylesheet" href="{{ asset('CSS/utilisateur.css') }}">
-		<link rel="stylesheet" href="{{ asset('CSS/utilisateur_form.css') }}">
 	</head>
 	<body>
 
@@ -34,7 +34,7 @@
 					</svg>
 					Étudiants
 				</a>
-				<a href="{{ path('app_promotions_read') }}" class="nav-item">
+                <a href="{{ path('app_promotions_read') }}" class="nav-item active">
 					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
 						<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
 						<path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
@@ -70,7 +70,7 @@
 					</svg>
 					Suivi &amp; Visites
 				</a>
-				<a href="{{ path('app_utilisateurs') }}" class="nav-item active">
+				<a href="{{ path('app_utilisateurs') }}" class="nav-item">
 					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
 						<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
 						<circle cx="12" cy="7" r="4"/>
@@ -99,32 +99,66 @@
 			</div>
 		</aside>
 
-		<main class="main">
+        <main class="main">
 
-			<div class="page-header-flex">
-				<div>
-					<h1>Modifier l'utilisateur</h1>
-					<p>Mise à jour des informations et des accès</p>
-				</div>
-
-				<a href="{{ path('app_utilisateur_read') }}" class="btn-outline-back">
-					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-					</svg>
-					Retour à la liste
-				</a>
+            <div class="page-header-flex">
+                <div>
+                    <h1>Détails de l'étudiant</h1>
+                    <p>Informations complètes sur l'étudiant.</p>
+                </div>
 			</div>
+            
+			<div class="profil-wrapper">
+			
 
-			<div class="form-wrapper">
-				<div class="form-card">
-					{{ include('utilisateur_crud/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+				<div class="profile-details-card">
+					<div class="section-header">
+						<h3>
+							<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/>
+							</svg>
+							Informations personnelles
+						</h3>
+					</div>
 
-					<div class="delete-simple-wrapper delete-form-wrapper">
-						{{ include('utilisateur_crud/_delete_form.html.twig') }}
+					<div class="info-grid">
+						<div class="info-group">
+							<h4>Classe</h4>
+							<p>{{ promotion.proLibelle }}</p>
+						</div>
+						<div class="info-group">
+							<h4>Session</h4>
+							<p>{{ promotion.proSession }}</p>
+						</div>
+						<div class="info-group">
+							<h4>Date de début de stage</h4>
+							<p>{{ promotion.proDatedebut ? promotion.proDatedebut|date('Y-m-d') : '' }}</p>
+						</div>
+						<div class="info-group">
+							<h4>Date de fin de stage</h4>
+							<p>{{ promotion.proDatefin ? promotion.proDatefin|date('Y-m-d') : '' }}</p>
+						</div>
 					</div>
 				</div>
+
+				<div class="profile-actions-bar">
+					<a href="{{ path('app_promotions_read') }}" class="btn-action btn-outline">
+						Retour à la liste
+					</a>
+
+					<div class="actions-right">
+						<a href="{{ path('app_promotions_update', {'id': promotion.id}) }}" class="btn-action btn-primary">
+							Modifier
+						</a>
+
+						<div class="delete-form-wrapper">
+							{{ include('promotions/delete_form.html.twig') }}
+						</div>
+					</div>
+				</div>
+
 			</div>
 
-		</main>
-	</body>
+        </main>
+    </body>
 </html>

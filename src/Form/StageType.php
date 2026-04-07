@@ -19,12 +19,12 @@ class StageType extends AbstractType
     {
         $builder
             ->add('STA_DateDebut', DateType::class, [
-                'label' => 'Date de debut',
+                'label' => 'Date de debut*',
                 'widget' => 'single_text',
                 'html5' => true,
             ])
             ->add('STA_DateFin', DateType::class, [
-                'label' => 'Date de fin',
+                'label' => 'Date de fin*',
                 'widget' => 'single_text',
                 'html5' => true,
             ])
@@ -42,14 +42,14 @@ class StageType extends AbstractType
             ])
             ->add('ETU_ID', EntityType::class, [
                 'class' => Etudiant::class,
-                'label' => 'Étudiant',
+                'label' => 'Étudiant*',
                 'choice_label' => function (Etudiant $etudiant) {
                 return $etudiant->getETUNom() . ' ' . $etudiant->getETUPrenom();
                 },
             ])
             ->add('ENT_ID', EntityType::class, [
                 'class' => Entreprise::class,
-                'label' => 'Entreprise',
+                'label' => 'Entreprise*',
                 'choice_label' => 'ENT_Nom',
             ])
             ->add('EnseignantVisite', EntityType::class, [

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Entreprise;
 use App\Entity\Ville;
+use App\Entity\Secteuractivite;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,6 +23,11 @@ class EntrepriseType extends AbstractType
                 'class' => Ville::class,
                 'label' => 'Ville',
                 'choice_label' => 'VIL_Nom',
+            ])
+            ->add('secteur', EntityType::class, [
+                'class' => Secteuractivite::class,
+                'label' => 'Secteur d\'activité',
+                'choice_label' => 'sa_libelle',
             ])
         ;
     }

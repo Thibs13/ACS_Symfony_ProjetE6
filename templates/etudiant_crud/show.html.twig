@@ -33,12 +33,26 @@
 					</svg>
 					Étudiants
 				</a>
+				<a href="{{ path('app_promotions_read') }}" class="nav-item">
+					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+						<path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+					</svg>
+					Promotions
+				</a>
 				<a href="{{ path('app_entreprise_read') }}" class="nav-item">
 					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
 						<rect x="2" y="7" width="20" height="14" rx="2"/>
 						<path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>
 					</svg>
 					Entreprises
+				</a>
+				<a href="{{ path('app_secteuractivite_read') }}" class="nav-item">
+					<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<rect x="2" y="7" width="20" height="14" rx="2"/>
+						<path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>
+					</svg>
+					Secteur d'activité
 				</a>
 				<a href="{{ path('app_stage_read') }}" class="nav-item">
 					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -121,12 +135,12 @@
 							<p>{{ etudiant.ETUPrenom }}</p>
 						</div>
 						<div class="info-group">
-							<h4>Promotion</h4>
-							<p>{{ etudiant.ETUPromotion }}</p>
+							<h4>Classe</h4>
+							<p>{{ etudiant.Promo.prolibelle }}</p>
 						</div>
 						<div class="info-group">
-							<h4>Filière</h4>
-							<p>{{ etudiant.FILID.FILLibelle }}</p>
+							<h4>Session</h4>
+							<p>{{ etudiant.Promo.prosession }}</p>
 						</div>
 					</div>
 				</div>

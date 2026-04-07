@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Modifier l'utilisateur – La Châtaigneraie</title>
+		<title>Modifier le secteur d'activité – La Châtaigneraie</title>
 		<link rel="stylesheet" href="{{ asset('CSS/dashboard.css') }}">
 		<link rel="stylesheet" href="{{ asset('CSS/utilisateur.css') }}">
 		<link rel="stylesheet" href="{{ asset('CSS/utilisateur_form.css') }}">
@@ -48,7 +48,7 @@
 					</svg>
 					Entreprises
 				</a>
-				<a href="{{ path('app_secteuractivite_read') }}" class="nav-item">
+				<a href="{{ path('app_secteuractivite_read') }}" class="nav-item active">
 					<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 						<rect x="2" y="7" width="20" height="14" rx="2"/>
 						<path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>
@@ -70,7 +70,7 @@
 					</svg>
 					Suivi &amp; Visites
 				</a>
-				<a href="{{ path('app_utilisateurs') }}" class="nav-item active">
+				<a href="{{ path('app_utilisateurs') }}" class="nav-item">
 					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
 						<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
 						<circle cx="12" cy="7" r="4"/>
@@ -99,32 +99,34 @@
 			</div>
 		</aside>
 
-		<main class="main">
+        <main class="main">
 
-			<div class="page-header-flex">
-				<div>
-					<h1>Modifier l'utilisateur</h1>
-					<p>Mise à jour des informations et des accès</p>
-				</div>
+            <div class="page-header-flex">
+                <div>
+                    <h1>Modifier le secteur d'activité</h1>
+                    <p>Modifiez les informations du secteur d'activité.</p>
+                </div>
 
-				<a href="{{ path('app_utilisateur_read') }}" class="btn-outline-back">
-					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-					</svg>
-					Retour à la liste
-				</a>
-			</div>
+                <a href="{{ path('app_secteuractivite_read') }}" class="btn-outline-back">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    Retour à la liste
+                </a>
+            </div>
 
-			<div class="form-wrapper">
-				<div class="form-card">
-					{{ include('utilisateur_crud/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+            <div class="form-wrapper">
+                <div class="form-card">
+                    {{ include('secteuractivite/form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-					<div class="delete-simple-wrapper delete-form-wrapper">
-						{{ include('utilisateur_crud/_delete_form.html.twig') }}
-					</div>
-				</div>
-			</div>
-
-		</main>
-	</body>
+                    <div class="delete-simple-wrapper delete-form-wrapper">
+                        {{ include('secteuractivite/delete_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
 </html>
+
+
+

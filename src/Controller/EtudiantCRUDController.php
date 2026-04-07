@@ -24,8 +24,9 @@ final class EtudiantCRUDController extends AbstractController
         $session = $requestStack->getSession();
         $userSession = $session->get('user');
 
-        $sort = $request->query->get('sort', 'id');
+        $sort = $request->query->get('sort', 'ETU_Nom');
         $order = $request->query->get('order', 'asc');
+        $nombreEtudiants = $etudiantRepository->compteEtudiant();
 
         // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
         if (!$userSession OR $userSession['role'] != 1) {
@@ -36,6 +37,7 @@ final class EtudiantCRUDController extends AbstractController
         return $this->render('etudiant_crud/index.html.twig', [
             'etudiants' => $etudiantRepository->findAllSorted($sort, $order),
             'filieres' => $filiereRepository->findAll(),
+            'totalEtudiants' => $nombreEtudiants,
             'sort' => $sort,
             'order' => $order,
         ]);

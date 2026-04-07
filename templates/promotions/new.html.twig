@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Nouvel étudiant – La Châtaigneraie</title>
+        <title>Nouvelle promotion – La Châtaigneraie</title>
         <link rel="stylesheet" href="{{ asset('CSS/dashboard.css') }}">
         <link rel="stylesheet" href="{{ asset('CSS/utilisateur.css') }}">
         <link rel="stylesheet" href="{{ asset('CSS/utilisateur_form.css') }}">
@@ -27,20 +27,20 @@
                     </svg>
                     Tableau de bord
                 </a>
-                <a href="{{ path('app_etudiant_read') }}" class="nav-item active">
+                <a href="{{ path('app_etudiant_read') }}" class="nav-item">
                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
                         <path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
                     </svg>
                     Étudiants
                 </a>
-                <a href="{{ path('app_promotions_read') }}" class="nav-item">
-					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
-						<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
-						<path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
-					</svg>
-					Promotions
-				</a>
+                <a href="{{ path('app_promotions_read') }}" class="nav-item active">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+                    </svg>
+                    Promotions
+                </a>
                 <a href="{{ path('app_entreprise_read') }}" class="nav-item">
                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <rect x="2" y="7" width="20" height="14" rx="2"/>
@@ -103,12 +103,12 @@
 
             <div class="page-header-flex">
                 <div>
-                    <h1>Nouvel Étudiant</h1>
-                    <p>Créer un nouveau profil d'étudiant.</p>
+                    <h1>Nouvelle promotion</h1>
+                    <p>Créer une nouvelle promotion.</p>
                 </div>
             
 
-                <a href="{{ path('app_etudiant_read') }}" class="btn-outline-back">
+                <a href="{{ path('app_promotions_read') }}" class="btn-outline-back">
                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                     </svg>
@@ -118,7 +118,7 @@
 
             <div class="form-wrapper">
                 <div class="form-card">
-                    {{ include('etudiant_crud/form.html.twig') }}
+                    {{ include('promotions/form.html.twig') }}
                 </div>
             </div>
         </main>

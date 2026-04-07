@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Etudiant;
-use App\Entity\Filiere;
+use App\Entity\Promotions;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,11 +16,10 @@ class EtudiantType extends AbstractType
         $builder
             ->add('ETU_Nom', null, ['label' => 'Nom'])
             ->add('ETU_Prenom', null, ['label' => 'Prénom'])
-            ->add('ETU_Promotion', null, ['label' => 'Promotion'])
-            ->add('FIL_ID', EntityType::class, [
-                'class' => Filiere::class,
-                'label' => 'Filière',
-                'choice_label' => 'FIL_Libelle',
+            ->add('promo', EntityType::class, [
+                'class' => Promotions::class,
+                'label' => 'Classe',
+                'choice_label' => 'pro_libelle',
             ])
         ;
     }

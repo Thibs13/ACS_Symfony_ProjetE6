@@ -57,6 +57,9 @@ class Stage
     #[ORM\JoinColumn(nullable: false, referencedColumnName: 'UTI_ID')]
     private ?Utilisateur $EnseignantSuivi = null;
 
+    #[ORM\ManyToOne(inversedBy: 'StagesPromo')]
+    private ?Promotions $promo = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -214,6 +217,18 @@ class Stage
     public function setEnseignantSuivi(?Utilisateur $EnseignantSuivi): static
     {
         $this->EnseignantSuivi = $EnseignantSuivi;
+
+        return $this;
+    }
+
+    public function getPromo(): ?Promotions
+    {
+        return $this->promo;
+    }
+
+    public function setPromo(?Promotions $promo): static
+    {
+        $this->promo = $promo;
 
         return $this;
     }

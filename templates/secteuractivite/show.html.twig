@@ -3,10 +3,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Modifier l'utilisateur – La Châtaigneraie</title>
+		<title>Détails Utilisateur – La Châtaigneraie</title>
 		<link rel="stylesheet" href="{{ asset('CSS/dashboard.css') }}">
 		<link rel="stylesheet" href="{{ asset('CSS/utilisateur.css') }}">
-		<link rel="stylesheet" href="{{ asset('CSS/utilisateur_form.css') }}">
 	</head>
 	<body>
 
@@ -48,7 +47,7 @@
 					</svg>
 					Entreprises
 				</a>
-				<a href="{{ path('app_secteuractivite_read') }}" class="nav-item">
+				<a href="{{ path('app_secteuractivite_read') }}" class="nav-item active">
 					<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 						<rect x="2" y="7" width="20" height="14" rx="2"/>
 						<path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>
@@ -70,7 +69,7 @@
 					</svg>
 					Suivi &amp; Visites
 				</a>
-				<a href="{{ path('app_utilisateurs') }}" class="nav-item active">
+				<a href="{{ path('app_utilisateurs') }}" class="nav-item">
 					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
 						<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
 						<circle cx="12" cy="7" r="4"/>
@@ -86,6 +85,7 @@
 					Exports
 				</a>
 			</nav>
+            
 
 			<div class="sidebar-footer">
 				<a href="{{ path('app_deco') }}" class="btn-deco">
@@ -99,32 +99,56 @@
 			</div>
 		</aside>
 
-		<main class="main">
+        <main class="main">
 
-			<div class="page-header-flex">
-				<div>
-					<h1>Modifier l'utilisateur</h1>
-					<p>Mise à jour des informations et des accès</p>
-				</div>
-
-				<a href="{{ path('app_utilisateur_read') }}" class="btn-outline-back">
-					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-					</svg>
-					Retour à la liste
-				</a>
+            <div class="page-header-flex">
+                <div>
+                    <h1>Détails du secteur d'activité</h1>
+                    <p>Informations sur le secteur d'activité.</p>
+                </div>
 			</div>
+            
+			<div class="profil-wrapper">			
 
-			<div class="form-wrapper">
-				<div class="form-card">
-					{{ include('utilisateur_crud/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+				<div class="profile-details-card">
+					<div class="section-header">
+						<h3>
+							<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/>
+							</svg>
+							Informations
+						</h3>
+					</div>
 
-					<div class="delete-simple-wrapper delete-form-wrapper">
-						{{ include('utilisateur_crud/_delete_form.html.twig') }}
+					<div class="info-grid">
+						<div class="info-group">
+							<h4>ID</h4>
+							<p>{{ secteuractivite.id }}</p>
+						</div>
+						<div class="info-group">
+							<h4>Libelle</h4>
+							<p>{{ secteuractivite.saLibelle }}</p>
+						</div>
 					</div>
 				</div>
+
+				<div class="profile-actions-bar">
+					<a href="{{ path('app_secteuractivite_read') }}" class="btn-action btn-outline">
+						Retour à la liste
+					</a>
+
+					<div class="actions-right">
+						<a href="{{ path('app_secteuractivite_edit', {'id': secteuractivite.id}) }}" class="btn-action btn-primary">
+							Modifier
+						</a>
+
+						<div class="delete-form-wrapper">
+							{{ include('secteuractivite/delete_form.html.twig') }}
+						</div>
+					</div>
+				</div>
+
 			</div>
 
-		</main>
-	</body>
-</html>
+        </main>
+    </body>

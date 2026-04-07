@@ -29,7 +29,7 @@ final class EntrepriseCRUDController extends AbstractController
             return $this->redirectToRoute('app_accueil');
         }
 
-        $sort = $request->query->get('sort', 'id');
+        $sort = $request->query->get('sort', 'ENT_Nom');
         $order = $request->query->get('order', 'asc');
         // on demande au repository de nous donner absolument toutes les entreprises et les villes 
         return $this->render('entreprise_crud/index.html.twig', [
