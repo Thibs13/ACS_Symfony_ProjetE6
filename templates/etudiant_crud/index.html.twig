@@ -111,12 +111,11 @@
         <table class="students-table">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Trigramme</th>
                     <th><a href="?sort=ETU_Nom&order={{ (sort == 'ETU_Nom' and order == 'asc') ? 'desc' : 'asc' }}">
                             Nom {{ sort == 'ETU_Nom' ? (order == 'asc' ? '🔽' : '🔼') : '' }}
                         </a>
                     </th>
-                    <th>Trigramme</th>
                     <th>Prenom</th>
                     <th>Classe</th>
                     <th>Session</th>
@@ -126,7 +125,6 @@
             <tbody>
             {% for etudiant in etudiants %}
                 <tr>
-                    <td>{{ etudiant.id }}</td>
                     <td>{{ etudiant.ETUPrenom|slice(0, 1)|upper }}{{ etudiant.ETUNom|slice(0, 2)|upper }} </td>
                     <td>{{ etudiant.ETUNom }}</td>
                     <td>{{ etudiant.ETUPrenom }}</td>
