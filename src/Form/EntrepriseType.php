@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Doctrine\ORM\EntityRepository;
 
 class EntrepriseType extends AbstractType
 {
@@ -23,6 +24,10 @@ class EntrepriseType extends AbstractType
                 'class' => Ville::class,
                 'label' => 'Ville',
                 'choice_label' => 'VIL_Nom',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('v')
+                        ->orderBy('v.VIL_Nom', 'ASC');
+                },
             ])
             ->add('secteur', EntityType::class, [
                 'class' => Secteuractivite::class,
