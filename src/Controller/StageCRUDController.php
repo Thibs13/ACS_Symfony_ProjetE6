@@ -36,6 +36,40 @@ final class StageCRUDController extends AbstractController
         ]);
     }
 
+    #[Route('/suivivisite', name: 'app_suivi_visite', methods: ['GET'])]
+    public function suiviVisite(StageRepository $stageRepository, RequestStack $requestStack): Response
+    {
+        $session = $requestStack->getSession();
+        $userSession = $session->get('user');
+
+        if (!$userSession) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
+        $role = $userSession['role'];
+        $userId = $userSession['id'];
+
+        if ($role == 1) {
+            // L'ADMIN : voit la liste globale avec les noms des profs
+            $stages = $stageRepository->findAll();
+            
+            return $this->render('SuiviVisite/index_admin.html.twig', [
+                'stages' => $stages,
+                'role' => $role
+            ]);
+        } else {
+            // LE PROF : voit ses deux listes personnelles
+            $mesSuivis = $stageRepository->findStagesByEnseignantSuivi($userId);
+            $mesVisites = $stageRepository->findStagesByEnseignantVisite($userId);
+
+            return $this->render('SuiviVisite/index_enseignant.html.twig', [
+                'mesSuivis' => $mesSuivis,
+                'mesVisites' => $mesVisites,
+                'role' => $role
+            ]);
+        }
+    }
+
     // permet de créer un nouveau stage via un formulaire
     #[Route('/new', name: 'app_stage_create', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, RequestStack $requestStack): Response
@@ -148,26 +182,5 @@ final class StageCRUDController extends AbstractController
         return $this->redirectToRoute('app_stage_read', [
             'role' => $userSession['role'] ?? 0,
         ], Response::HTTP_SEE_OTHER);
-    }
-
-    // Toujours dans StageCRUDController.php
-
-    #[Route('/mes-suivis', name: 'app_suivi_visite', methods: ['GET'])]
-    public function suiviVisite(StageRepository $stageRepository, RequestStack $requestStack): Response
-    {
-        $userSession = $requestStack->getSession()->get('user');
-
-        if (!$userSession) {
-            return $this->redirectToRoute('app_accueil');
-        }
-
-        $userId = $userSession['id'];
-
-        // On récupère les deux listes filtrées pour le prof
-        return $this->render('SuiviVisite/index.html.twig', [
-            'stagesSuivi' => $stageRepository->findStagesByEnseignantSuivi($userId),
-            'stagesVisite' => $stageRepository->findStagesByEnseignantVisite($userId),
-            'role' => $userSession['role']
-        ]);
     }
 }

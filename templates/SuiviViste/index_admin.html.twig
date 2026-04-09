@@ -1,0 +1,26 @@
+{# templates/SuiviVisite/index_admin.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Suivi Global des Stages (Admin)</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Étudiant</th>
+                <th>Entreprise</th>
+                <th>Prof. Suivi</th>
+                <th>Prof. Visite</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stage in stages %}
+                <tr>
+                    <td>{{ stage.ETUID.ETUNom }} {{ stage.ETUID.ETUPrenom }}</td>
+                    <td>{{ stage.ENTID.ENTNom }}</td>
+                    <td>{{ stage.EnseignantSuivi ? stage.EnseignantSuivi.nom : 'Non assigné' }}</td>
+                    <td>{{ stage.EnseignantVisite ? stage.EnseignantVisite.nom : 'Non assigné' }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

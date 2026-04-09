@@ -1,0 +1,46 @@
+{# templates/SuiviVisite/index_enseignant.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Mes Missions</h1>
+
+    <h3>Missions de Visite (Adresse incluse)</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Étudiant</th>
+                <th>Entreprise</th>
+                <th>Adresse</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stage in mesVisites %}
+                <tr>
+                    <td>{{ stage.ETUID.ETUNom }}</td>
+                    <td>{{ stage.ENTID.ENTNom }}</td>
+                    <td>{{ stage.ENTID.ENTAdresse }} {{ stage.ENTID.ENTVille }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <hr>
+
+    <h3>Missions de Suivi</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Étudiant</th>
+                <th>Entreprise</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stage in mesSuivis %}
+                <tr>
+                    <td>{{ stage.ETUID.ETUNom }}</td>
+                    <td>{{ stage.ENTID.ENTNom }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
