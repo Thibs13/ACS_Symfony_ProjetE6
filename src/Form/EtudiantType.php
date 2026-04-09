@@ -19,7 +19,9 @@ class EtudiantType extends AbstractType
             ->add('promo', EntityType::class, [
                 'class' => Promotions::class,
                 'label' => 'Classe',
-                'choice_label' => 'pro_libelle',
+                'choice_label' => function (Promotions $promotions){
+                return $promotions->getProLibelle() . ' ' . $promotions->getProSession();
+                },
             ])
         ;
     }
