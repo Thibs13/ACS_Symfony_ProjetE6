@@ -19,11 +19,14 @@ final class UtilisateurCRUDController extends AbstractController
 
     // affiche la liste complète des utilisateurs enregistrés en base de données
     #[Route(name: 'app_utilisateur_read', methods: ['GET'])]
-    public function index(UtilisateurRepository $utilisateurRepository,RequestStack $requestStack): Response
+    public function index(UtilisateurRepository $utilisateurRepository,RequestStack $requestStack, Request $request): Response
     {
         // on récupère la session en cours pour vérifier qui navigue sur le site
         $session = $requestStack->getSession();
         $userSession = $session->get('user');
+
+        $sort = $request->query->get('sort', 'nom');
+        $order = $request->query->get('order', 'asc');
 
         // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
         if (!$userSession OR $userSession['role'] != 1) {
@@ -32,7 +35,7 @@ final class UtilisateurCRUDController extends AbstractController
         
         // on récupère tous les utilisateurs pour les envoyer à la vue
         return $this->render('utilisateur_crud/index.html.twig', [
-            'utilisateurs' => $utilisateurRepository->findAll(),
+            'utilisateurs' => $utilisateurRepository->findAllSorted($sort, $order),
             'role' => $userSession['role'] ?? 0,
         ]);
     }

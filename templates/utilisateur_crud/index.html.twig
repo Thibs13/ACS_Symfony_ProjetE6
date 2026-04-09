@@ -135,10 +135,10 @@
                     <div class="user-card">
                         <div class="user-card-header">
                             <div class="user-avatar">
-                                {{ utilisateur.prenom|first|upper }}{{ utilisateur.nom|first|upper }}
+                                {{ utilisateur.nom|first|upper }}{{ utilisateur.prenom|first|upper }}
                             </div>
                             <div class="user-info">
-                                <h3>{{ utilisateur.prenom }} {{ utilisateur.nom }}</h3>
+                                <h3>{{ utilisateur.nom }} {{ utilisateur.prenom }}</h3>
                                 <span class="user-login">@{{ utilisateur.login }}</span>
                             </div>
                         </div>
