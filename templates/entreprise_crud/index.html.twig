@@ -130,14 +130,14 @@
             <thead>
                 <tr>
                     <th>
-                        <a href="?sort=ENT_Nom&order={{ (sort == 'ENT_Nom' and order == 'asc') ? 'desc' : 'asc' }}">
-                            Nom {{ sort == 'ENT_Nom' ? (order == 'asc' ? '🔽' : '🔼') : '' }}
+                        <a style="text-decoration:none;color:#3a3d45;" href="?sort=ENT_Nom&order={{ (sort == 'ENT_Nom' and order == 'asc') ? 'desc' : 'asc' }}">
+                            Nom {{ sort == 'ENT_Nom' ? (order == 'asc' ? '&uarr;' : '&darr;') : '' }}
                         </a>
                     </th>
                     <th>Telephone</th>
                     <th>Email</th>
-                    <th><a href="?sort=VIL_Nom&order={{ (sort == 'VIL_Nom' and order == 'asc') ? 'desc' : 'asc' }}">
-                            Ville {{ sort == 'VIL_Nom' ? (order == 'asc' ? '🔽' : '🔼') : '' }}
+                    <th><a style="text-decoration:none;color:#3a3d45;" href="?sort=VIL_Nom&order={{ (sort == 'VIL_Nom' and order == 'asc') ? 'desc' : 'asc' }}">
+                            Ville {{ sort == 'VIL_Nom' ? (order == 'asc' ? '&uarr;' : '&darr;') : '' }}
                         </a></th>
                     <th>Secteur d'activité</th>
                     <th>actions</th>
