@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class StageType extends AbstractType
 {
@@ -29,11 +30,31 @@ class StageType extends AbstractType
                 'html5' => true,
             ])
             ->add('STA_Remarque', null, ['label' => 'Remarque'])
-            ->add('STA_Remerciement', null, ['label' => 'Remerciement'])
-            ->add('STA_Bilan', null, ['label' => 'Bilan'])
-            ->add('STA_Attestation', null, ['label' => 'Attestation'])
-            ->add('STA_Jury', null, ['label' => 'Jury'])
-            ->add('STA_Commentaire', null, ['label' => 'Commentaire'])
+            ->add('STA_Remerciement', TextType::class, [
+                'label' => 'Remerciement',
+                'attr' => [
+                    'placeholder' => 'Oui ou Non',
+                ],
+            ])
+            ->add('STA_Bilan', TextType::class, [
+                'label' => 'Bilan',
+                'attr' => [
+                    'placeholder' => 'Oui ou Non',
+                ],
+            ])
+            ->add('STA_Attestation', TextType::class, [
+                'label' => 'Attestation',
+                'attr' => [
+                    'placeholder' => 'Oui ou Non',
+                ],
+            ])
+            ->add('STA_Jury', TextType::class, [
+                'label' => 'Jury',
+                'attr' => [
+                    'placeholder' => 'Oui ou Non',
+                ],
+            ])
+            ->add('STA_Commentaire')
             ->add('STA_DateRetenu', DateType::class, [
                 'label' => 'Date retenu',
                 'widget' => 'single_text',
