@@ -116,7 +116,10 @@
                             Nom {{ sort == 'ETU_Nom' ? (order == 'asc' ? '&uarr;' : '&darr;') : '' }}
                         </a>
                     </th>
-                    <th>Prenom</th>
+                    <th><a style="text-decoration:none;color:#627183;" href="?sort=ETU_Prenom&order={{ (sort == 'ETU_Prenom' and order == 'asc') ? 'desc' : 'asc' }}">
+                            Prenom {{ sort == 'ETU_Prenom' ? (order == 'asc' ? '&uarr;' : '&darr;') : '' }}
+                        </a>
+                    </th>
                     <th>Classe</th>
                     <th>Session</th>
                     <th>Actions</th>
