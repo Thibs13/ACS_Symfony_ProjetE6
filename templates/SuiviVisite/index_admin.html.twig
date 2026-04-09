@@ -1,0 +1,67 @@
+{# templates/SuiviVisite/index_admin.html.twig #}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suivi Global - La Chataigneraie</title>
+    <link rel="stylesheet" href="{{ asset('CSS/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('CSS/etudiant.css') }}">
+</head>
+<body>
+
+    {# --- SIDEBAR (Identique à ton modèle) --- #}
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-badge">
+                <img src="{{ asset('Image/campus-logo.png') }}" alt="Logo" />
+            </div>
+            <h2>La Chataigneraie</h2>
+            <p>Suivi des stages</p>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="{{ path('app_dashboard') }}" class="nav-item">Tableau de bord</a>
+            <a href="{{ path('app_etudiant_read') }}" class="nav-item">Étudiants</a>
+            <a href="{{ path('app_stage_read') }}" class="nav-item">Stages</a>
+            <a href="{{ path('app_suivi_visite') }}" class="nav-item active">Suivi &amp; Visites</a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="{{ path('app_deco') }}" class="btn-deco">Deconnexion</a>
+        </div>
+    </aside>
+
+    <main class="main">
+        <div class="page-header-flex">
+            <div>
+                <h1>Suivi Global des Stages</h1>
+                <p>Vue administrateur : répartition des enseignants par stage.</p>
+            </div>
+        </div>
+
+        <div class="section-card table-wrapper">
+            <table class="students-table">
+                <thead>
+                    <tr>
+                        <th>Étudiant</th>
+                        <th>Entreprise</th>
+                        <th>Prof. Suivi</th>
+                        <th>Prof. Visite</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for stage in stages %}
+                    <tr>
+                        <td><strong>{{ stage.ETUID.ETUNom }}</strong> {{ stage.ETUID.ETUPrenom }}</td>
+                        <td>{{ stage.ENTID.ENTNom }}</td>
+                        <td>{{ stage.EnseignantSuivi ? stage.EnseignantSuivi.nom : 'Non assigné' }}</td>
+                        <td>{{ stage.EnseignantVisite ? stage.EnseignantVisite.nom : 'Non assigné' }}</td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="4">Aucun stage enregistré.</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>
