@@ -40,4 +40,15 @@ class UtilisateurRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findAllSorted(string $sort, string $order): array
+        {
+            $qb = $this->createQueryBuilder('e');
+
+            // Cas général : Tri sur les champs directs (ex: ENT_Nom)
+            // On ajoute un 'e.' devant pour être sûr que Doctrine sache de quoi on parle
+            return $qb->orderBy('e.' . $sort, $order)
+                    ->getQuery()
+                    ->getResult();
+        }
 }
