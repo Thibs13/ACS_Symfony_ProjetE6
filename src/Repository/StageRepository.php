@@ -57,4 +57,33 @@ class StageRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getResult();
         }
+
+        public function findStagesByEnseignant(int $userId): array
+        {
+            return $this->createQueryBuilder('s')
+                // On cherche l'ID de l'enseignant connecté dans les deux colonnes possibles
+                ->where('s.EnseignantVisite = :id')
+                ->orWhere('s.EnseignantSuivi = :id')
+                ->setParameter('id', $userId) // Ici, $userId est l'ID de celui qui est devant l'écran
+                ->getQuery()
+                ->getResult();
+        }
+
+        public function findStagesByEnseignantSuivi(int $userId): array
+        {
+            return $this->createQueryBuilder('s')
+                ->where('s.EnseignantSuivi = :id')
+                ->setParameter('id', $userId)
+                ->getQuery()
+                ->getResult();
+        }
+
+        public function findStagesByEnseignantVisite(int $userId): array
+        {
+            return $this->createQueryBuilder('s')
+                ->where('s.EnseignantVisite = :id')
+                ->setParameter('id', $userId)
+                ->getQuery()
+                ->getResult();
+        }
 }

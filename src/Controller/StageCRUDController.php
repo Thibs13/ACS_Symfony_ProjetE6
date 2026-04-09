@@ -149,4 +149,25 @@ final class StageCRUDController extends AbstractController
             'role' => $userSession['role'] ?? 0,
         ], Response::HTTP_SEE_OTHER);
     }
+
+    // Toujours dans StageCRUDController.php
+
+    #[Route('/mes-suivis', name: 'app_suivi_visite', methods: ['GET'])]
+    public function suiviVisite(StageRepository $stageRepository, RequestStack $requestStack): Response
+    {
+        $userSession = $requestStack->getSession()->get('user');
+
+        if (!$userSession) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
+        $userId = $userSession['id'];
+
+        // On récupère les deux listes filtrées pour le prof
+        return $this->render('SuiviVisite/index.html.twig', [
+            'stagesSuivi' => $stageRepository->findStagesByEnseignantSuivi($userId),
+            'stagesVisite' => $stageRepository->findStagesByEnseignantVisite($userId),
+            'role' => $userSession['role']
+        ]);
+    }
 }
