@@ -127,8 +127,8 @@
                     <tr>
                         <td><strong>{{ stage.ETUID.ETUNom }}</strong> {{ stage.ETUID.ETUPrenom }}</td>
                         <td>{{ stage.ENTID.ENTNom }}</td>
-                        <td>{{ stage.EnseignantSuivi ? stage.EnseignantSuivi.nom : 'Non assigné' }}</td>
-                        <td>{{ stage.EnseignantVisite ? stage.EnseignantVisite.nom : 'Non assigné' }}</td>
+                        <td>{{ stage.EnseignantSuivi ? stage.EnseignantSuivi.nom ~ ' ' ~ stage.EnseignantSuivi.prenom : 'Non assigné' }}</td>
+                        <td>{{ stage.EnseignantVisite ? stage.EnseignantVisite.nom ~ ' ' ~ stage.EnseignantVisite.prenom : 'Non assigné' }}</td>
                     </tr>
                 {% else %}
                     <tr><td colspan="4">Aucun stage enregistré.</td></tr>
