@@ -28,12 +28,21 @@ final class SecteuractiviteController extends AbstractController
 
         return $this->render('secteuractivite/index.html.twig', [
             'secteuractivites' => $secteuractiviteRepository->findAll(),
+            'role' => $userSession['role'] ?? 0,
         ]);
     }
 
     #[Route('/new', name: 'app_secteuractivite_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, RequestStack $requestStack): Response
     {
+        $session = $requestStack->getSession();
+        $userSession = $session->get('user');
+
+        // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
+        if (!$userSession OR $userSession['role'] != 1) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
         $secteuractivite = new Secteuractivite();
         $form = $this->createForm(SecteuractiviteType::class, $secteuractivite);
         $form->handleRequest($request);
@@ -48,20 +57,38 @@ final class SecteuractiviteController extends AbstractController
         return $this->render('secteuractivite/new.html.twig', [
             'secteuractivite' => $secteuractivite,
             'form' => $form,
+            'role' => $userSession['role'] ?? 0,
         ]);
     }
 
     #[Route('/{id}', name: 'app_secteuractivite_show', methods: ['GET'])]
-    public function show(Secteuractivite $secteuractivite): Response
+    public function show(Secteuractivite $secteuractivite, RequestStack $requestStack): Response
     {
+        $session = $requestStack->getSession();
+        $userSession = $session->get('user');
+
+        // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
+        if (!$userSession OR $userSession['role'] != 1) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
         return $this->render('secteuractivite/show.html.twig', [
             'secteuractivite' => $secteuractivite,
+            'role' => $userSession['role'] ?? 0,
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_secteuractivite_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Secteuractivite $secteuractivite, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Secteuractivite $secteuractivite, EntityManagerInterface $entityManager, RequestStack $requestStack): Response
     {
+        $session = $requestStack->getSession();
+        $userSession = $session->get('user');
+
+        // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
+        if (!$userSession OR $userSession['role'] != 1) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
         $form = $this->createForm(SecteuractiviteType::class, $secteuractivite);
         $form->handleRequest($request);
 
@@ -74,6 +101,7 @@ final class SecteuractiviteController extends AbstractController
         return $this->render('secteuractivite/edit.html.twig', [
             'secteuractivite' => $secteuractivite,
             'form' => $form,
+            'role' => $userSession['role'] ?? 0,
         ]);
     }
 
