@@ -7,11 +7,15 @@ use App\Form\EtudiantType;
 use App\Repository\EtudiantRepository;
 use App\Repository\FiliereRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\RequestStack;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 #[Route('/etudiants')]
 final class EtudiantCRUDController extends AbstractController
@@ -41,6 +45,63 @@ final class EtudiantCRUDController extends AbstractController
             'sort' => $sort,
             'order' => $order,
         ]);
+    }
+
+    #[Route('/export/excel', name: 'app_etudiant_export_excel', methods: ['GET'])]
+    public function exportExcel(EtudiantRepository $etudiantRepository, RequestStack $requestStack, Request $request): Response
+    {
+        // on récupère la session en cours pour vérifier qui navigue sur le site
+        $session = $requestStack->getSession();
+        $userSession = $session->get('user');
+
+        // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
+        if (!$userSession OR $userSession['role'] != 1) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
+        $sort = $request->query->get('sort', 'ETU_Nom');
+        $order = $request->query->get('order', 'asc');
+        $etudiants = $etudiantRepository->findAllSorted($sort, $order);
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setTitle('Etudiants');
+        $sheet->setCellValue('A1', 'Trigramme');
+        $sheet->setCellValue('B1', 'Nom');
+        $sheet->setCellValue('C1', 'Prenom');
+        $sheet->setCellValue('D1', 'Classe');
+        $sheet->setCellValue('E1', 'Session');
+
+        $row = 2;
+        foreach ($etudiants as $etudiant) {
+            $prenom = $etudiant->getETUPrenom() ?? '';
+            $nom = $etudiant->getETUNom() ?? '';
+            $promo = $etudiant->getPromo();
+
+            $sheet->setCellValue('A' . $row, strtoupper(mb_substr($prenom, 0, 1) . mb_substr($nom, 0, 2)));
+            $sheet->setCellValue('B' . $row, $nom);
+            $sheet->setCellValue('C' . $row, $prenom);
+            $sheet->setCellValue('D' . $row, $promo?->getProLibelle() ?? '');
+            $sheet->setCellValue('E' . $row, $promo?->getProSession() ?? '');
+            $row++;
+        }
+
+        foreach (['A', 'B', 'C', 'D', 'E'] as $column) {
+            $sheet->getColumnDimension($column)->setAutoSize(true);
+        }
+
+        $sheet->getStyle('A1:E1')->getFont()->setBold(true);
+
+        $tempFile = tempnam(sys_get_temp_dir(), 'etudiants_export_');
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($tempFile);
+
+        $response = new BinaryFileResponse($tempFile);
+        $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'export_etudiants.xlsx');
+        $response->deleteFileAfterSend(true);
+
+        return $response;
     }
 
     // gère la création d'une nouvelle fiche étudiant
