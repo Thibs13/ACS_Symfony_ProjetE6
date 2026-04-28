@@ -44,6 +44,7 @@ final class EtudiantCRUDController extends AbstractController
             'totalEtudiants' => $nombreEtudiants,
             'sort' => $sort,
             'order' => $order,
+            'role' => $userSession['role'] ?? 0,
         ]);
     }
 
@@ -136,6 +137,7 @@ final class EtudiantCRUDController extends AbstractController
         return $this->render('etudiant_crud/new.html.twig', [
             'etudiant' => $etudiant,
             'form' => $form,
+            'role' => $userSession['role'] ?? 0,
         ]);
     }
 
@@ -155,6 +157,7 @@ final class EtudiantCRUDController extends AbstractController
         // Symfony récupère automatiquement l'étudiant correspondant grâce à l'id
         return $this->render('etudiant_crud/show.html.twig', [
             'etudiant' => $etudiant,
+            'role' => $userSession['role'] ?? 0,
         ]);
     }
 
@@ -189,6 +192,7 @@ final class EtudiantCRUDController extends AbstractController
         return $this->render('etudiant_crud/edit.html.twig', [
             'etudiant' => $etudiant,
             'form' => $form,
+            'role' => $userSession['role'] ?? 0,
         ]);
     }
 

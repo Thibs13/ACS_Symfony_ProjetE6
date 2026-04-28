@@ -77,6 +77,7 @@ final class EntrepriseCRUDController extends AbstractController
         return $this->render('entreprise_crud/new.html.twig', [
             'entreprise' => $entreprise,
             'form' => $form,
+            'role' => $userSession['role'] ?? 0,
         ]);
     }
 
