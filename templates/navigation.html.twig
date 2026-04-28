@@ -1,5 +1,9 @@
 <nav class="sidebar-nav">
+        {% if namePage == 'dashboard' %}
         <a href="{{ path('app_dashboard') }}" class="nav-item active">
+        {% else %}
+        <a href="{{ path('app_dashboard') }}" class="nav-item">
+        {% endif %}
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
                 <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
@@ -54,7 +58,11 @@
             Suivi &amp; Visites
         </a>
         {% if role == 1 %}
+            {% if namePage == 'utilisateur' %}
+            <a href="{{ path('app_utilisateurs') }}" class="nav-item active">
+            {% else %}
             <a href="{{ path('app_utilisateurs') }}" class="nav-item">
+            {% endif %}
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
                     <circle cx="12" cy="7" r="4"/>

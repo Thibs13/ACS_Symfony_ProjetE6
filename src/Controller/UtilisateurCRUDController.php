@@ -70,6 +70,7 @@ final class UtilisateurCRUDController extends AbstractController
         return $this->render('utilisateur_crud/new.html.twig', [
             'utilisateur' => $utilisateur,
             'form' => $form,
+            'role' => $userSession['role'] ?? 0,
         ]);
     }
 
@@ -89,6 +90,7 @@ final class UtilisateurCRUDController extends AbstractController
         // symfony retrouve l'utilisateur tout seul grâce à l'identifiant dans l'adresse
         return $this->render('utilisateur_crud/show.html.twig', [
             'utilisateur' => $utilisateur,
+            'role' => $userSession['role'] ?? 0,
         ]);
     }
 
@@ -120,6 +122,7 @@ final class UtilisateurCRUDController extends AbstractController
         return $this->render('utilisateur_crud/edit.html.twig', [
             'utilisateur' => $utilisateur,
             'form' => $form,
+            'role' => $userSession['role'] ?? 0,
         ]);
     }
 
