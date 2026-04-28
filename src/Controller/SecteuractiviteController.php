@@ -10,13 +10,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 #[Route('/secteuractivite')]
 final class SecteuractiviteController extends AbstractController
 {
     #[Route(name: 'app_secteuractivite_read', methods: ['GET'])]
-    public function index(SecteuractiviteRepository $secteuractiviteRepository): Response
+    public function index(SecteuractiviteRepository $secteuractiviteRepository, RequestStack $requestStack): Response
     {
+        $session = $requestStack->getSession();
+        $userSession = $session->get('user');
+
+        // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
+        if (!$userSession OR $userSession['role'] != 1) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
         return $this->render('secteuractivite/index.html.twig', [
             'secteuractivites' => $secteuractiviteRepository->findAll(),
         ]);
