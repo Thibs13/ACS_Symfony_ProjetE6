@@ -11,7 +11,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Repository\VilleRepository;
-use \Symfony\Component\HttpFoundation\RequestStack; 
+use \Symfony\Component\HttpFoundation\RequestStack;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 #[Route('/entreprise')]
 final class EntrepriseCRUDController extends AbstractController
@@ -152,5 +156,67 @@ final class EntrepriseCRUDController extends AbstractController
         return $this->redirectToRoute('app_entreprise_read', [
             'role' => $userSession['role'] ?? 0,
         ], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/export/excel', name: 'app_entreprise_export_excel', methods: ['GET'])]
+    public function exportExcel(EntrepriseRepository $entrepriseRepository, RequestStack $requestStack, Request $request): Response
+    {
+        // on récupère la session en cours pour vérifier qui navigue sur le site
+        $session = $requestStack->getSession();
+        $userSession = $session->get('user');
+
+        // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
+        if (!$userSession OR $userSession['role'] != 1) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
+        $sort = $request->query->get('sort', 'ENT_Nom');
+        $order = $request->query->get('order', 'asc');
+        $entreprises = $entrepriseRepository->findAllSorted($sort, $order);
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setTitle('Entreprises');
+        $sheet->setCellValue('A1', 'Nom');
+        $sheet->setCellValue('B1', 'Téléphone');
+        $sheet->setCellValue('C1', 'Email');
+        $sheet->setCellValue('D1', 'Ville');
+        $sheet->setCellValue('E1', 'Adresse');
+        $sheet->setCellValue('F1', 'Secteur d\'activité');
+
+        $row = 2;
+        foreach ($entreprises as $entreprise) {
+            $nom = $entreprise->getENTNom() ?? '';
+            $adresse = $entreprise->getENTAdresse() ?? '';
+            $ville = $entreprise->getVILID()?->getVILNom() ?? '';
+            $telephone = $entreprise->getENTTelephone() ?? '';
+            $email = $entreprise->getENTEmail() ?? '';
+            $secteurActivite = $entreprise->getSecteur()?->getSaLibelle() ?? '';
+
+            $sheet->setCellValue('A' . $row, $nom);
+            $sheet->setCellValue('B' . $row, $telephone);
+            $sheet->setCellValue('C' . $row, $email);
+            $sheet->setCellValue('D' . $row, $ville);
+            $sheet->setCellValue('E' . $row, $adresse);
+            $sheet->setCellValue('F' . $row, $secteurActivite);
+            $row++;
+        }
+
+        foreach (['A', 'B', 'C', 'D', 'E', 'F'] as $column) {
+            $sheet->getColumnDimension($column)->setAutoSize(true);
+        }
+
+        $sheet->getStyle('A1:F1')->getFont()->setBold(true);
+
+        $tempFile = tempnam(sys_get_temp_dir(), 'entreprises_export_');
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($tempFile);
+
+        $response = new BinaryFileResponse($tempFile);
+        $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'export_entreprises.xlsx');
+        $response->deleteFileAfterSend(true);
+
+        return $response;
     }
 }
