@@ -67,6 +67,10 @@ class StageType extends AbstractType
                 'choice_label' => function (Etudiant $etudiant) {
                 return $etudiant->getETUNom() . ' ' . $etudiant->getETUPrenom();
                 },
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('v')
+                        ->orderBy('v.ETU_Nom', 'ASC');
+                },
             ])
             ->add('ENT_ID', EntityType::class, [
                 'class' => Entreprise::class,
