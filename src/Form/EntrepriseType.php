@@ -33,6 +33,10 @@ class EntrepriseType extends AbstractType
                 'class' => Secteuractivite::class,
                 'label' => 'Secteur d\'activité',
                 'choice_label' => 'sa_libelle',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('v')
+                        ->orderBy('v.sa_libelle', 'ASC');
+                },
             ])
         ;
     }
