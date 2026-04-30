@@ -101,17 +101,45 @@
     <div class="page-header-flex">
         <div>
             <h1>Exports</h1>
+            <br>
             <p>Gérer les exports de données</p>
         </div>
     </div>
 
     <div class="content">
-        <p>Vous pouvez exporter les données au format Excel ou CSV en cliquant sur les boutons ci-dessous.</p>
         <div class="export-actions">
-            <a href="{{ path('app_etudiant_export_excel') }}" class="btn-add">Exporter les étudiants en Excel</a>
+            <!-- <a href="{{ path('app_etudiant_export_excel') }}" class="btn-add">Exporter les étudiants en Excel</a> -->
             <br>
-            <a href="{{ path('app_entreprise_export_excel') }}" class="btn-add">Exporter les entreprises en Excel</a>
+            <!-- <a href="{{ path('app_entreprise_export_excel') }}" class="btn-add">Exporter les entreprises en Excel</a> -->
         </div>
+
+        <div class="cards-grid">
+			<div class="section-card">
+				<h3>Liste des étudiants</h3>
+				<p>Export complet de tout les étudiants</p>
+
+                <a href="{{ path('app_etudiant_export_excel') }}" class="action-btn btn-green">
+					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M3 17v1a4 4 0 00+4+4H17 17v-0a4 4 0 00+4-4v-0.7"/>
+                        <path d="M12.7 1v15q10 -10 0 0M10.7 1v15q-10 -10 0 0"/>
+                    </svg>
+					Exporter en Excel
+				</a>
+			</div>
+            
+            <div class="section-card">
+                <h3>Liste des entreprises</h3>
+                <p>Export complet de tout les entreprises</p>
+
+                <a href="{{ path('app_entreprise_export_excel') }}" class="action-btn btn-green">
+					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M3 17v1a4 4 0 00+4+4H17 17v-0a4 4 0 00+4-4v-0.7"/>
+                        <path d="M12.7 1v15q10 -10 0 0M10.7 1v15q-10 -10 0 0"/>
+                    </svg>
+					Exporter en Excel
+				</a>
+			</div>
+		</div>
     </div>
 </main>
 
