@@ -1,101 +1,243 @@
-<nav class="sidebar-nav">
-        {% if namePage == 'dashboard' %}
-        <a href="{{ path('app_dashboard') }}" class="nav-item active">
-        {% else %}
-        <a href="{{ path('app_dashboard') }}" class="nav-item">
-        {% endif %}
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
-                <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
-            </svg>
-            Tableau de bord
-        </a>
-        {% if role == 1 %}
-            {% if namePage == 'etudiant' %}
-            <a href="{{ path('app_etudiant_read') }}" class="nav-item active">
-            {% else %}
-            <a href="{{ path('app_etudiant_read') }}" class="nav-item">
-            {% endif %}
-                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
-                    <path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
-                </svg>
-                Étudiants
-            </a>
-            {% if namePage == 'promotion' %}
-            <a href="{{ path('app_promotions_read') }}" class="nav-item active">
-            {% else %}
-            <a href="{{ path('app_promotions_read') }}" class="nav-item">
-            {% endif %}
-                <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
-                    <path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
-                </svg>
-                Promotions
-            </a>
-        {% endif %}
-        {% if namePage == 'entreprise' %}
-        <a href="{{ path('app_entreprise_read') }}" class="nav-item active">
-        {% else %}
-        <a href="{{ path('app_entreprise_read') }}" class="nav-item">
-        {% endif %}
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="7" width="20" height="14" rx="2"/>
-                <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>
-            </svg>
-            Entreprises
-        </a>
-        {% if role == 1 %}
-            {% if namePage == 'secteuractivite' %}
-            <a href="{{ path('app_secteuractivite_read') }}" class="nav-item active">
-            {% else %}
-            <a href="{{ path('app_secteuractivite_read') }}" class="nav-item">
-            {% endif %}
-                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <rect x="2" y="7" width="20" height="14" rx="2"/>
-                    <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>
-                </svg>
-                Secteur d'activité
-            </a>
-        {% endif %}
-        {% if namePage == 'stage' %}
-        <a href="{{ path('app_stage_read') }}" class="nav-item active">
-        {% else %}
-        <a href="{{ path('app_stage_read') }}" class="nav-item">
-        {% endif %}
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                <path d="M3 9h18M9 21V9"/>
-            </svg>
-            Stages
-        </a>
-        <a href="{{ path('app_suivi_visite') }}" class="nav-item">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/>
-                <rect x="9" y="3" width="6" height="4" rx="1"/>
-                <path d="M9 12h6M9 16h4"/>
-            </svg>
-            Suivi &amp; Visites
-        </a>
-        {% if role == 1 %}
-            {% if namePage == 'utilisateur' %}
-            <a href="{{ path('app_utilisateurs') }}" class="nav-item active">
-            {% else %}
-            <a href="{{ path('app_utilisateurs') }}" class="nav-item">
-            {% endif %}
-                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
-                    <circle cx="12" cy="7" r="4"/>
-                </svg>
-                Utilisateurs
-            </a>
-        {% endif %}
-        <a href="{{ path('app_exports') }}" class="nav-item">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
-                <polyline points="7 10 12 15 17 10"/>
-                <line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
-            Exports
-        </a>
-</nav>
+<?php
+// index.php — Dashboard principal
+// BDD : tfc_historique (colonnes réelles)
+require_once 'includes/config.php';
+$nav = 'dashboard'; $pageTitle = 'Dashboard';
+$db  = getDB();
+$sid = $GLOBALS['sid'];
+
+// Bilan saison
+$bilan = $db->prepare("
+    SELECT COUNT(*) j,
+        SUM(resultat='V') v, SUM(resultat='N') n, SUM(resultat='D') d,
+        SUM(score_tfc) bp, SUM(score_adverse) bc,
+        SUM(resultat='V')*3 + SUM(resultat='N') pts,
+        ROUND(AVG(spectateurs)) moy_spec
+    FROM matchs WHERE saison_id=? AND score_tfc IS NOT NULL");
+$bilan->execute([$sid]); $b = $bilan->fetch();
+
+// Infos saison
+$saison = $db->prepare("SELECT s.*,st.nom stade_nom FROM saisons s
+    LEFT JOIN stades st ON st.id=s.stade_id WHERE s.id=?");
+$saison->execute([$sid]); $saison = $saison->fetch();
+
+// Dernier classement enregistré
+$cls = $db->prepare("SELECT * FROM classement WHERE saison_id=? ORDER BY journee DESC LIMIT 1");
+$cls->execute([$sid]); $cl = $cls->fetch();
+
+// Prochain match (sans score)
+$next = $db->prepare("
+    SELECT m.*,a.nom adv,c.nom comp
+    FROM matchs m
+    JOIN adversaires a ON a.id=m.adversaire_id
+    LEFT JOIN competitions c ON c.id=m.competition_id
+    WHERE m.saison_id=? AND m.score_tfc IS NULL AND m.date_match >= NOW()
+    ORDER BY m.date_match ASC LIMIT 1");
+$next->execute([$sid]); $prochain = $next->fetch();
+
+// Derniers matchs joués
+$dm = $db->prepare("
+    SELECT m.*,a.nom adv
+    FROM matchs m
+    JOIN adversaires a ON a.id=m.adversaire_id
+    WHERE m.saison_id=? AND m.score_tfc IS NOT NULL
+    ORDER BY m.date_match DESC LIMIT 6");
+$dm->execute([$sid]); $derniers = $dm->fetchAll();
+
+// Top buteurs (depuis stats_joueur_match — table réelle)
+$bu = $db->prepare("
+    SELECT j.nom, j.prenom, j.poste_principal,
+        (SELECT jp.numero_maillot FROM joueurs_passages jp WHERE jp.joueur_id=j.id AND jp.actif=1 LIMIT 1) AS numero,
+        SUM(sm.buts) buts,
+        SUM(sm.passes_decisives) passes,
+        SUM(sm.minutes_jouees) mins,
+        COUNT(DISTINCT sm.match_id) mj
+    FROM stats_joueur_match sm
+    JOIN joueurs j ON j.id=sm.joueur_id
+    JOIN matchs m ON m.id=sm.match_id
+    WHERE m.saison_id=?
+    GROUP BY j.id
+    HAVING buts>0
+    ORDER BY buts DESC, passes DESC
+    LIMIT 8");
+$bu->execute([$sid]); $buteurs = $bu->fetchAll();
+
+// Bilan domicile / extérieur
+$bde = $db->prepare("
+    SELECT
+        SUM(domicile=1 AND resultat='V') vd, SUM(domicile=1 AND resultat='N') nd, SUM(domicile=1 AND resultat='D') dd,
+        SUM(domicile=0 AND resultat='V') ve, SUM(domicile=0 AND resultat='N') ne, SUM(domicile=0 AND resultat='D') de
+    FROM matchs WHERE saison_id=? AND score_tfc IS NOT NULL");
+$bde->execute([$sid]); $bilande = $bde->fetch();
+
+// Forme récente (5 derniers)
+$forme = $db->prepare("
+    SELECT resultat FROM matchs
+    WHERE saison_id=? AND resultat IS NOT NULL
+    ORDER BY date_match DESC LIMIT 5");
+$forme->execute([$sid]); $forme5 = array_reverse($forme->fetchAll());
+
+$v=(int)($b['v']??0); $n=(int)($b['n']??0); $d=(int)($b['d']??0);
+$j=(int)($b['j']??0); $bp=(int)($b['bp']??0); $bc=(int)($b['bc']??0);
+$pts=(int)($b['pts']??0); $pct=$j>0?round($v/$j*100):0;
+
+require_once 'includes/header.php';
+?>
+
+<!-- Forme récente -->
+<?php if($forme5): ?>
+<div class="flex flex-ic gap2 mb6" style="flex-wrap:wrap">
+  <span class="tsm tw3" style="margin-right:4px">Forme récente :</span>
+  <?php foreach($forme5 as $f): ?>
+  <span class="rb <?= $f['resultat'] ?>" style="width:32px;height:32px;font-size:13px"><?= $f['resultat'] ?></span>
+  <?php endforeach ?>
+  <?php if($cl): ?>
+  <span style="margin-left:16px;padding:4px 14px;background:var(--s2);border:1px solid var(--b);border-radius:20px;font-size:12px">
+    📍 <?= $cl['position'] ?>e · <?= $cl['points'] ?> pts
+  </span>
+  <?php endif ?>
+</div>
+<?php endif ?>
+
+<!-- KPIs -->
+<div class="kgrid mb6">
+  <div class="kpi gold fu"><div class="kpi-icon">🏆</div><div class="kpi-val"><?= $pts ?></div><div class="kpi-lbl">Points</div></div>
+  <div class="kpi fu2"><div class="kpi-icon">📍</div><div class="kpi-val"><?= $cl['position']??'—' ?></div><div class="kpi-lbl">Classement</div></div>
+  <div class="kpi fu3"><div class="kpi-icon">📅</div><div class="kpi-val"><?= $j ?></div><div class="kpi-lbl">Matchs joués</div></div>
+  <div class="kpi green fu"><div class="kpi-icon">✅</div><div class="kpi-val"><?= $v ?></div><div class="kpi-lbl">Victoires</div></div>
+  <div class="kpi fu2"><div class="kpi-icon">🤝</div><div class="kpi-val"><?= $n ?></div><div class="kpi-lbl">Nuls</div></div>
+  <div class="kpi red fu3"><div class="kpi-icon">❌</div><div class="kpi-val"><?= $d ?></div><div class="kpi-lbl">Défaites</div></div>
+  <div class="kpi blue fu"><div class="kpi-icon">⚽</div><div class="kpi-val"><?= $bp ?></div><div class="kpi-lbl">Buts marqués</div></div>
+  <div class="kpi red fu2"><div class="kpi-icon">🥅</div><div class="kpi-val"><?= $bc ?></div><div class="kpi-lbl">Buts encaissés</div></div>
+  <div class="kpi fu3"><div class="kpi-icon">📊</div><div class="kpi-val"><?= $pct>0?"$pct%":'—' ?></div><div class="kpi-lbl">% Victoires</div></div>
+  <div class="kpi gold fu"><div class="kpi-icon">↕️</div>
+    <div class="kpi-val"><?= ($bp-$bc)>=0?'+'.($bp-$bc):$bp-$bc ?></div><div class="kpi-lbl">Diff. buts</div>
+  </div>
+</div>
+
+<!-- Prochain match -->
+<?php if($prochain): ?>
+<div class="card mb6 fu" style="border-color:var(--b3);background:linear-gradient(135deg,var(--s2),var(--s1))">
+  <div class="card-hd">
+    <span class="card-title">⏭ Prochain match</span>
+    <span class="tsm tw3"><?= h($prochain['comp']??'') ?><?= $prochain['journee']?" · J{$prochain['journee']}":'' ?></span>
+  </div>
+  <div class="card-bd">
+    <div class="flex flex-ic gap4" style="flex-wrap:wrap">
+      <div class="fbig" style="font-size:32px">TFC</div>
+      <div style="font-size:24px;color:var(--w3)">vs</div>
+      <div class="fbig" style="font-size:32px"><?= h($prochain['adv']) ?></div>
+      <div class="tsm tw3" style="margin-left:auto;text-align:right">
+        📅 <?= date('d/m/Y à H\hi', strtotime($prochain['date_match'])) ?><br>
+        <?= $prochain['domicile'] ? '🏠 Domicile' : '✈️ Extérieur' ?>
+      </div>
+    </div>
+  </div>
+</div>
+<?php endif ?>
+
+<div class="g2 mb6">
+  <!-- Bilan D/E -->
+  <div class="card fu">
+    <div class="card-hd"><span class="card-title">🏠 Domicile / Extérieur</span></div>
+    <div class="card-bd">
+      <div class="g2" style="gap:10px;margin-bottom:14px">
+        <?php foreach([['Domicile','vd','nd','dd'],['Extérieur','ve','ne','de']] as [$label,$kv,$kn,$kd]): ?>
+        <div style="background:var(--s2);border-radius:8px;padding:14px;text-align:center">
+          <div class="txs tw3" style="text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px"><?= $label ?></div>
+          <div class="fbig" style="font-size:30px;color:var(--grn)"><?= (int)($bilande[$kv]??0) ?>V</div>
+          <div class="tsm" style="margin-top:4px">
+            <span class="tw3"><?= (int)($bilande[$kn]??0) ?>N</span>
+            <span style="margin:0 6px;color:var(--b3)">·</span>
+            <span class="tred"><?= (int)($bilande[$kd]??0) ?>D</span>
+          </div>
+        </div>
+        <?php endforeach ?>
+      </div>
+      <hr>
+      <div class="flex flex-ic" style="justify-content:space-between">
+        <span class="tsm tw3">Moy. spectateurs</span>
+        <span class="fnum tsm"><?= $b['moy_spec'] ? number_format((int)$b['moy_spec'],0,',',' ') : '—' ?></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top buteurs -->
+  <div class="card fu2">
+    <div class="card-hd">
+      <span class="card-title">🥇 Top buteurs</span>
+      <a href="stats.php" class="btn btn-ghost btn-sm">Voir tout</a>
+    </div>
+    <?php if(!$buteurs): ?>
+    <div class="card-bd tc tw3">Aucune stat · <a href="saisir_match.php" class="lnk">Saisir</a></div>
+    <?php else: ?>
+    <div class="twrap">
+      <table>
+        <thead><tr><th>#</th><th>Joueur</th><th>⚽</th><th>🅰️</th><th>Min</th></tr></thead>
+        <tbody>
+        <?php foreach($buteurs as $i=>$bu_): ?>
+        <tr>
+          <td class="fnum fw7 tg"><?= $i+1 ?></td>
+          <td><div class="pcell">
+            <div class="av" style="width:28px;height:28px;font-size:10px">
+              <?= strtoupper(substr($bu_['prenom'],0,1).substr($bu_['nom'],0,1)) ?>
+            </div>
+            <div class="pname tsm"><?= h($bu_['prenom'].' '.$bu_['nom']) ?></div>
+          </div></td>
+          <td class="fw7 tv"><?= $bu_['buts'] ?></td>
+          <td class="tg"><?= $bu_['passes'] ?></td>
+          <td class="tw3 fnum tsm"><?= $bu_['mins'] ?>'</td>
+        </tr>
+        <?php endforeach ?>
+        </tbody>
+      </table>
+    </div>
+    <?php endif ?>
+  </div>
+</div>
+
+<!-- Derniers matchs -->
+<div class="sh mb4">
+  <div class="sh-title">🕐 Derniers matchs</div>
+  <a href="matchs.php" class="btn btn-ghost btn-sm">Tous →</a>
+</div>
+
+<?php if(!$derniers): ?>
+<div class="card">
+  <div class="card-bd tc tw3" style="padding:40px">
+    Aucun match enregistré pour cette saison.<br>
+    <a href="saisir_match.php" class="lnk" style="margin-top:8px;display:inline-block">✏️ Saisir le premier match</a>
+  </div>
+</div>
+<?php else: ?>
+<div class="g2">
+<?php foreach($derniers as $m):
+  $dt   = new DateTime($m['date_match']);
+  $home = $m['domicile'] ? 'TFC' : $m['adv'];
+  $away = $m['domicile'] ? $m['adv'] : 'TFC';
+  $sh   = $m['domicile'] ? $m['score_tfc'] : $m['score_adverse'];
+  $sa   = $m['domicile'] ? $m['score_adverse'] : $m['score_tfc'];
+?>
+<a href="match_detail.php?id=<?= $m['id'] ?>" class="mcard fu">
+  <div class="mc-date">
+    <div class="mc-day"><?= $dt->format('d') ?></div>
+    <div class="mc-mon"><?= $dt->format('M') ?></div>
+  </div>
+  <div class="mc-teams">
+    <div class="mc-team r"><div class="mc-tname"><?= h($home) ?></div></div>
+    <div class="mc-scores">
+      <div class="sc-box"><?= $sh ?? '?' ?></div>
+      <div class="sc-sep">–</div>
+      <div class="sc-box"><?= $sa ?? '?' ?></div>
+    </div>
+    <div class="mc-team"><div class="mc-tname"><?= h($away) ?></div></div>
+  </div>
+  <?php if($m['resultat']): ?>
+  <span class="rb <?= $m['resultat'] ?>"><?= $m['resultat'] ?></span>
+  <?php endif ?>
+</a>
+<?php endforeach ?>
+</div>
+<?php endif ?>
+
+<?php require_once 'includes/footer.php'; ?>
