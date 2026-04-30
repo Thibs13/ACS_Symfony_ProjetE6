@@ -76,6 +76,10 @@ class StageType extends AbstractType
                 'class' => Entreprise::class,
                 'label' => 'Entreprise*',
                 'choice_label' => 'ENT_Nom',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('v')
+                        ->orderBy('v.ENT_Nom', 'ASC');
+                },
             ])
             ->add('EnseignantVisite', EntityType::class, [
                 'class' => Utilisateur::class,
@@ -85,7 +89,8 @@ class StageType extends AbstractType
                 },
                 'query_builder' => function (EntityRepository $enseignant) {
                     return $enseignant->createQueryBuilder('u')
-                        ->join('u.role', 'r') 
+                        ->join('u.role', 'r')
+                        ->orderBy('u.nom', 'ASC') 
                         ->where('r.libelle = :role') 
                         ->setParameter('role', 'Enseignant');
                 },
@@ -99,6 +104,7 @@ class StageType extends AbstractType
                 'query_builder' => function (EntityRepository $enseignant) {
                     return $enseignant->createQueryBuilder('u')
                         ->join('u.role', 'r') 
+                        ->orderBy('u.nom', 'ASC') 
                         ->where('r.libelle = :role') 
                         ->setParameter('role', 'Enseignant');
                 },
