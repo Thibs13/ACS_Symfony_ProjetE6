@@ -1,28 +1,65 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modifier un stage - La Chataigneraie</title>
-    <link rel="stylesheet" href="{{ asset('CSS/stage.css') }}">
-</head>
-<body>
-    <main class="stage-page">
-        <section class="stage-form-card">
-            <div class="stage-header">
-                <h1>Modifier un stage</h1>
-                <p class="stage-subtitle">Mettez a jour les informations du stage.</p>
-            </div>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Modifier le secteur d'activité – La Châtaigneraie</title>
+		<link rel="stylesheet" href="{{ asset('CSS/dashboard.css') }}">
+		<link rel="stylesheet" href="{{ asset('CSS/utilisateur.css') }}">
+		<link rel="stylesheet" href="{{ asset('CSS/utilisateur_form.css') }}">
+	</head>
+	<body>
 
-            <div class="stage-form-wrap">
-                {{ include('stage_crud/form.html.twig', {'button_label': 'Enregistrer les modifications'}) }}
-            </div>
+		<aside class="sidebar">
+			<div class="sidebar-logo">
+				<div class="logo-badge">
+					<img src="{{ asset('Image/campus-logo.png') }}" alt="Logo Campus La Chataigneraie"/>
+				</div>
+				<h2>La Châtaigneraie</h2>
+				<p>Suivi des stages</p>
+			</div>
 
-            <div class="stage-actions-row">
-                <a href="{{ path('app_stage_read') }}" class="btn-secondary">Retour</a>
+			{% include 'navigation.html.twig' with {
+            	'namePage' : 'stage' 
+            } %}
+
+			<div class="sidebar-footer">
+				<a href="{{ path('app_deco') }}" class="btn-deco">
+					<svg fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+						<polyline points="16 17 21 12 16 7"/>
+						<line x1="21" y1="12" x2="9" y2="12"/>
+					</svg>
+					Déconnexion
+				</a>
+			</div>
+		</aside>
+
+    <main class="main">
+    <div class="page-header-flex">
+        <div>
+            <h1>Modifier un stage</h1>
+            <p>Mettez à jour les informations du stage.</p>
+        </div>
+
+        <a href="{{ path('app_stage_read') }}" class="btn-outline-back">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+            </svg>
+            Retour à la liste
+        </a>
+    </div>
+
+    <div class="form-wrapper">
+        <div class="form-card">
+            {{ include('stage_crud/form.html.twig', {'button_label': 'Enregistrer les modifications'}) }}
+
+            <div class="delete-simple-wrapper delete-form-wrapper">
                 {{ include('stage_crud/delete_form.html.twig') }}
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
+
+</main>
 </body>
 </html>
