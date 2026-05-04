@@ -30,7 +30,7 @@ final class StageCRUDController extends AbstractController
             return $this->redirectToRoute('app_accueil');
         }
 
-        $sort = $request->query->get('sort', 'STA_DateDebut');
+        $sort = $request->query->get('sort', 'ETU_Nom');
         $order = $request->query->get('order', 'asc');
         // on va chercher l'intégralité des stages via le repository
         return $this->render('stage_crud/index.html.twig', [
