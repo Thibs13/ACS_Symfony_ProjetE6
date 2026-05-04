@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Stage;
+use App\Repository\EtudiantRepository;
 use App\Form\StageType;
 use App\Repository\StageRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,7 +19,7 @@ final class StageCRUDController extends AbstractController
 {
     // affiche la liste de tous les stages enregistrés dans le système
     #[Route(name: 'app_stage_read', methods: ['GET'])]
-    public function index(StageRepository $stageRepository, RequestStack $requestStack): Response
+    public function index(StageRepository $stageRepository, RequestStack $requestStack, EtudiantRepository $etudiantRepository, Request $request): Response
     {
         // on récupère la session en cours pour vérifier qui navigue sur le site
         $session = $requestStack->getSession();
@@ -29,10 +30,15 @@ final class StageCRUDController extends AbstractController
             return $this->redirectToRoute('app_accueil');
         }
 
+        $sort = $request->query->get('sort', 'STA_DateDebut');
+        $order = $request->query->get('order', 'asc');
         // on va chercher l'intégralité des stages via le repository
         return $this->render('stage_crud/index.html.twig', [
-            'stages' => $stageRepository->findAll(),
+            'stages' => $stageRepository->findAllSorted($sort, $order),
+            'etudiants' => $etudiantRepository->findAll(),
             'role' => $userSession['role'] ?? 0,
+            'sort' => $sort,
+            'order' => $order,
         ]);
     }
 
