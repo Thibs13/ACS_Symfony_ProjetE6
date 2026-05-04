@@ -26,7 +26,9 @@ final class ExportsController extends AbstractController
             return $this->redirectToRoute('app_accueil');
         }
 
-        return $this->render('Exports/Exports.html.twig');
+        return $this->render('Exports/Exports.html.twig', [
+            'role' => $userSession['role'] ?? 0,
+        ]);
     }
 
     public function exportExcel(RequestStack $requestStack): Response
