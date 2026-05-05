@@ -32,46 +32,34 @@ final class StageCRUDController extends AbstractController
 
         $sort = $request->query->get('sort', 'ETU_Nom');
         $order = $request->query->get('order', 'asc');
-        // on va chercher l'intégralité des stages via le repository
-        return $this->render('stage_crud/index.html.twig', [
-            'stages' => $stageRepository->findAllSorted($sort, $order),
-            'etudiants' => $etudiantRepository->findAll(),
-            'role' => $userSession['role'] ?? 0,
-            'sort' => $sort,
-            'order' => $order,
-        ]);
-    }
+        
+        
 
-    #[Route('/suivivisite', name: 'app_suivi_visite', methods: ['GET'])]
-    public function suiviVisite(StageRepository $stageRepository, RequestStack $requestStack): Response
-    {
-        $session = $requestStack->getSession();
-        $userSession = $session->get('user');
-
-        if (!$userSession) {
-            return $this->redirectToRoute('app_accueil');
-        }
-
-        $role = $userSession['role'];
-        $userId = $userSession['id'];
-
-        if ($role == 1) {
+        if ($userSession['role'] == 1) {
             // L'ADMIN : voit la liste globale avec les noms des profs
             $stages = $stageRepository->findAll();
             
-            return $this->render('SuiviVisite/index_admin.html.twig', [
-                'stages' => $stages,
-                'role' => $role
-            ]);
+                // on va chercher l'intégralité des stages via le repository
+            return $this->render('stage_crud/index.html.twig', [
+                'stages' => $stageRepository->findAllSorted($sort, $order),
+                'etudiants' => $etudiantRepository->findAll(),
+                'role' => $userSession['role'] ?? 0,
+                'sort' => $sort,
+                'order' => $order,
+                ]);
         } else {
             // LE PROF : voit ses deux listes personnelles
-            $mesSuivis = $stageRepository->findStagesByEnseignantSuivi($userId);
-            $mesVisites = $stageRepository->findStagesByEnseignantVisite($userId);
+            $mesSuivis = $stageRepository->findStagesByEnseignantSuivi($userSession['id']);
+            $mesVisites = $stageRepository->findStagesByEnseignantVisite($userSession['id']);
 
-            return $this->render('SuiviVisite/index_enseignant.html.twig', [
+            return $this->render('stage_crud/index.html.twig', [
                 'mesSuivis' => $mesSuivis,
                 'mesVisites' => $mesVisites,
-                'role' => $role
+                'role' => $userSession['role'],
+                'stages' => $stageRepository->findAllSorted($sort, $order),
+                'etudiants' => $etudiantRepository->findAll(),
+                'sort' => $sort,
+                'order' => $order,
             ]);
         }
     }
