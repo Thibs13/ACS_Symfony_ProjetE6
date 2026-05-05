@@ -81,10 +81,10 @@ final class EntrepriseCRUDController extends AbstractController
                 if ($value !== null) {
                     // Si c'est un objet (comme une Ville), on essaie de prendre son ID ou son nom
                     if (is_object($value)) {
-                        if(gettype($value) == 'Ville'){
+                        if(get_class($value) == 'App\Entity\Ville'){
                             $valeurAEnregistrer = $value->getVILNom();
                         }
-                        if(gettype($value) == 'Secteuractivite'){
+                        if(get_class($value) == 'App\Entity\Secteuractivite'){
                             $valeurAEnregistrer = $value->getSaLibelle();
                         }
                         
