@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Entreprise;
+use App\Entity\Historique;
+use App\Entity\Utilisateur;
 use App\Form\EntrepriseType;
 use App\Repository\EntrepriseRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,6 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use App\Repository\VilleRepository;
 use \Symfony\Component\HttpFoundation\RequestStack;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use DateTime;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -68,6 +71,44 @@ final class EntrepriseCRUDController extends AbstractController
             // on dit à l'outil de gestion de base de données de "préparer" puis "d'enregistrer" la nouvelle entreprise
             $entityManager->persist($entreprise);
             $entityManager->flush();
+
+            // Partie pour les logs
+            $data = $form->getData();
+
+            foreach ($form->all() as $fieldName => $field) {
+                $value = $field->getData();
+
+                if ($value !== null) {
+                    // Si c'est un objet (comme une Ville), on essaie de prendre son ID ou son nom
+                    if (is_object($value)) {
+                        if(gettype($value) == 'Ville'){
+                            $valeurAEnregistrer = $value->getVILNom();
+                        }
+                        if(gettype($value) == 'Secteuractivite'){
+                            $valeurAEnregistrer = $value->getSaLibelle();
+                        }
+                        
+                    } else {
+                        $valeurAEnregistrer = (string)$value;
+                    }
+
+                    $historique = new Historique();
+                    $historique->setHISDate(new DateTime());
+                    $historique->setHISNouvelleValeur($valeurAEnregistrer);
+                    $historique->setHISAncienneValeur('');
+
+                    $user = $entityManager->getRepository(Utilisateur::class)->find($userSession['id']);
+                    $historique->setUTIID($user);
+
+                    $entityManager->persist($historique);
+                }
+            }
+
+            // Un seul flush global pour tous les logs
+            $entityManager->flush();
+
+            //Fin partie pour les logs
+            
 
             // une fois fini, on repart sur la liste globale
             return $this->redirectToRoute('app_entreprise_read', [], Response::HTTP_SEE_OTHER);

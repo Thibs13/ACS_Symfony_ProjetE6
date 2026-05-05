@@ -15,7 +15,7 @@ class Historique
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTime $HIS_Date = null;
+    private ?\DateTimeInterface $HIS_Date = null;
 
     #[ORM\Column(length: 255)]
     private ?string $HIS_AncienneValeur = null;

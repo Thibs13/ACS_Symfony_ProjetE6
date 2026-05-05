@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Historique - La Chataigneraie</title>
+    <title>Historique - La Châtaigneraie</title>
     <link rel="stylesheet" href="{{ asset('CSS/dashboard.css') }}">
     <link rel="stylesheet" href="{{ asset('CSS/etudiant.css') }}">
 </head>
@@ -53,6 +53,7 @@
                     <th>Date</th>
                     <th>Ancienne valeur</th>
                     <th>Nouvelle valeur</th>
+                    <th>Auteur</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -63,6 +64,7 @@
                         <td>{{ historique.HISDate ? historique.HISDate|date('Y-m-d') : '' }}</td>
                         <td>{{ historique.HISAncienneValeur }}</td>
                         <td>{{ historique.HISNouvelleValeur }}</td>
+                        <td>{{ historique.UTIID.Nom }}</td>
                         <td>
                             <a href="{{ path('app_historique_show', {'id': historique.id}) }}">show</a>
                             <a href="{{ path('app_historique_edit', {'id': historique.id}) }}">edit</a>
