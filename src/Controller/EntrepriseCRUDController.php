@@ -195,10 +195,7 @@ final class EntrepriseCRUDController extends AbstractController
 
             // 2. On récupère les objets liés (Ville, Secteur) pour éviter les erreurs s'ils sont nulls
             $ville = $entityManager->getRepository(Ville::class)->find($entreprise->getVILID());
-            $nomVille = $ville ? $ville->getVILNom() : '';
-
             $secteuractivite = $entityManager->getRepository(Secteuractivite::class)->find($entreprise->getSecteur());
-            $nomSecteur = $secteuractivite ? $secteuractivite->getSaLibelle() : '';
 
             // 3. On liste toutes les anciennes valeurs que l'on veut sauvegarder
             $anciennesValeurs = [
@@ -206,16 +203,12 @@ final class EntrepriseCRUDController extends AbstractController
                 (string)$entreprise->getENTTelephone(),
                 (string)$entreprise->getENTEmail(),
                 (string)$entreprise->getENTAdresse(),
-                (string)$nomVille,
-                (string)$nomSecteur
+                (string)$ville->getVILNom(),
+                (string)$secteuractivite->getSaLibelle()
             ];
 
             // 4. On boucle sur ces valeurs pour créer UN NOUVEAU log à chaque fois
             foreach ($anciennesValeurs as $valeur) {
-                if (empty($valeur)) {
-                    continue;
-                }
-
                 $historique = new Historique();
                 $historique->setHISDate($dateLog);
                 $historique->setUTIID($user);
