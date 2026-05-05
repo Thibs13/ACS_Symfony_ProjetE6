@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Entreprise;
 use App\Entity\Historique;
+use App\Entity\Ville;
+use App\Entity\Secteuractivite;
 use App\Entity\Utilisateur;
 use App\Form\EntrepriseType;
 use App\Repository\EntrepriseRepository;
@@ -186,7 +188,44 @@ final class EntrepriseCRUDController extends AbstractController
 
         // par sécurité, on vérifie que le jeton (token) de suppression est valide
         if ($this->isCsrfTokenValid('delete'.$entreprise->getId(), $request->getPayload()->getString('_token'))) {
-            // on retire l'entreprise de la base de données et on valide le changement
+
+            // 1. On prépare les données communes à tous les logs
+            $user = $entityManager->getRepository(Utilisateur::class)->find($userSession['id']);
+            $dateLog = new DateTime();
+
+            // 2. On récupère les objets liés (Ville, Secteur) pour éviter les erreurs s'ils sont nulls
+            $ville = $entityManager->getRepository(Ville::class)->find($entreprise->getVILID());
+            $nomVille = $ville ? $ville->getVILNom() : '';
+
+            $secteuractivite = $entityManager->getRepository(Secteuractivite::class)->find($entreprise->getSecteur());
+            $nomSecteur = $secteuractivite ? $secteuractivite->getSaLibelle() : '';
+
+            // 3. On liste toutes les anciennes valeurs que l'on veut sauvegarder
+            $anciennesValeurs = [
+                (string)$entreprise->getENTNom(),
+                (string)$entreprise->getENTTelephone(),
+                (string)$entreprise->getENTEmail(),
+                (string)$entreprise->getENTAdresse(),
+                (string)$nomVille,
+                (string)$nomSecteur
+            ];
+
+            // 4. On boucle sur ces valeurs pour créer UN NOUVEAU log à chaque fois
+            foreach ($anciennesValeurs as $valeur) {
+                if (empty($valeur)) {
+                    continue;
+                }
+
+                $historique = new Historique();
+                $historique->setHISDate($dateLog);
+                $historique->setUTIID($user);
+                $historique->setHISNouvelleValeur('');
+                $historique->setHISAncienneValeur($valeur);
+
+                $entityManager->persist($historique);
+            }
+
+            // 5. On supprime l'entreprise et on valide tout d'un coup
             $entityManager->remove($entreprise);
             $entityManager->flush();
         }
