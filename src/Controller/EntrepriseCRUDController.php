@@ -78,8 +78,6 @@ final class EntrepriseCRUDController extends AbstractController
             foreach ($form->all() as $fieldName => $field) {
                 $value = $field->getData();
 
-                if ($value !== null) {
-                    // Si c'est un objet (comme une Ville), on essaie de prendre son ID ou son nom
                     if (is_object($value)) {
                         if(get_class($value) == 'App\Entity\Ville'){
                             $valeurAEnregistrer = $value->getVILNom();
@@ -101,7 +99,6 @@ final class EntrepriseCRUDController extends AbstractController
                     $historique->setUTIID($user);
 
                     $entityManager->persist($historique);
-                }
             }
 
             // Un seul flush global pour tous les logs
