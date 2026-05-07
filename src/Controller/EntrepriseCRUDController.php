@@ -141,26 +141,71 @@ final class EntrepriseCRUDController extends AbstractController
         ]);
     }
 
-    // permet de modifier les informations d'une entreprise existante
     #[Route('/{id}/edit', name: 'app_entreprise_update', methods: ['GET', 'POST'])]
     public function edit(Request $request, Entreprise $entreprise, EntityManagerInterface $entityManager, RequestStack $requestStack): Response
     {
-        // on récupère la session en cours pour vérifier qui navigue sur le site
         $session = $requestStack->getSession();
         $userSession = $session->get('user');
 
-        // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
         if (!$userSession OR $userSession['role'] != 1) {
             return $this->redirectToRoute('app_accueil');
         }
 
-        // on crée le formulaire pré-rempli avec les données actuelles de l'entreprise
         $form = $this->createForm(EntrepriseType::class, $entreprise);
+
+        // 1. ON CAPTURE L'HISTORIQUE *AVANT* QUE LE FORMULAIRE MODIFIE L'OBJET
+        $ville = $entityManager->getRepository(Ville::class)->find($entreprise->getVILID());
+        $secteuractivite = $entityManager->getRepository(Secteuractivite::class)->find($entreprise->getSecteur());
+        
+        // Utilisation d'un tableau associatif pour éviter les erreurs d'ordre
+        $anciennesValeurs = [
+            'nom' => (string)$entreprise->getENTNom(),
+            'telephone' => (string)$entreprise->getENTTelephone(),
+            'email' => (string)$entreprise->getENTEmail(),
+            'adresse' => (string)$entreprise->getENTAdresse(),
+            'ville' => $ville ? (string)$ville->getVILNom() : '',
+            'secteur' => $secteuractivite ? (string)$secteuractivite->getSaLibelle() : ''
+        ]; 
+
+        // 2. ICI SYMFONY MET A JOUR L'OBJET AVEC LES DONNÉES DU POST
         $form->handleRequest($request);
 
-        // si on valide les modifications
         if ($form->isSubmitted() && $form->isValid()) {
-            // on met à jour la base de données (pas besoin de persist ici, l'objet existe déjà)
+            
+            // 3. ON CAPTURE LES NOUVELLES VALEURS *APRÈS* LA MISE A JOUR
+            $villeNouvelle = $entityManager->getRepository(Ville::class)->find($entreprise->getVILID());
+            $secteurNouveau = $entityManager->getRepository(Secteuractivite::class)->find($entreprise->getSecteur());
+
+            $nouvellesValeurs = [
+                'nom' => (string)$entreprise->getENTNom(),
+                'telephone' => (string)$entreprise->getENTTelephone(),
+                'email' => (string)$entreprise->getENTEmail(),
+                'adresse' => (string)$entreprise->getENTAdresse(),
+                'ville' => $villeNouvelle ? (string)$villeNouvelle->getVILNom() : '',
+                'secteur' => $secteurNouveau ? (string)$secteurNouveau->getSaLibelle() : ''
+            ];
+
+            $user = $entityManager->getRepository(Utilisateur::class)->find($userSession['id']);
+            $dateLog = new DateTime();
+
+            // 4. ON COMPARE LES CLÉS IDENTIQUES
+            foreach ($anciennesValeurs as $cle => $ancienneVal) {
+                $nouvelleVal = $nouvellesValeurs[$cle];
+
+                if ($ancienneVal !== $nouvelleVal) {
+                    $historique = new Historique();
+                    $historique->setHISDate($dateLog);
+                    $historique->setUTIID($user);
+                    $historique->setHISNouvelleValeur($nouvelleVal);
+                    $historique->setHISAncienneValeur($ancienneVal);
+                    
+                    // (Optionnel) Tu pourrais même enregistrer le nom du champ modifié avec $cle !
+
+                    $entityManager->persist($historique);
+                }
+            }
+
+            // Un seul flush à la fin suffit pour sauvegarder l'entreprise ET les logs
             $entityManager->flush();
 
             return $this->redirectToRoute('app_entreprise_read', [], Response::HTTP_SEE_OTHER);
