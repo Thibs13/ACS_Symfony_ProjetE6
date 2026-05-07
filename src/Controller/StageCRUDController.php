@@ -4,6 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Stage;
 use App\Repository\EtudiantRepository;
+use App\Entity\Historique;
+use DateTime;
+use App\Entity\Utilisateur;
+use App\Entity\Etudiant;
+use App\Entity\Entreprise;
 use App\Form\StageType;
 use App\Repository\StageRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -87,6 +92,42 @@ final class StageCRUDController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // on demande à Doctrine de préparer l'ajout en base de données
             $entityManager->persist($stage);
+
+            // Partie pour les logs
+            $data = $form->getData();
+
+            foreach ($form->all() as $fieldName => $field) {
+                $value = $field->getData();
+
+                if (is_object($value)) {
+                    if(get_class($value) == 'App\Entity\Etudiant'){
+                        $valeurAEnregistrer = (string)$value->getETUNom() . " " . (string)$value->getETUPrenom();
+                    }
+                    if(get_class($value) == 'App\Entity\Entreprise'){
+                        $valeurAEnregistrer = $value->getENTNom();
+                    }
+                    if(get_class($value) == 'App\Entity\Utilisateur'){
+                        $valeurAEnregistrer = (string)$value->getNom() . " " . (string)$value->getPrenom();
+                    } 
+                    if ($value instanceof \DateTimeInterface) {
+                        $valeurAEnregistrer = (string)$value->format('d/m/Y');
+                    }
+                    
+                } else {
+                    $valeurAEnregistrer = (string)$value;
+                }
+
+                $historique = new Historique();
+                $historique->setHISDate(new DateTime());
+                $historique->setHISNouvelleValeur($valeurAEnregistrer);
+                $historique->setHISAncienneValeur('');
+
+                $user = $entityManager->getRepository(Utilisateur::class)->find($userSession['id']);
+                $historique->setUTIID($user);
+
+                $entityManager->persist($historique);
+            }
+
             $entityManager->flush(); // on valide définitivement l'écriture en base
 
             // une fois enregistré, on redirige vers la liste des stages
@@ -167,6 +208,41 @@ final class StageCRUDController extends AbstractController
 
         // petite vérification de sécurité pour être sûr que la demande de suppression est légitime
         if ($this->isCsrfTokenValid('delete'.$stage->getId(), $request->getPayload()->getString('_token'))) {
+            
+            $user = $entityManager->getRepository(Utilisateur::class)->find($userSession['id']);
+            $dateLog = new DateTime();
+
+            $etudiant = $entityManager->getRepository(Etudiant::class)->find($stage->getETUID());
+            $entreprise = $entityManager->getRepository(Entreprise::class)->find($stage->getENTID());
+            $enseignantVisite = $entityManager->getRepository(Utilisateur::class)->find($stage->getEnseignantVisite());
+            $enseignantSuivi = $entityManager->getRepository(Utilisateur::class)->find($stage->getEnseignantSuivi());
+
+            $anciennesValeurs = [
+                (string)$stage->getSTADateDebut(),
+                (string)$stage->getSTADateFin(),
+                (string)$stage->getSTARemarque(),
+                (string)$stage->getSTARemerciement(),
+                (string)$stage->getSTABilan(),
+                (string)$stage->getSTAAttestation(),
+                (string)$stage->getSTAJury(),
+                (string)$stage->getSTACommentaire(),
+                (string)$stage->getSTADateRetenu(),
+                (string)$etudiant->getETUNom() . " " . (string)$etudiant->getETUPrenom(),
+                (string)$entreprise->getENTNom(),
+                (string)$enseignantSuivi->getNom() . " " . (string)$enseignantSuivi->getPrenom(),
+                (string)$enseignantVisite->getNom() . " " . (string)$enseignantVisite->getPrenom()
+            ];
+
+            foreach ($anciennesValeurs as $valeur) {
+                $historique = new Historique();
+                $historique->setHISDate($dateLog);
+                $historique->setUTIID($user);
+                $historique->setHISNouvelleValeur('');
+                $historique->setHISAncienneValeur($valeur);
+
+                $entityManager->persist($historique);
+            }
+
             // on donne l'ordre de supprimer le stage et on valide
             $entityManager->remove($stage);
             $entityManager->flush();

@@ -80,27 +80,27 @@ final class EntrepriseCRUDController extends AbstractController
             foreach ($form->all() as $fieldName => $field) {
                 $value = $field->getData();
 
-                    if (is_object($value)) {
-                        if(get_class($value) == 'App\Entity\Ville'){
-                            $valeurAEnregistrer = $value->getVILNom();
-                        }
-                        if(get_class($value) == 'App\Entity\Secteuractivite'){
-                            $valeurAEnregistrer = $value->getSaLibelle();
-                        }
-                        
-                    } else {
-                        $valeurAEnregistrer = (string)$value;
+                if (is_object($value)) {
+                    if(get_class($value) == 'App\Entity\Ville'){
+                        $valeurAEnregistrer = $value->getVILNom();
                     }
+                    if(get_class($value) == 'App\Entity\Secteuractivite'){
+                        $valeurAEnregistrer = $value->getSaLibelle();
+                    }
+                    
+                } else {
+                    $valeurAEnregistrer = (string)$value;
+                }
 
-                    $historique = new Historique();
-                    $historique->setHISDate(new DateTime());
-                    $historique->setHISNouvelleValeur($valeurAEnregistrer);
-                    $historique->setHISAncienneValeur('');
+                $historique = new Historique();
+                $historique->setHISDate(new DateTime());
+                $historique->setHISNouvelleValeur($valeurAEnregistrer);
+                $historique->setHISAncienneValeur('');
 
-                    $user = $entityManager->getRepository(Utilisateur::class)->find($userSession['id']);
-                    $historique->setUTIID($user);
+                $user = $entityManager->getRepository(Utilisateur::class)->find($userSession['id']);
+                $historique->setUTIID($user);
 
-                    $entityManager->persist($historique);
+                $entityManager->persist($historique);
             }
 
             // Un seul flush global pour tous les logs
