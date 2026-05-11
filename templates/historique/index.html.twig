@@ -54,7 +54,8 @@
                     <th>Ancienne valeur</th>
                     <th>Nouvelle valeur</th>
                     <th>Auteur</th>
-                    <th>Actions</th>
+                    <th>Table concernée</th>
+                    <th>Id objet</th>
                 </tr>
             </thead>
             <tbody>
@@ -65,10 +66,8 @@
                         <td>{{ historique.HISAncienneValeur }}</td>
                         <td>{{ historique.HISNouvelleValeur }}</td>
                         <td>{{ historique.UTIID.Nom }}</td>
-                        <td>
-                            <a href="{{ path('app_historique_show', {'id': historique.id}) }}">show</a>
-                            <a href="{{ path('app_historique_edit', {'id': historique.id}) }}">edit</a>
-                        </td>
+                        <td>{{ historique.NomTable }}</td>
+                        <td>{{ historique.IdSource }}</td>
                     </tr>
                 {% else %}
                     <tr>
