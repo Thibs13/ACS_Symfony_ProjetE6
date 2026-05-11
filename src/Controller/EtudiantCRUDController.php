@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Etudiant;
 use App\Form\EtudiantType;
 use App\Repository\EtudiantRepository;
-use App\Repository\FiliereRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,7 +21,7 @@ final class EtudiantCRUDController extends AbstractController
 {
     // affiche la liste de tous les étudiants enregistrés
     #[Route(name: 'app_etudiant_read', methods: ['GET'])]
-    public function index(EtudiantRepository $etudiantRepository, FiliereRepository $filiereRepository, RequestStack $requestStack, Request $request): Response
+    public function index(EtudiantRepository $etudiantRepository, RequestStack $requestStack, Request $request): Response
     {
         // on récupère la session en cours pour vérifier qui navigue sur le site
         $session = $requestStack->getSession();
@@ -40,7 +39,6 @@ final class EtudiantCRUDController extends AbstractController
         // on demande au repository de nous donner absolument tous les étudiants et les filières 
         return $this->render('etudiant_crud/index.html.twig', [
             'etudiants' => $etudiantRepository->findAllSorted($sort, $order),
-            'filieres' => $filiereRepository->findAll(),
             'totalEtudiants' => $nombreEtudiants,
             'sort' => $sort,
             'order' => $order,

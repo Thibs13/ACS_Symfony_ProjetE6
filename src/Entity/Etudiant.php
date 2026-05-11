@@ -21,13 +21,6 @@ class Etudiant
     #[ORM\Column(length: 50)]
     private ?string $ETU_Prenom = null;
 
-    #[ORM\Column]
-    private ?int $ETU_Promotion = null;
-
-    #[ORM\ManyToOne(inversedBy: 'Etudiants')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Filiere $FIL_ID = null;
-
     /**
      * @var Collection<int, Stage>
      */
@@ -67,30 +60,6 @@ class Etudiant
     public function setETUPrenom(string $ETU_Prenom): static
     {
         $this->ETU_Prenom = $ETU_Prenom;
-
-        return $this;
-    }
-
-    public function getETUPromotion(): ?int
-    {
-        return $this->ETU_Promotion;
-    }
-
-    public function setETUPromotion(int $ETU_Promotion): static
-    {
-        $this->ETU_Promotion = $ETU_Promotion;
-
-        return $this;
-    }
-
-    public function getFILID(): ?Filiere
-    {
-        return $this->FIL_ID;
-    }
-
-    public function setFILID(?Filiere $FIL_ID): static
-    {
-        $this->FIL_ID = $FIL_ID;
 
         return $this;
     }
