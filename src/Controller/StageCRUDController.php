@@ -176,10 +176,77 @@ final class StageCRUDController extends AbstractController
 
         // on charge le formulaire avec les données actuelles du stage
         $form = $this->createForm(StageType::class, $stage);
+
+            $etudiant = $entityManager->getRepository(Etudiant::class)->find($stage->getETUID());
+            $entreprise = $entityManager->getRepository(Entreprise::class)->find($stage->getENTID());
+            $enseignantVisite = $entityManager->getRepository(Utilisateur::class)->find($stage->getEnseignantVisite());
+            $enseignantSuivi = $entityManager->getRepository(Utilisateur::class)->find($stage->getEnseignantSuivi());
+
+            $anciennesValeurs = [
+                'dateDebut' => (string)$stage->getSTADateDebut()->format('d/m/Y'),
+                'dateFin' => (string)$stage->getSTADateFin()->format('d/m/Y'),
+                'dateRetenu' => $stage->getSTADateRetenu() ? (string)$stage->getSTADateRetenu()->format('d/m/Y') : '',
+                'etudiant' => (string)$etudiant->getETUNom() . ' ' . (string)$etudiant->getETUPrenom(),
+                'entreprise' => (string)$entreprise->getENTNom(),
+                'enseignantVisite' => (string)$enseignantVisite->getNom() . ' ' . (string)$enseignantVisite->getPrenom(),
+                'enseignantSuivi' => (string)$enseignantSuivi->getNom() . ' ' . (string)$enseignantSuivi->getPrenom(),
+                'remarque' => (string)$stage->getSTARemarque(),
+                'remerciement' => (string)$stage->getSTARemerciement(),
+                'bilan' => (string)$stage->getSTABilan(),
+                'attestation' => (string)$stage->getSTAAttestation(),
+                'jury' => (string)$stage->getSTAJury(),
+                'commentaire' => (string)$stage->getSTACommentaire()
+            ]; 
+
         $form->handleRequest($request);
 
         // si on valide les changements
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $etudiant = $entityManager->getRepository(Etudiant::class)->find($stage->getETUID());
+            $entreprise = $entityManager->getRepository(Entreprise::class)->find($stage->getENTID());
+            $enseignantVisite = $entityManager->getRepository(Utilisateur::class)->find($stage->getEnseignantVisite());
+            $enseignantSuivi = $entityManager->getRepository(Utilisateur::class)->find($stage->getEnseignantSuivi());
+
+            $nouvellesValeurs = [
+                'dateDebut' => (string)$stage->getSTADateDebut()->format('d/m/Y'),
+                'dateFin' => (string)$stage->getSTADateFin()->format('d/m/Y'),
+                'dateRetenu' => $stage->getSTADateRetenu() ? (string)$stage->getSTADateRetenu()->format('d/m/Y') : '',
+                'etudiant' => (string)$etudiant->getETUNom() . ' ' . (string)$etudiant->getETUPrenom(),
+                'entreprise' => (string)$entreprise->getENTNom(),
+                'enseignantVisite' => (string)$enseignantVisite->getNom() . ' ' . (string)$enseignantVisite->getPrenom(),
+                'enseignantSuivi' => (string)$enseignantSuivi->getNom() . ' ' . (string)$enseignantSuivi->getPrenom(),
+                'remarque' => (string)$stage->getSTARemarque(),
+                'remerciement' => (string)$stage->getSTARemerciement(),
+                'bilan' => (string)$stage->getSTABilan(),
+                'attestation' => (string)$stage->getSTAAttestation(),
+                'jury' => (string)$stage->getSTAJury(),
+                'commentaire' => (string)$stage->getSTACommentaire()
+            ]; 
+
+            $user = $entityManager->getRepository(Utilisateur::class)->find($userSession['id']);
+            $dateLog = new DateTime();
+
+            // 4. ON COMPARE LES CLÉS IDENTIQUES
+            foreach ($anciennesValeurs as $cle => $ancienneVal) {
+                $nouvelleVal = $nouvellesValeurs[$cle];
+
+                if ($ancienneVal !== $nouvelleVal) {
+                    $historique = new Historique();
+                    $historique->setHISDate($dateLog);
+                    $historique->setUTIID($user);
+                    $historique->setHISNouvelleValeur($nouvelleVal);
+                    $historique->setHISAncienneValeur($ancienneVal);
+                    
+                    // (Optionnel) Tu pourrais même enregistrer le nom du champ modifié avec $cle !
+
+                    $entityManager->persist($historique);
+                }
+            }
+
+
+
+
             // on applique les modifications directement en base de données
             $entityManager->flush();
 
@@ -226,7 +293,7 @@ final class StageCRUDController extends AbstractController
                 (string)$stage->getSTAAttestation(),
                 (string)$stage->getSTAJury(),
                 (string)$stage->getSTACommentaire(),
-                (string)$stage->getSTADateRetenu()->format('d/m/Y'),
+                $stage->getSTADateRetenu() ? (string)$stage->getSTADateRetenu()->format('d/m/Y') : '',
                 (string)$etudiant->getETUNom() . " " . (string)$etudiant->getETUPrenom(),
                 (string)$entreprise->getENTNom(),
                 (string)$enseignantSuivi->getNom() . " " . (string)$enseignantSuivi->getPrenom(),
