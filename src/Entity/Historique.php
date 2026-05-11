@@ -27,6 +27,12 @@ class Historique
     #[ORM\JoinColumn(nullable: false, referencedColumnName: 'UTI_ID')]
     private ?Utilisateur $UTI_ID = null;
 
+    #[ORM\Column(length: 50)]
+    private ?string $NomTable = null;
+
+    #[ORM\Column]
+    private ?int $IdSource = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +82,30 @@ class Historique
     public function setUTIID(?Utilisateur $UTI_ID): static
     {
         $this->UTI_ID = $UTI_ID;
+
+        return $this;
+    }
+
+    public function getNomTable(): ?string
+    {
+        return $this->NomTable;
+    }
+
+    public function setNomTable(string $NomTable): static
+    {
+        $this->NomTable = $NomTable;
+
+        return $this;
+    }
+
+    public function getIdSource(): ?int
+    {
+        return $this->IdSource;
+    }
+
+    public function setIdSource(int $IdSource): static
+    {
+        $this->IdSource = $IdSource;
 
         return $this;
     }

@@ -70,9 +70,10 @@ final class EntrepriseCRUDController extends AbstractController
 
         // si le formulaire est envoyé et que les données sont correctes
         if ($form->isSubmitted() && $form->isValid()) {
-            // on dit à l'outil de gestion de base de données de "préparer" puis "d'enregistrer" la nouvelle entreprise
             $entityManager->persist($entreprise);
-            $entityManager->flush();
+            $entityManager->flush(); 
+            
+            $idSource = $entreprise->getId(); 
 
             // Partie pour les logs
             $data = $form->getData();
@@ -96,6 +97,8 @@ final class EntrepriseCRUDController extends AbstractController
                 $historique->setHISDate(new DateTime());
                 $historique->setHISNouvelleValeur($valeurAEnregistrer);
                 $historique->setHISAncienneValeur('');
+                $historique->setNomTable('entreprise');
+                $historique->setIdSource($idSource);
 
                 $user = $entityManager->getRepository(Utilisateur::class)->find($userSession['id']);
                 $historique->setUTIID($user);
@@ -198,6 +201,8 @@ final class EntrepriseCRUDController extends AbstractController
                     $historique->setUTIID($user);
                     $historique->setHISNouvelleValeur($nouvelleVal);
                     $historique->setHISAncienneValeur($ancienneVal);
+                    $historique->setNomTable('entreprise');
+                    $historique->setIdSource($entreprise->getId());
                     
                     // (Optionnel) Tu pourrais même enregistrer le nom du champ modifié avec $cle !
 
@@ -259,6 +264,8 @@ final class EntrepriseCRUDController extends AbstractController
                 $historique->setUTIID($user);
                 $historique->setHISNouvelleValeur('');
                 $historique->setHISAncienneValeur($valeur);
+                $historique->setNomTable('entreprise');
+                $historique->setIdSource($entreprise->getId());
 
                 $entityManager->persist($historique);
             }

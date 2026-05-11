@@ -92,7 +92,10 @@ final class StageCRUDController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // on demande à Doctrine de préparer l'ajout en base de données
             $entityManager->persist($stage);
+            $entityManager->flush();
 
+            $idSource = $stage->getId(); 
+            
             // Partie pour les logs
             $data = $form->getData();
 
@@ -121,6 +124,8 @@ final class StageCRUDController extends AbstractController
                 $historique->setHISDate(new DateTime());
                 $historique->setHISNouvelleValeur($valeurAEnregistrer);
                 $historique->setHISAncienneValeur('');
+                $historique->setNomTable('stage');
+                $historique->setIdSource($idSource);
 
                 $user = $entityManager->getRepository(Utilisateur::class)->find($userSession['id']);
                 $historique->setUTIID($user);
@@ -237,6 +242,8 @@ final class StageCRUDController extends AbstractController
                     $historique->setUTIID($user);
                     $historique->setHISNouvelleValeur($nouvelleVal);
                     $historique->setHISAncienneValeur($ancienneVal);
+                    $historique->setNomTable('stage');
+                    $historique->setIdSource($stage->getId());
                     
                     // (Optionnel) Tu pourrais même enregistrer le nom du champ modifié avec $cle !
 
@@ -306,6 +313,8 @@ final class StageCRUDController extends AbstractController
                 $historique->setUTIID($user);
                 $historique->setHISNouvelleValeur('');
                 $historique->setHISAncienneValeur($valeur);
+                $historique->setNomTable('stage');
+                $historique->setIdSource($stage->getId());
 
                 $entityManager->persist($historique);
             }

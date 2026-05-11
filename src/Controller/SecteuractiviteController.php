@@ -54,6 +54,8 @@ final class SecteuractiviteController extends AbstractController
             $entityManager->persist($secteuractivite);
             $entityManager->flush();
 
+            $idSource = $secteuractivite->getId(); 
+
             // Partie pour les logs
             $data = $form->getData();
 
@@ -66,6 +68,8 @@ final class SecteuractiviteController extends AbstractController
                     $historique->setHISDate(new DateTime());
                     $historique->setHISNouvelleValeur($valeurAEnregistrer);
                     $historique->setHISAncienneValeur('');
+                    $historique->setNomTable('secteuractivite');
+                    $historique->setIdSource($idSource);
 
                     $user = $entityManager->getRepository(Utilisateur::class)->find($userSession['id']);
                     $historique->setUTIID($user);
@@ -142,6 +146,8 @@ final class SecteuractiviteController extends AbstractController
                     $historique->setUTIID($user);
                     $historique->setHISNouvelleValeur($nouvelleVal);
                     $historique->setHISAncienneValeur($ancienneVal);
+                    $historique->setNomTable('secteuractivite');
+                    $historique->setIdSource($secteuractivite->getId());
                     
                     // (Optionnel) Tu pourrais même enregistrer le nom du champ modifié avec $cle !
 
@@ -187,6 +193,8 @@ final class SecteuractiviteController extends AbstractController
                 $historique->setUTIID($user);
                 $historique->setHISNouvelleValeur('');
                 $historique->setHISAncienneValeur($valeur);
+                $historique->setNomTable('secteuractivite');
+                $historique->setIdSource($secteuractivite->getId());
 
                 $entityManager->persist($historique);
             }
