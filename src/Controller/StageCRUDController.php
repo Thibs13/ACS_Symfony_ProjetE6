@@ -218,15 +218,15 @@ final class StageCRUDController extends AbstractController
             $enseignantSuivi = $entityManager->getRepository(Utilisateur::class)->find($stage->getEnseignantSuivi());
 
             $anciennesValeurs = [
-                (string)$stage->getSTADateDebut(),
-                (string)$stage->getSTADateFin(),
+                (string)$stage->getSTADateDebut()->format('d/m/Y'),
+                (string)$stage->getSTADateFin()->format('d/m/Y'),
                 (string)$stage->getSTARemarque(),
                 (string)$stage->getSTARemerciement(),
                 (string)$stage->getSTABilan(),
                 (string)$stage->getSTAAttestation(),
                 (string)$stage->getSTAJury(),
                 (string)$stage->getSTACommentaire(),
-                (string)$stage->getSTADateRetenu(),
+                (string)$stage->getSTADateRetenu()->format('d/m/Y'),
                 (string)$etudiant->getETUNom() . " " . (string)$etudiant->getETUPrenom(),
                 (string)$entreprise->getENTNom(),
                 (string)$enseignantSuivi->getNom() . " " . (string)$enseignantSuivi->getPrenom(),
