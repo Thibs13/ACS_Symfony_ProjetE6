@@ -10,6 +10,7 @@ use App\Entity\Utilisateur;
 use App\Entity\Etudiant;
 use App\Entity\Entreprise;
 use App\Form\StageType;
+use App\Repository\HistoriqueRepository;
 use App\Repository\StageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -162,6 +163,28 @@ final class StageCRUDController extends AbstractController
         // Symfony trouve tout seul le bon stage grâce à l'ID présent dans l'adresse
         return $this->render('stage_crud/show.html.twig', [
             'stage' => $stage,
+            'role' => $userSession['role'] ?? 0,
+        ]);
+    }
+
+    // affiche les logs completes d'un stage (entreprise, étudiant, dates, etc.)
+    #[Route('/{id}/log', name: 'app_stage_historique', methods: ['GET'])]
+    public function log(Stage $stage, RequestStack $requestStack, HistoriqueRepository $historique): Response
+    {
+        // on récupère la session en cours pour vérifier qui navigue sur le site
+        $session = $requestStack->getSession();
+        $userSession = $session->get('user');
+
+        // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
+        if (!$userSession) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
+        $listeHistorique = $historique->findByStage($stage->getId());
+
+        // Symfony trouve tout seul le bon stage grâce à l'ID présent dans l'adresse
+        return $this->render('stage_crud/stage_historique.html.twig', [
+            'listeHistorique' => $listeHistorique,
             'role' => $userSession['role'] ?? 0,
         ]);
     }

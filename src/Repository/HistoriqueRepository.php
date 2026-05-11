@@ -19,17 +19,17 @@ class HistoriqueRepository extends ServiceEntityRepository
     //    /**
     //     * @return Historique[] Returns an array of Historique objects
     //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('h')
-    //            ->andWhere('h.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('h.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+       public function findByStage(int $id): array
+       {
+           return $this->createQueryBuilder('h')
+               ->andWhere('h.NomTable = :table')
+               ->andWhere('h.IdSource = :id')
+               ->setParameter('table', 'stage')
+               ->setParameter('id', $id)
+               ->getQuery()
+               ->getResult()
+           ;
+       }
 
     //    public function findOneBySomeField($value): ?Historique
     //    {
@@ -40,4 +40,6 @@ class HistoriqueRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+
 }

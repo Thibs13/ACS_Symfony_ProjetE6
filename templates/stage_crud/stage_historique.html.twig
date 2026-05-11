@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historique (Stage) - La Châtaigneraie</title>
+    <link rel="stylesheet" href="{{ asset('CSS/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('CSS/etudiant.css') }}">
+</head>
+<aside class="sidebar">
+    <div class="sidebar-logo">
+        <div class="logo-badge">
+            <img src="{{ asset('Image/campus-logo.png') }}" alt="Logo Campus La Chataigneraie" />
+        </div>
+        <h2>La Chataigneraie</h2>
+        <p>Historique (Stage)</p>
+    </div>
+
+    {% include 'navigation.html.twig' with {
+                'namePage' : 'stage' 
+                } %}
+
+    <div class="sidebar-footer">
+        <a href="{{ path('app_deco') }}" class="btn-deco">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            Deconnexion
+        </a>
+    </div>
+</aside>
+<main class="main">
+    {# en-tête de page avec le titre et le bouton d'ajout rapide #}
+    <div class="page-header-flex">
+        <div>
+            <h1>Historique (Stage)</h1>
+            <p>Consulter les logs d'un stage.</p>
+        </div>
+    </div>
+
+    {# tableau affichant les données #}
+    <div class="section-card table-wrapper">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id log</th>
+                    <th>Date</th>
+                    <th>Ancienne valeur</th>
+                    <th>Nouvelle valeur</th>
+                    <th>Auteur</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for historique in listeHistorique %}
+                <tr>
+                    <td>{{ historique.id }}</td>
+                    <td>{{ historique.HISDate ? historique.HISDate|date('Y-m-d') : '' }}</td>
+                    <td>{{ historique.HISAncienneValeur }}</td>
+                    <td>{{ historique.HISNouvelleValeur }}</td>
+                    <td>{{ historique.UTIID.Nom }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
