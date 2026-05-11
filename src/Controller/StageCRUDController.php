@@ -185,6 +185,7 @@ final class StageCRUDController extends AbstractController
         // Symfony trouve tout seul le bon stage grâce à l'ID présent dans l'adresse
         return $this->render('stage_crud/stage_historique.html.twig', [
             'listeHistorique' => $listeHistorique,
+            'idStage' => $stage->getId(),
             'role' => $userSession['role'] ?? 0,
         ]);
     }
