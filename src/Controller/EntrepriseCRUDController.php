@@ -34,7 +34,7 @@ final class EntrepriseCRUDController extends AbstractController
         $userSession = $session->get('user');
 
         // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
-        if (!$userSession) {
+        if ($userSession['role'] != 1) {
             return $this->redirectToRoute('app_accueil');
         }
 
@@ -133,7 +133,7 @@ final class EntrepriseCRUDController extends AbstractController
         $userSession = $session->get('user');
 
         // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
-        if (!$userSession) {
+        if ($userSession['role'] != 1) {
             return $this->redirectToRoute('app_accueil');
         }
 

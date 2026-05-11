@@ -156,7 +156,7 @@ final class StageCRUDController extends AbstractController
         $userSession = $session->get('user');
 
         // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
-        if (!$userSession) {
+        if ($userSession['role'] != 1 ) {
             return $this->redirectToRoute('app_accueil');
         }
 
@@ -176,7 +176,7 @@ final class StageCRUDController extends AbstractController
         $userSession = $session->get('user');
 
         // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
-        if (!$userSession) {
+        if ($userSession['role'] != 1) {
             return $this->redirectToRoute('app_accueil');
         }
 
@@ -199,7 +199,7 @@ final class StageCRUDController extends AbstractController
         $userSession = $session->get('user');
 
         // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
-        if (!$userSession OR $userSession['role'] != 1) {
+        if ($userSession['role'] != 1 and $userSession['role'] != 2) {
             return $this->redirectToRoute('app_accueil');
         }
 
@@ -300,7 +300,7 @@ final class StageCRUDController extends AbstractController
         $userSession = $session->get('user');
 
         // si personne n'est connecté, on renvoie l'utilisateur vers la page de connexion
-        if (!$userSession OR $userSession['role'] != 1) {
+        if ($userSession['role'] != 1 and $userSession['role'] != 2) {
             return $this->redirectToRoute('app_accueil');
         }
 
