@@ -204,13 +204,10 @@ final class EntrepriseCRUDController extends AbstractController
                     $historique->setNomTable('entreprise');
                     $historique->setIdSource($entreprise->getId());
                     
-                    // (Optionnel) Tu pourrais même enregistrer le nom du champ modifié avec $cle !
-
                     $entityManager->persist($historique);
                 }
             }
 
-            // Un seul flush à la fin suffit pour sauvegarder l'entreprise ET les logs
             $entityManager->flush();
 
             return $this->redirectToRoute('app_entreprise_read', [], Response::HTTP_SEE_OTHER);

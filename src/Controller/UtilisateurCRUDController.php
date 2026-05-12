@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Role;
+use DateTime;
 use App\Entity\Utilisateur;
+use App\Entity\Historique;
 use App\Form\UtilisateurType;
 use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -109,11 +112,49 @@ final class UtilisateurCRUDController extends AbstractController
 
         // on charge le formulaire avec les données actuelles de l'utilisateur
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
+
+        $role = $entityManager->getRepository(Role::class)->find($utilisateur->getRole());
+        
+        $anciennesValeurs = [
+            'nom' => (string)$utilisateur->getNom(),
+            'prenom' => (string)$utilisateur->getPrenom(),
+            'login' => (string)$utilisateur->getLogin(),
+            'role' => (string)$role->getLibelle()
+        ]; 
+
         $form->handleRequest($request);
 
         // si on confirme les modifications
         if ($form->isSubmitted() && $form->isValid()) {
-            // on met à jour la base de données
+
+            $role = $entityManager->getRepository(Role::class)->find($utilisateur->getRole());
+        
+            $nouvellesValeurs = [
+                'nom' => (string)$utilisateur->getNom(),
+                'prenom' => (string)$utilisateur->getPrenom(),
+                'login' => (string)$utilisateur->getLogin(),
+                'role' => (string)$role->getLibelle()
+            ]; 
+
+            $user = $entityManager->getRepository(Utilisateur::class)->find($userSession['id']);
+            $dateLog = new DateTime();
+            
+            foreach ($anciennesValeurs as $cle => $ancienneVal) {
+                $nouvelleVal = $nouvellesValeurs[$cle];
+
+                if ($ancienneVal !== $nouvelleVal) {
+                    $historique = new Historique();
+                    $historique->setHISDate($dateLog);
+                    $historique->setUTIID($user);
+                    $historique->setHISNouvelleValeur($nouvelleVal);
+                    $historique->setHISAncienneValeur($ancienneVal);
+                    $historique->setNomTable('utilisateur');
+                    $historique->setIdSource($utilisateur->getId());
+                    
+                    $entityManager->persist($historique);
+                }
+            }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_utilisateur_read', [], Response::HTTP_SEE_OTHER);
@@ -141,6 +182,31 @@ final class UtilisateurCRUDController extends AbstractController
 
         // on vérifie que la demande de suppression est sécurisée par un jeton (token)
         if ($this->isCsrfTokenValid('delete'.$utilisateur->getId(), $request->getPayload()->getString('_token'))) {
+            
+            $user = $entityManager->getRepository(Utilisateur::class)->find($userSession['id']);
+            $dateLog = new DateTime();
+
+            $role = $entityManager->getRepository(Role::class)->find($utilisateur->getRole());
+        
+            $anciennesValeurs = [
+                'nom' => (string)$utilisateur->getNom(),
+                'prenom' => (string)$utilisateur->getPrenom(),
+                'login' => (string)$utilisateur->getLogin(),
+                'role' => (string)$role->getLibelle()
+            ]; 
+
+            foreach ($anciennesValeurs as $valeur) {
+                $historique = new Historique();
+                $historique->setHISDate($dateLog);
+                $historique->setUTIID($user);
+                $historique->setHISNouvelleValeur('');
+                $historique->setHISAncienneValeur($valeur);
+                $historique->setNomTable('utilisateur');
+                $historique->setIdSource($utilisateur->getId());
+
+                $entityManager->persist($historique);
+            }
+
             // on supprime l'utilisateur et on valide le changement
             $entityManager->remove($utilisateur);
             $entityManager->flush();
