@@ -158,7 +158,7 @@ final class EntrepriseCRUDController extends AbstractController
 
         // 1. ON CAPTURE L'HISTORIQUE *AVANT* QUE LE FORMULAIRE MODIFIE L'OBJET
         $ville = $entityManager->getRepository(Ville::class)->find($entreprise->getVILID());
-        $secteuractivite = $entityManager->getRepository(Secteuractivite::class)->find($entreprise->getSecteur());
+        $secteuractivite = $entityManager->getRepository(Secteuractivite::class)->find($entreprise->getSecteur()->getId());
         
         // Utilisation d'un tableau associatif pour éviter les erreurs d'ordre
         $anciennesValeurs = [
