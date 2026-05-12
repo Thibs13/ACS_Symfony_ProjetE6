@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Etudiant;
+use App\Entity\Historique;
+use App\Entity\Promotions;
 use App\Form\EtudiantType;
+use App\Entity\Utilisateur;
 use App\Repository\EtudiantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -127,6 +131,42 @@ final class EtudiantCRUDController extends AbstractController
             $entityManager->persist($etudiant);
             $entityManager->flush();
 
+
+            $idSource = $etudiant->getId(); 
+
+            // Partie pour les logs
+            $data = $form->getData();
+
+            foreach ($form->all() as $fieldName => $field) {
+                $value = $field->getData();
+
+                if (is_object($value)) {
+                    if(get_class($value) == 'App\Entity\Promotions'){
+                        $valeurAEnregistrer = $value->getProLibelle();
+                    }
+                    
+                } else {
+                    $valeurAEnregistrer = (string)$value;
+                }
+
+                $historique = new Historique();
+                $historique->setHISDate(new DateTime());
+                $historique->setHISNouvelleValeur($valeurAEnregistrer);
+                $historique->setHISAncienneValeur('');
+                $historique->setNomTable('etudiant');
+                $historique->setIdSource($idSource);
+
+                $user = $entityManager->getRepository(Utilisateur::class)->find($userSession['id']);
+                $historique->setUTIID($user);
+
+                $entityManager->persist($historique);
+            }
+
+            // Un seul flush global pour tous les logs
+            $entityManager->flush();
+
+            //Fin partie pour les logs
+
             // une fois fini, on repart sur la liste globale
             return $this->redirectToRoute('app_etudiant_read', [], Response::HTTP_SEE_OTHER);
         }
@@ -174,12 +214,54 @@ final class EtudiantCRUDController extends AbstractController
 
         // on prépare le formulaire pré-rempli avec les données de l'étudiant à modifier
         $form = $this->createForm(EtudiantType::class, $etudiant);
+
+        // 1. ON CAPTURE L'HISTORIQUE *AVANT* QUE LE FORMULAIRE MODIFIE L'OBJET
+        $promotion = $entityManager->getRepository(Promotions::class)->find($etudiant->getPromo());
+    
+        // Utilisation d'un tableau associatif pour éviter les erreurs d'ordre
+        $anciennesValeurs = [
+            'nom' => (string)$etudiant->getETUNom(),
+            'prenom' => (string)$etudiant->getETUPrenom(),
+            'ville' => $promotion ? (string)$promotion->getProLibelle() : '',
+        ]; 
+
+        // 2. ICI SYMFONY MET A JOUR L'OBJET AVEC LES DONNÉES DU POST
         $form->handleRequest($request);
 
         // si le formulaire est envoyé et que les données sont correctes
         if ($form->isSubmitted() && $form->isValid()) {
-            // on dit à l'outil de gestion de base de données de "préparer" puis "d'enregistrer" les modifications de l'étudiant
-            $entityManager->persist($etudiant);
+            // 3. ON CAPTURE LES NOUVELLES VALEURS *APRÈS* LA MISE A JOUR
+            $promoNouvelle = $entityManager->getRepository(Promotions::class)->find($etudiant->getPromo());
+
+            $nouvellesValeurs = [
+                'nom' => (string)$etudiant->getETUNom(),
+                'prenom' => (string)$etudiant->getETUPrenom(),
+                'ville' => $promoNouvelle ? (string)$promoNouvelle->getProLibelle() : '',
+            ];
+
+            $user = $entityManager->getRepository(Utilisateur::class)->find($userSession['id']);
+            $dateLog = new DateTime();
+
+             // 4. ON COMPARE LES CLÉS IDENTIQUES
+            foreach ($anciennesValeurs as $cle => $ancienneVal) {
+                $nouvelleVal = $nouvellesValeurs[$cle];
+
+                if ($ancienneVal !== $nouvelleVal) {
+                    $historique = new Historique();
+                    $historique->setHISDate($dateLog);
+                    $historique->setUTIID($user);
+                    $historique->setHISNouvelleValeur($nouvelleVal);
+                    $historique->setHISAncienneValeur($ancienneVal);
+                    $historique->setNomTable('etudiant');
+                    $historique->setIdSource($etudiant->getId());
+                    
+                    // (Optionnel) Tu pourrais même enregistrer le nom du champ modifié avec $cle !
+
+                    $entityManager->persist($historique);
+                }
+            }
+
+            // Un seul flush à la fin suffit pour sauvegarder l'entreprise ET les logs
             $entityManager->flush();
 
             // une fois fini, on repart sur la liste globale
@@ -209,6 +291,33 @@ final class EtudiantCRUDController extends AbstractController
 
         // on vérifie que la requête contient un token de sécurité valide pour éviter les attaques CSRF
         if ($this->isCsrfTokenValid('delete' . $etudiant->getId(), $request->request->get('_token'))) {
+            // 1. On prépare les données communes à tous les logs
+            $user = $entityManager->getRepository(Utilisateur::class)->find($userSession['id']);
+            $dateLog = new DateTime();
+
+            // 2. On récupère les objets liés (Promotions) pour éviter les erreurs s'ils sont nulls
+            $promotion = $entityManager->getRepository(Promotions::class)->find($etudiant->getPromo());
+
+            // 3. On liste toutes les anciennes valeurs que l'on veut sauvegarder
+            $anciennesValeurs = [
+                'nom' => (string)$etudiant->getETUNom(),
+                'prenom' => (string)$etudiant->getETUPrenom(),
+                'ville' => $promotion ? (string)$promotion->getProLibelle() : '',
+            ]; 
+
+            // 4. On boucle sur ces valeurs pour créer UN NOUVEAU log à chaque fois
+            foreach ($anciennesValeurs as $valeur) {
+                $historique = new Historique();
+                $historique->setHISDate($dateLog);
+                $historique->setUTIID($user);
+                $historique->setHISNouvelleValeur('');
+                $historique->setHISAncienneValeur($valeur);
+                $historique->setNomTable('etudiant');
+                $historique->setIdSource($etudiant->getId());
+
+                $entityManager->persist($historique);
+            }
+        
             // si le token est valide, on dit à l'outil de gestion de base de données de supprimer l'étudiant
             $entityManager->remove($etudiant);
             $entityManager->flush();
